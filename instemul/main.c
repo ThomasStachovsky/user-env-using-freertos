@@ -25,10 +25,50 @@ void vPortTrapHandler(struct TrapFrame *frame) {
                    *(uint32_t *)((frame->m68000.pc) + 4);
   uint32_t instrlow = (uint32_t)(instr & 0xffffffff);
   uint32_t instrhigh = (uint32_t)(instr >> 32);
+
+  /* 00001000000000000100110000111100 ; muls opcode with #<data> mode 111 reg
+     100 */
+  if ((instrhigh & 0b01001100001111000000100000000000) ==
+      0b01001100001111000000100000000000) {
+    int32_t factor = *(int32_t *)(&instrlow);
+    uint32_t *destination =
+      (uint32_t *)((void *)frame +
+                   (((instrhigh & 0b0111000000000000) >> 12) << 2));
+
+    int32_t product = 0, original = *destination, absoriginal, absfactor;
+    int sign_factor, sign_original;
+    if (factor >= 0) {
+      sign_factor = 0;
+      absfactor = factor;
+    } else {
+      sign_factor = 1;
+      absfactor = -factor;
+    }
+    if (original >= 0) {
+      sign_original = 0;
+      absoriginal = original;
+    } else {
+      sign_original = 1;
+      absoriginal = -original;
+    }
+    while (absfactor) {
+      if (absfactor & 1)
+        product += absoriginal;
+      absfactor >>= 1;
+      absoriginal <<= 1;
+    }
+    if (sign_factor ^ sign_original)
+      product = -product;
+
+    *destination = product;
+
+    frame->m68000.pc += 8;
+
+  }
   /* 0b01001100011111000000100000000000 ; divsl opcode with #<data> mode 111 reg
    * 100 */
-  if ((instrhigh & 0b01001100011111000000100000000000) ==
-      0b01001100011111000000100000000000) {
+  else if ((instrhigh & 0b01001100011111000000100000000000) ==
+           0b01001100011111000000100000000000) {
     int32_t divisor = *(int32_t *)(&instrlow);
     if (divisor == 0)
       vPortDefaultTrapHandler(frame);
@@ -67,32 +107,6 @@ void vPortTrapHandler(struct TrapFrame *frame) {
 
     *dq = q;
     *dr = r;
-
-    frame->m68000.pc += 8;
-
-  }
-  /* 00001000000000000100110000111100 ; muls opcode with #<data> mode 111 reg
-     100 */
-  else if ((instrhigh & 0b01001100001111000000100000000000) ==
-           0b01001100001111000000100000000000) {
-    int32_t factor = *(int32_t *)(&instrlow);
-    uint32_t *destination =
-      (uint32_t *)((void *)frame +
-                   (((instrhigh & 0b0111000000000000) >> 12) << 2));
-    int32_t n;
-    int32_t product = *destination;
-    int32_t original = product;
-    if (factor >= 0)
-      n = factor;
-    else
-      n = -factor;
-    for (int i = 0; i < n; i++)
-      product += original;
-
-    if (factor >= 0)
-      *destination = product;
-    else
-      *destination = -product;
 
     frame->m68000.pc += 8;
 
