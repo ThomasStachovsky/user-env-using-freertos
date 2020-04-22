@@ -30,6 +30,8 @@ void vPortTrapHandler(struct TrapFrame *frame) {
   if ((instrhigh & 0b01001100011111000000100000000000) ==
       0b01001100011111000000100000000000) {
     int32_t divisor = *(int32_t *)(&instrlow);
+    if (divisor == 0)
+      vPortDefaultTrapHandler(frame);
     uint32_t *dq =
       (uint32_t *)((void *)frame +
                    (((instrhigh & 0b0111000000000000) >> 12) << 2));

@@ -64,7 +64,7 @@ Linker script and memory map
                 [!provide]                        PROVIDE (msm6242b = 0xdc0000)
                 0x0000000000dff000                PROVIDE (custom = 0xdff000)
 
-.text           0x0000000000000000     0x25e4
+.text           0x0000000000000000     0x25f8
                 [!provide]                        PROVIDE (_text = .)
  *(.text .text.*)
  .text          0x0000000000000000      0x13e ../startup.o
@@ -74,222 +74,222 @@ Linker script and memory map
                 0x0000000000000158                vApplicationStackOverflowHook
  .text          0x0000000000000172      0x168 ../trap.o
                 0x0000000000000172                vPortDefaultTrapHandler
- .text          0x00000000000002da       0xe0 main.o
+ .text          0x00000000000002da       0xf4 main.o
                 0x00000000000002ec                vPortTrapHandler
-                0x00000000000003b0                vApplicationIdleHook
- .text.startup  0x00000000000003ba       0x2e main.o
-                0x00000000000003ba                main
- .text          0x00000000000003e8       0x34 rand.o
-                0x00000000000003e8                rand
- .text          0x000000000000041c       0x30 /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(bootcons.o)
- .text          0x000000000000044c       0x6c /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(cia-icr.o)
-                0x000000000000044c                WriteICR
-                0x0000000000000486                SampleICR
- .text          0x00000000000004b8       0xde /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(file.o)
-                0x00000000000004b8                FileRead
-                0x00000000000004cc                FileWrite
-                0x0000000000000502                FileSeek
-                0x0000000000000518                FileClose
-                0x000000000000052c                FilePutChar
-                0x000000000000054e                FilePrintf
- .text          0x0000000000000596       0x20 /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(bootcons-putc.o)
-                0x0000000000000596                BootConsPutChar
- .text          0x00000000000005b6     0x1226 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(tasks.o)
-                0x00000000000006be                xTaskResumeFromISR
-                0x000000000000076a                vTaskEndScheduler
-                0x000000000000077a                vTaskSuspendAll
-                0x000000000000078a                xTaskGetTickCountFromISR
-                0x00000000000007ae                uxTaskGetNumberOfTasks
-                0x00000000000007b6                pcTaskGetName
-                0x00000000000007ce                xTaskIncrementTick
-                0x000000000000090e                vTaskSwitchContext
-                0x00000000000009ca                vTaskPlaceOnEventList
-                0x0000000000000a00                vTaskPlaceOnUnorderedEventList
-                0x0000000000000a58                xTaskRemoveFromEventList
-                0x0000000000000af4                vTaskRemoveFromUnorderedEventList
-                0x0000000000000b84                vTaskInternalSetTimeOutState
-                0x0000000000000b9c                vTaskMissedYield
-                0x0000000000000ba6                uxTaskGetStackHighWaterMark
-                0x0000000000000bd2                xTaskGetCurrentTaskHandle
-                0x0000000000000bda                xTaskGetSchedulerState
-                0x0000000000000bf6                vTaskEnterCritical
-                0x0000000000000c28                vTaskExitCritical
-                0x0000000000000c58                xTaskCreate
-                0x0000000000000e56                vTaskStartScheduler
-                0x0000000000000ea4                vTaskDelete
-                0x0000000000000f56                vTaskSuspend
-                0x0000000000001008                vTaskResume
-                0x000000000000110e                xTaskResumeAll
-                0x0000000000001212                vTaskDelayUntil
-                0x000000000000127c                vTaskDelay
-                0x00000000000012ae                xTaskGetTickCount
-                0x00000000000012c4                vTaskSetTimeOutState
-                0x00000000000012f0                xTaskCheckForTimeOut
-                0x000000000000135e                uxTaskResetEventItemValue
-                0x0000000000001380                ulTaskNotifyTake
-                0x0000000000001404                xTaskNotifyWait
-                0x00000000000014b6                xTaskGenericNotify
-                0x00000000000015aa                xTaskGenericNotifyFromISR
-                0x00000000000016d8                vTaskNotifyGiveFromISR
-                0x00000000000017a6                xTaskNotifyStateClear
- .text          0x00000000000017dc      0x21e /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(heap.o)
-                0x00000000000017dc                _pvPortMallocBelow
-                0x0000000000001882                pvPortMalloc
-                0x0000000000001892                pvPortMallocChip
-                0x00000000000018a4                vPortFree
-                0x0000000000001972                xPortGetFreeHeapSize
-                0x000000000000198c                xPortGetMinimumEverFreeHeapSize
-                0x00000000000019a6                vPortDefineMemoryRegions
- .text          0x00000000000019fa      0x1c2 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(port.o)
-                0x00000000000019fa                pxPortInitialiseStack
-                0x0000000000001a30                xPortStartScheduler
-                0x0000000000001a50                vPortEndScheduler
-                0x0000000000001a52                vPortSetupExceptionVector
- .text          0x0000000000001bbc       0xaa /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(intsrv.o)
-                0x0000000000001bbc                AddIntServer
-                0x0000000000001c06                RemIntServer
-                0x0000000000001c3a                RunIntChain
- .text          0x0000000000001c66       0xe8 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(intr.o)
-                0x0000000000001c66                AmigaLvl1Handler
-                0x0000000000001c8a                AmigaLvl2Handler
-                0x0000000000001c98                AmigaLvl3Handler
-                0x0000000000001cbc                AmigaLvl4Handler
-                0x0000000000001d24                AmigaLvl5Handler
-                0x0000000000001d3e                AmigaLvl6Handler
-                0x0000000000001d4c                DummyInterruptHandler
- .text          0x0000000000001d4e       0x5a /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(trap.o)
-                0x0000000000001d4e                BadTrap
-                0x0000000000001d54                BusErrTrap
-                0x0000000000001d5a                AddrErrTrap
-                0x0000000000001d60                IllegalTrap
-                0x0000000000001d66                ZeroDivTrap
-                0x0000000000001d6c                ChkInstTrap
-                0x0000000000001d72                TrapvInstTrap
-                0x0000000000001d78                PrivInstTrap
-                0x0000000000001d7e                TraceTrap
-                0x0000000000001d84                FmtErrTrap
-                0x0000000000001d8a                TrapInstTrap
-                0x0000000000001d92                EnterTrap
- .text          0x0000000000001da8       0x4e /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(portasm.o)
-                0x0000000000001da8                ulPortSetIPL
-                0x0000000000001dc4                vPortYieldHandler
-                0x0000000000001de8                vPortStartFirstTask
- .text          0x0000000000001df6       0xe2 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(list.o)
-                0x0000000000001df6                vListInitialise
-                0x0000000000001e14                vListInitialiseItem
-                0x0000000000001e1e                vListInsertEnd
-                0x0000000000001e54                vListInsert
-                0x0000000000001ea0                uxListRemove
- .text          0x0000000000001ed8      0x376 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(kvprintf.o)
-                0x000000000000202a                kvprintf
- .text          0x000000000000224e       0x22 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(mulsi3.o)
-                0x000000000000224e                __mulsi3
- .text          0x0000000000002270       0x5c /home/tomasz/FreeRTOS-Amiga/libc/c.lib(udivsi3.o)
-                0x0000000000002270                __ldivu
-                0x0000000000002270                __udivsi3
- .text          0x00000000000022cc       0x2e /home/tomasz/FreeRTOS-Amiga/libc/c.lib(umodsi3.o)
-                0x00000000000022cc                __umodsi3
- .text          0x00000000000022fa       0x94 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(memset.o)
-                0x00000000000022fa                memset
+                0x00000000000003c4                vApplicationIdleHook
+ .text.startup  0x00000000000003ce       0x2e main.o
+                0x00000000000003ce                main
+ .text          0x00000000000003fc       0x34 rand.o
+                0x00000000000003fc                rand
+ .text          0x0000000000000430       0x30 /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(bootcons.o)
+ .text          0x0000000000000460       0x6c /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(cia-icr.o)
+                0x0000000000000460                WriteICR
+                0x000000000000049a                SampleICR
+ .text          0x00000000000004cc       0xde /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(file.o)
+                0x00000000000004cc                FileRead
+                0x00000000000004e0                FileWrite
+                0x0000000000000516                FileSeek
+                0x000000000000052c                FileClose
+                0x0000000000000540                FilePutChar
+                0x0000000000000562                FilePrintf
+ .text          0x00000000000005aa       0x20 /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(bootcons-putc.o)
+                0x00000000000005aa                BootConsPutChar
+ .text          0x00000000000005ca     0x1226 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(tasks.o)
+                0x00000000000006d2                xTaskResumeFromISR
+                0x000000000000077e                vTaskEndScheduler
+                0x000000000000078e                vTaskSuspendAll
+                0x000000000000079e                xTaskGetTickCountFromISR
+                0x00000000000007c2                uxTaskGetNumberOfTasks
+                0x00000000000007ca                pcTaskGetName
+                0x00000000000007e2                xTaskIncrementTick
+                0x0000000000000922                vTaskSwitchContext
+                0x00000000000009de                vTaskPlaceOnEventList
+                0x0000000000000a14                vTaskPlaceOnUnorderedEventList
+                0x0000000000000a6c                xTaskRemoveFromEventList
+                0x0000000000000b08                vTaskRemoveFromUnorderedEventList
+                0x0000000000000b98                vTaskInternalSetTimeOutState
+                0x0000000000000bb0                vTaskMissedYield
+                0x0000000000000bba                uxTaskGetStackHighWaterMark
+                0x0000000000000be6                xTaskGetCurrentTaskHandle
+                0x0000000000000bee                xTaskGetSchedulerState
+                0x0000000000000c0a                vTaskEnterCritical
+                0x0000000000000c3c                vTaskExitCritical
+                0x0000000000000c6c                xTaskCreate
+                0x0000000000000e6a                vTaskStartScheduler
+                0x0000000000000eb8                vTaskDelete
+                0x0000000000000f6a                vTaskSuspend
+                0x000000000000101c                vTaskResume
+                0x0000000000001122                xTaskResumeAll
+                0x0000000000001226                vTaskDelayUntil
+                0x0000000000001290                vTaskDelay
+                0x00000000000012c2                xTaskGetTickCount
+                0x00000000000012d8                vTaskSetTimeOutState
+                0x0000000000001304                xTaskCheckForTimeOut
+                0x0000000000001372                uxTaskResetEventItemValue
+                0x0000000000001394                ulTaskNotifyTake
+                0x0000000000001418                xTaskNotifyWait
+                0x00000000000014ca                xTaskGenericNotify
+                0x00000000000015be                xTaskGenericNotifyFromISR
+                0x00000000000016ec                vTaskNotifyGiveFromISR
+                0x00000000000017ba                xTaskNotifyStateClear
+ .text          0x00000000000017f0      0x21e /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(heap.o)
+                0x00000000000017f0                _pvPortMallocBelow
+                0x0000000000001896                pvPortMalloc
+                0x00000000000018a6                pvPortMallocChip
+                0x00000000000018b8                vPortFree
+                0x0000000000001986                xPortGetFreeHeapSize
+                0x00000000000019a0                xPortGetMinimumEverFreeHeapSize
+                0x00000000000019ba                vPortDefineMemoryRegions
+ .text          0x0000000000001a0e      0x1c2 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(port.o)
+                0x0000000000001a0e                pxPortInitialiseStack
+                0x0000000000001a44                xPortStartScheduler
+                0x0000000000001a64                vPortEndScheduler
+                0x0000000000001a66                vPortSetupExceptionVector
+ .text          0x0000000000001bd0       0xaa /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(intsrv.o)
+                0x0000000000001bd0                AddIntServer
+                0x0000000000001c1a                RemIntServer
+                0x0000000000001c4e                RunIntChain
+ .text          0x0000000000001c7a       0xe8 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(intr.o)
+                0x0000000000001c7a                AmigaLvl1Handler
+                0x0000000000001c9e                AmigaLvl2Handler
+                0x0000000000001cac                AmigaLvl3Handler
+                0x0000000000001cd0                AmigaLvl4Handler
+                0x0000000000001d38                AmigaLvl5Handler
+                0x0000000000001d52                AmigaLvl6Handler
+                0x0000000000001d60                DummyInterruptHandler
+ .text          0x0000000000001d62       0x5a /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(trap.o)
+                0x0000000000001d62                BadTrap
+                0x0000000000001d68                BusErrTrap
+                0x0000000000001d6e                AddrErrTrap
+                0x0000000000001d74                IllegalTrap
+                0x0000000000001d7a                ZeroDivTrap
+                0x0000000000001d80                ChkInstTrap
+                0x0000000000001d86                TrapvInstTrap
+                0x0000000000001d8c                PrivInstTrap
+                0x0000000000001d92                TraceTrap
+                0x0000000000001d98                FmtErrTrap
+                0x0000000000001d9e                TrapInstTrap
+                0x0000000000001da6                EnterTrap
+ .text          0x0000000000001dbc       0x4e /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(portasm.o)
+                0x0000000000001dbc                ulPortSetIPL
+                0x0000000000001dd8                vPortYieldHandler
+                0x0000000000001dfc                vPortStartFirstTask
+ .text          0x0000000000001e0a       0xe2 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(list.o)
+                0x0000000000001e0a                vListInitialise
+                0x0000000000001e28                vListInitialiseItem
+                0x0000000000001e32                vListInsertEnd
+                0x0000000000001e68                vListInsert
+                0x0000000000001eb4                uxListRemove
+ .text          0x0000000000001eec      0x376 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(kvprintf.o)
+                0x000000000000203e                kvprintf
+ .text          0x0000000000002262       0x22 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(mulsi3.o)
+                0x0000000000002262                __mulsi3
+ .text          0x0000000000002284       0x5c /home/tomasz/FreeRTOS-Amiga/libc/c.lib(udivsi3.o)
+                0x0000000000002284                __ldivu
+                0x0000000000002284                __udivsi3
+ .text          0x00000000000022e0       0x2e /home/tomasz/FreeRTOS-Amiga/libc/c.lib(umodsi3.o)
+                0x00000000000022e0                __umodsi3
+ .text          0x000000000000230e       0x94 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(memset.o)
+                0x000000000000230e                memset
  *(.rodata .rodata.*)
  .rodata.str1.1
-                0x000000000000238e       0x67 ../startup.o
- *fill*         0x00000000000023f5        0x1 
+                0x00000000000023a2       0x67 ../startup.o
+ *fill*         0x0000000000002409        0x1 
  .rodata.str1.1
-                0x00000000000023f6       0x24 ../fault.o
+                0x000000000000240a       0x24 ../fault.o
  .rodata.str1.1
-                0x000000000000241a      0x182 ../trap.o
+                0x000000000000242e      0x182 ../trap.o
                                         0x18e (size before relaxing)
- .rodata        0x000000000000259c       0x2c ../trap.o
+ .rodata        0x00000000000025b0       0x2c ../trap.o
  .rodata.str1.1
-                0x00000000000025c8        0x5 main.o
- *fill*         0x00000000000025cd        0x1 
+                0x00000000000025dc        0x5 main.o
+ *fill*         0x00000000000025e1        0x1 
  .rodata.str1.1
-                0x00000000000025ce        0x5 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(tasks.o)
- *fill*         0x00000000000025d3        0x1 
- .rodata        0x00000000000025d4       0x10 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(kvprintf.o)
-                0x00000000000025e4                . = ALIGN (0x4)
+                0x00000000000025e2        0x5 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(tasks.o)
+ *fill*         0x00000000000025e7        0x1 
+ .rodata        0x00000000000025e8       0x10 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(kvprintf.o)
+                0x00000000000025f8                . = ALIGN (0x4)
                 [!provide]                        PROVIDE (_etext = .)
 
-.data           0x00000000000025e4       0x30
+.data           0x00000000000025f8       0x30
                 [!provide]                        PROVIDE (_data = .)
  *(.data .data.*)
- .data          0x00000000000025e4        0x0 ../startup.o
- .data          0x00000000000025e4        0x0 ../fault.o
- .data          0x00000000000025e4        0x0 ../trap.o
- .data          0x00000000000025e4        0x0 main.o
- .data          0x00000000000025e4        0x4 rand.o
- .data          0x00000000000025e8       0x1e /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(bootcons.o)
-                0x00000000000025e8                KernCons
- *fill*         0x0000000000002606        0x2 
- .data          0x0000000000002608        0x0 /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(cia-icr.o)
- .data          0x0000000000002608        0x0 /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(file.o)
- .data          0x0000000000002608        0x0 /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(bootcons-putc.o)
- .data          0x0000000000002608        0x0 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(tasks.o)
- .data          0x0000000000002608        0x0 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(heap.o)
- .data          0x0000000000002608        0xc /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(port.o)
-                0x0000000000002608                ExterChain
-                0x000000000000260c                VertBlankChain
-                0x0000000000002610                PortsChain
- .data          0x0000000000002614        0x0 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(intsrv.o)
- .data          0x0000000000002614        0x0 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(intr.o)
- .data          0x0000000000002614        0x0 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(trap.o)
- .data          0x0000000000002614        0x0 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(portasm.o)
- .data          0x0000000000002614        0x0 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(list.o)
- .data          0x0000000000002614        0x0 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(kvprintf.o)
- .data          0x0000000000002614        0x0 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(mulsi3.o)
- .data          0x0000000000002614        0x0 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(udivsi3.o)
- .data          0x0000000000002614        0x0 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(umodsi3.o)
- .data          0x0000000000002614        0x0 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(memset.o)
-                0x0000000000002614                . = ALIGN (0x4)
+ .data          0x00000000000025f8        0x0 ../startup.o
+ .data          0x00000000000025f8        0x0 ../fault.o
+ .data          0x00000000000025f8        0x0 ../trap.o
+ .data          0x00000000000025f8        0x0 main.o
+ .data          0x00000000000025f8        0x4 rand.o
+ .data          0x00000000000025fc       0x1e /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(bootcons.o)
+                0x00000000000025fc                KernCons
+ *fill*         0x000000000000261a        0x2 
+ .data          0x000000000000261c        0x0 /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(cia-icr.o)
+ .data          0x000000000000261c        0x0 /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(file.o)
+ .data          0x000000000000261c        0x0 /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(bootcons-putc.o)
+ .data          0x000000000000261c        0x0 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(tasks.o)
+ .data          0x000000000000261c        0x0 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(heap.o)
+ .data          0x000000000000261c        0xc /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(port.o)
+                0x000000000000261c                ExterChain
+                0x0000000000002620                VertBlankChain
+                0x0000000000002624                PortsChain
+ .data          0x0000000000002628        0x0 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(intsrv.o)
+ .data          0x0000000000002628        0x0 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(intr.o)
+ .data          0x0000000000002628        0x0 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(trap.o)
+ .data          0x0000000000002628        0x0 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(portasm.o)
+ .data          0x0000000000002628        0x0 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(list.o)
+ .data          0x0000000000002628        0x0 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(kvprintf.o)
+ .data          0x0000000000002628        0x0 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(mulsi3.o)
+ .data          0x0000000000002628        0x0 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(udivsi3.o)
+ .data          0x0000000000002628        0x0 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(umodsi3.o)
+ .data          0x0000000000002628        0x0 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(memset.o)
+                0x0000000000002628                . = ALIGN (0x4)
                 [!provide]                        PROVIDE (_edata = .)
 
-.bss            0x0000000000002614      0x1b8
+.bss            0x0000000000002628      0x1b8
                 [!provide]                        PROVIDE (_bss = .)
  *(.bss .bss.*)
- .bss           0x0000000000002614        0x0 ../startup.o
- .bss           0x0000000000002614        0x0 ../fault.o
- .bss           0x0000000000002614        0x0 ../trap.o
- .bss           0x0000000000002614        0x4 main.o
- .bss           0x0000000000002618        0x0 rand.o
- .bss           0x0000000000002618        0x0 /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(bootcons.o)
- .bss           0x0000000000002618        0x4 /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(cia-icr.o)
- .bss           0x000000000000261c        0x0 /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(file.o)
- .bss           0x000000000000261c        0x0 /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(bootcons-putc.o)
- .bss           0x000000000000261c       0xf0 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(tasks.o)
-                0x000000000000261c                pxCurrentTCB
- .bss           0x000000000000270c        0x4 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(heap.o)
-                0x000000000000270c                MemRegions
- .bss           0x0000000000002710       0xbc /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(port.o)
-                0x0000000000002710                xNeedRescheduleTask
-                0x0000000000002714                CpuModel
-                0x0000000000002716                IntVec
-                0x0000000000002786                ExcVecBase
- .bss           0x00000000000027cc        0x0 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(intsrv.o)
- .bss           0x00000000000027cc        0x0 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(intr.o)
- .bss           0x00000000000027cc        0x0 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(trap.o)
- .bss           0x00000000000027cc        0x0 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(portasm.o)
- .bss           0x00000000000027cc        0x0 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(list.o)
- .bss           0x00000000000027cc        0x0 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(kvprintf.o)
- .bss           0x00000000000027cc        0x0 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(mulsi3.o)
- .bss           0x00000000000027cc        0x0 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(udivsi3.o)
- .bss           0x00000000000027cc        0x0 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(umodsi3.o)
- .bss           0x00000000000027cc        0x0 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(memset.o)
+ .bss           0x0000000000002628        0x0 ../startup.o
+ .bss           0x0000000000002628        0x0 ../fault.o
+ .bss           0x0000000000002628        0x0 ../trap.o
+ .bss           0x0000000000002628        0x4 main.o
+ .bss           0x000000000000262c        0x0 rand.o
+ .bss           0x000000000000262c        0x0 /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(bootcons.o)
+ .bss           0x000000000000262c        0x4 /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(cia-icr.o)
+ .bss           0x0000000000002630        0x0 /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(file.o)
+ .bss           0x0000000000002630        0x0 /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(bootcons-putc.o)
+ .bss           0x0000000000002630       0xf0 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(tasks.o)
+                0x0000000000002630                pxCurrentTCB
+ .bss           0x0000000000002720        0x4 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(heap.o)
+                0x0000000000002720                MemRegions
+ .bss           0x0000000000002724       0xbc /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(port.o)
+                0x0000000000002724                xNeedRescheduleTask
+                0x0000000000002728                CpuModel
+                0x000000000000272a                IntVec
+                0x000000000000279a                ExcVecBase
+ .bss           0x00000000000027e0        0x0 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(intsrv.o)
+ .bss           0x00000000000027e0        0x0 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(intr.o)
+ .bss           0x00000000000027e0        0x0 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(trap.o)
+ .bss           0x00000000000027e0        0x0 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(portasm.o)
+ .bss           0x00000000000027e0        0x0 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(list.o)
+ .bss           0x00000000000027e0        0x0 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(kvprintf.o)
+ .bss           0x00000000000027e0        0x0 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(mulsi3.o)
+ .bss           0x00000000000027e0        0x0 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(udivsi3.o)
+ .bss           0x00000000000027e0        0x0 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(umodsi3.o)
+ .bss           0x00000000000027e0        0x0 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(memset.o)
  *(COMMON)
-                0x00000000000027cc                . = ALIGN (0x4)
+                0x00000000000027e0                . = ALIGN (0x4)
                 [!provide]                        PROVIDE (_ebss = .)
 
 .data.MEMF_CHIP
-                0x00000000000027cc        0x0
+                0x00000000000027e0        0x0
                 [!provide]                        PROVIDE (_datachip = .)
  *(.datachip .datachip.*)
-                0x00000000000027cc                . = ALIGN (0x4)
+                0x00000000000027e0                . = ALIGN (0x4)
                 [!provide]                        PROVIDE (_edatachip = .)
 
-.bss.MEMF_CHIP  0x00000000000027cc        0x0
+.bss.MEMF_CHIP  0x00000000000027e0        0x0
                 [!provide]                        PROVIDE (_bsschip = .)
  *(.bsschip .bsschip.*)
-                0x00000000000027cc                . = ALIGN (0x4)
+                0x00000000000027e0                . = ALIGN (0x4)
                 [!provide]                        PROVIDE (_ebsschip = .)
 
 /DISCARD/
@@ -304,29 +304,29 @@ LOAD /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib
 LOAD /home/tomasz/FreeRTOS-Amiga/libc/c.lib
 OUTPUT(instemul.elf elf32-m68k)
 
-.debug_info     0x0000000000000000     0x7106
+.debug_info     0x0000000000000000     0x710f
  .debug_info    0x0000000000000000      0xd2d ../startup.o
  .debug_info    0x0000000000000d2d      0x234 ../fault.o
  .debug_info    0x0000000000000f61      0x572 ../trap.o
- .debug_info    0x00000000000014d3      0xc70 main.o
- .debug_info    0x0000000000002143       0xab rand.o
- .debug_info    0x00000000000021ee      0x276 /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(bootcons.o)
- .debug_info    0x0000000000002464      0x380 /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(cia-icr.o)
- .debug_info    0x00000000000027e4      0x43c /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(file.o)
- .debug_info    0x0000000000002c20       0x26 /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(bootcons-putc.o)
- .debug_info    0x0000000000002c46     0x1bbf /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(tasks.o)
- .debug_info    0x0000000000004805      0x6c6 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(heap.o)
- .debug_info    0x0000000000004ecb      0xe8a /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(port.o)
- .debug_info    0x0000000000005d55      0xbd9 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(intsrv.o)
- .debug_info    0x000000000000692e       0x26 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(intr.o)
- .debug_info    0x0000000000006954       0x26 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(trap.o)
- .debug_info    0x000000000000697a       0x26 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(portasm.o)
- .debug_info    0x00000000000069a0      0x2ed /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(list.o)
- .debug_info    0x0000000000006c8d      0x3e1 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(kvprintf.o)
- .debug_info    0x000000000000706e       0x26 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(mulsi3.o)
- .debug_info    0x0000000000007094       0x26 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(udivsi3.o)
- .debug_info    0x00000000000070ba       0x26 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(umodsi3.o)
- .debug_info    0x00000000000070e0       0x26 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(memset.o)
+ .debug_info    0x00000000000014d3      0xc79 main.o
+ .debug_info    0x000000000000214c       0xab rand.o
+ .debug_info    0x00000000000021f7      0x276 /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(bootcons.o)
+ .debug_info    0x000000000000246d      0x380 /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(cia-icr.o)
+ .debug_info    0x00000000000027ed      0x43c /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(file.o)
+ .debug_info    0x0000000000002c29       0x26 /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(bootcons-putc.o)
+ .debug_info    0x0000000000002c4f     0x1bbf /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(tasks.o)
+ .debug_info    0x000000000000480e      0x6c6 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(heap.o)
+ .debug_info    0x0000000000004ed4      0xe8a /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(port.o)
+ .debug_info    0x0000000000005d5e      0xbd9 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(intsrv.o)
+ .debug_info    0x0000000000006937       0x26 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(intr.o)
+ .debug_info    0x000000000000695d       0x26 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(trap.o)
+ .debug_info    0x0000000000006983       0x26 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(portasm.o)
+ .debug_info    0x00000000000069a9      0x2ed /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(list.o)
+ .debug_info    0x0000000000006c96      0x3e1 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(kvprintf.o)
+ .debug_info    0x0000000000007077       0x26 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(mulsi3.o)
+ .debug_info    0x000000000000709d       0x26 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(udivsi3.o)
+ .debug_info    0x00000000000070c3       0x26 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(umodsi3.o)
+ .debug_info    0x00000000000070e9       0x26 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(memset.o)
 
 .debug_abbrev   0x0000000000000000     0x19e8
  .debug_abbrev  0x0000000000000000      0x245 ../startup.o
@@ -352,20 +352,20 @@ OUTPUT(instemul.elf elf32-m68k)
  .debug_abbrev  0x00000000000019c0       0x14 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(umodsi3.o)
  .debug_abbrev  0x00000000000019d4       0x14 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(memset.o)
 
-.debug_loc      0x0000000000000000     0x2073
+.debug_loc      0x0000000000000000     0x1f0e
  .debug_loc     0x0000000000000000       0x5d ../startup.o
  .debug_loc     0x000000000000005d       0xe8 ../trap.o
- .debug_loc     0x0000000000000145      0x3f0 main.o
- .debug_loc     0x0000000000000535       0xc4 rand.o
- .debug_loc     0x00000000000005f9       0x3f /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(bootcons.o)
- .debug_loc     0x0000000000000638       0x67 /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(cia-icr.o)
- .debug_loc     0x000000000000069f       0xa2 /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(file.o)
- .debug_loc     0x0000000000000741      0xd40 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(tasks.o)
- .debug_loc     0x0000000000001481      0x40b /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(heap.o)
- .debug_loc     0x000000000000188c       0xf0 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(port.o)
- .debug_loc     0x000000000000197c       0x99 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(intsrv.o)
- .debug_loc     0x0000000000001a15       0x8a /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(list.o)
- .debug_loc     0x0000000000001a9f      0x5d4 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(kvprintf.o)
+ .debug_loc     0x0000000000000145      0x28b main.o
+ .debug_loc     0x00000000000003d0       0xc4 rand.o
+ .debug_loc     0x0000000000000494       0x3f /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(bootcons.o)
+ .debug_loc     0x00000000000004d3       0x67 /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(cia-icr.o)
+ .debug_loc     0x000000000000053a       0xa2 /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(file.o)
+ .debug_loc     0x00000000000005dc      0xd40 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(tasks.o)
+ .debug_loc     0x000000000000131c      0x40b /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(heap.o)
+ .debug_loc     0x0000000000001727       0xf0 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(port.o)
+ .debug_loc     0x0000000000001817       0x99 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(intsrv.o)
+ .debug_loc     0x00000000000018b0       0x8a /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(list.o)
+ .debug_loc     0x000000000000193a      0x5d4 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(kvprintf.o)
 
 .debug_aranges  0x0000000000000000      0x2c8
  .debug_aranges
@@ -422,29 +422,29 @@ OUTPUT(instemul.elf elf32-m68k)
  .debug_ranges  0x00000000000001f0      0x168 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(heap.o)
  .debug_ranges  0x0000000000000358       0x18 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(intsrv.o)
 
-.debug_line     0x0000000000000000     0x39c6
+.debug_line     0x0000000000000000     0x39c8
  .debug_line    0x0000000000000000      0x306 ../startup.o
  .debug_line    0x0000000000000306      0x136 ../fault.o
  .debug_line    0x000000000000043c      0x234 ../trap.o
- .debug_line    0x0000000000000670      0x312 main.o
- .debug_line    0x0000000000000982       0x97 rand.o
- .debug_line    0x0000000000000a19       0xff /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(bootcons.o)
- .debug_line    0x0000000000000b18      0x10c /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(cia-icr.o)
- .debug_line    0x0000000000000c24      0x19b /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(file.o)
- .debug_line    0x0000000000000dbf       0x69 /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(bootcons-putc.o)
- .debug_line    0x0000000000000e28     0x1758 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(tasks.o)
- .debug_line    0x0000000000002580      0x54b /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(heap.o)
- .debug_line    0x0000000000002acb      0x323 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(port.o)
- .debug_line    0x0000000000002dee      0x1d8 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(intsrv.o)
- .debug_line    0x0000000000002fc6       0x97 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(intr.o)
- .debug_line    0x000000000000305d       0x80 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(trap.o)
- .debug_line    0x00000000000030dd       0x7f /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(portasm.o)
- .debug_line    0x000000000000315c      0x273 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(list.o)
- .debug_line    0x00000000000033cf      0x411 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(kvprintf.o)
- .debug_line    0x00000000000037e0       0x65 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(mulsi3.o)
- .debug_line    0x0000000000003845       0x7f /home/tomasz/FreeRTOS-Amiga/libc/c.lib(udivsi3.o)
- .debug_line    0x00000000000038c4       0x6a /home/tomasz/FreeRTOS-Amiga/libc/c.lib(umodsi3.o)
- .debug_line    0x000000000000392e       0x98 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(memset.o)
+ .debug_line    0x0000000000000670      0x314 main.o
+ .debug_line    0x0000000000000984       0x97 rand.o
+ .debug_line    0x0000000000000a1b       0xff /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(bootcons.o)
+ .debug_line    0x0000000000000b1a      0x10c /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(cia-icr.o)
+ .debug_line    0x0000000000000c26      0x19b /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(file.o)
+ .debug_line    0x0000000000000dc1       0x69 /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(bootcons-putc.o)
+ .debug_line    0x0000000000000e2a     0x1758 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(tasks.o)
+ .debug_line    0x0000000000002582      0x54b /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(heap.o)
+ .debug_line    0x0000000000002acd      0x323 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(port.o)
+ .debug_line    0x0000000000002df0      0x1d8 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(intsrv.o)
+ .debug_line    0x0000000000002fc8       0x97 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(intr.o)
+ .debug_line    0x000000000000305f       0x80 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(trap.o)
+ .debug_line    0x00000000000030df       0x7f /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(portasm.o)
+ .debug_line    0x000000000000315e      0x273 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(list.o)
+ .debug_line    0x00000000000033d1      0x411 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(kvprintf.o)
+ .debug_line    0x00000000000037e2       0x65 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(mulsi3.o)
+ .debug_line    0x0000000000003847       0x7f /home/tomasz/FreeRTOS-Amiga/libc/c.lib(udivsi3.o)
+ .debug_line    0x00000000000038c6       0x6a /home/tomasz/FreeRTOS-Amiga/libc/c.lib(umodsi3.o)
+ .debug_line    0x0000000000003930       0x98 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(memset.o)
 
 .debug_str      0x0000000000000000     0x1c28
  .debug_str     0x0000000000000000      0x6e5 ../startup.o
@@ -492,18 +492,18 @@ OUTPUT(instemul.elf elf32-m68k)
  .debug_str     0x0000000000001bf7       0x31 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(memset.o)
                                          0x5e (size before relaxing)
 
-.debug_frame    0x0000000000000000      0xc20
+.debug_frame    0x0000000000000000      0xc28
  .debug_frame   0x0000000000000000       0x8c ../startup.o
  .debug_frame   0x000000000000008c       0x4c ../fault.o
  .debug_frame   0x00000000000000d8       0x90 ../trap.o
- .debug_frame   0x0000000000000168       0x8c main.o
- .debug_frame   0x00000000000001f4       0x2c rand.o
- .debug_frame   0x0000000000000220       0x38 /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(bootcons.o)
- .debug_frame   0x0000000000000258       0x48 /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(cia-icr.o)
- .debug_frame   0x00000000000002a0       0x9c /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(file.o)
- .debug_frame   0x000000000000033c      0x5b8 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(tasks.o)
- .debug_frame   0x00000000000008f4       0xc8 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(heap.o)
- .debug_frame   0x00000000000009bc       0x68 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(port.o)
- .debug_frame   0x0000000000000a24       0x7c /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(intsrv.o)
- .debug_frame   0x0000000000000aa0       0x88 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(list.o)
- .debug_frame   0x0000000000000b28       0xf8 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(kvprintf.o)
+ .debug_frame   0x0000000000000168       0x94 main.o
+ .debug_frame   0x00000000000001fc       0x2c rand.o
+ .debug_frame   0x0000000000000228       0x38 /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(bootcons.o)
+ .debug_frame   0x0000000000000260       0x48 /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(cia-icr.o)
+ .debug_frame   0x00000000000002a8       0x9c /home/tomasz/FreeRTOS-Amiga/drivers/drivers.lib(file.o)
+ .debug_frame   0x0000000000000344      0x5b8 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(tasks.o)
+ .debug_frame   0x00000000000008fc       0xc8 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(heap.o)
+ .debug_frame   0x00000000000009c4       0x68 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(port.o)
+ .debug_frame   0x0000000000000a2c       0x7c /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(intsrv.o)
+ .debug_frame   0x0000000000000aa8       0x88 /home/tomasz/FreeRTOS-Amiga/FreeRTOS/freertos.lib(list.o)
+ .debug_frame   0x0000000000000b30       0xf8 /home/tomasz/FreeRTOS-Amiga/libc/c.lib(kvprintf.o)
