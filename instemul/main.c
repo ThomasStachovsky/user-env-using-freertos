@@ -19,134 +19,146 @@ extern void vPortDefaultTrapHandler(struct TrapFrame *);
 void vPortTrapHandler(struct TrapFrame *frame) {
   /* TODO: implement muls.l and divsl.l instruction emulation. */
 
-  /* general version */
-
+  /* get instruction */
   uint64_t instr = ((uint64_t)(*(uint32_t *)(frame->m68000.pc)) << 32) |
                    *(uint32_t *)((frame->m68000.pc) + 4);
   uint32_t instrlow = (uint32_t)(instr & 0xffffffff);
   uint32_t instrhigh = (uint32_t)(instr >> 32);
 
-  /* 00001000000000000100110000111100 ; muls opcode with #<data> mode 111 reg
-     100 */
+  /* get condition codes register */
+  uint8_t *ccr = (((uint8_t *)&(frame->m68000.sr)) + 1);
+
+  /* 00001000000000000100110000111100 ; muls  #<data> mode 111 reg 100 */
   if ((instrhigh & 0b01001100001111000000100000000000) ==
       0b01001100001111000000100000000000) {
-    int32_t factor = *(int32_t *)(&instrlow);
+    /* get destination register */
     uint32_t *destination =
       (uint32_t *)((void *)frame +
                    (((instrhigh & 0b0111000000000000) >> 12) << 2));
 
-    int32_t product = 0, original = *destination, absoriginal, absfactor;
-    int sign_factor, sign_original;
-    if (factor >= 0) {
-      sign_factor = 0;
-      absfactor = factor;
-    } else {
-      sign_factor = 1;
-      absfactor = -factor;
-    }
-    if (original >= 0) {
-      sign_original = 0;
-      absoriginal = original;
-    } else {
-      sign_original = 1;
-      absoriginal = -original;
-    }
-    while (absfactor) {
-      if (absfactor & 1)
-        product += absoriginal;
-      absfactor >>= 1;
-      absoriginal <<= 1;
-    }
-    if (sign_factor ^ sign_original)
-      product = -product;
+    /* get factors to multiply */
+    int32_t factor_one = *(int32_t *)(&instrlow);
+    int32_t factor_two = *(int32_t *)destination;
 
+    /* check if overflow */
+    if (!((factor_one > 0 &&
+           factor_two <= 0b01111111111111111111111111111111 / factor_one &&
+           factor_two >= 0b10000000000000000000000000000000 / factor_one) ||
+          (factor_one == 0) ||
+          (factor_one == -1 &&
+           factor_two >= -0b01111111111111111111111111111111) ||
+          (factor_one < -1 &&
+           factor_two >= 0b01111111111111111111111111111111 / factor_one &&
+           factor_two <= 0b10000000000000000000000000000000 / factor_one))) {
+      /* V flag */
+      *ccr |= 0b00000010;
+    } else {
+      /* V flag */
+      *ccr &= 0b11111101;
+    }
+
+    /* do math */
+    int32_t product = factor_one * factor_two;
+
+    /* get result in the correct place */
     *destination = product;
 
-    frame->m68000.pc += 8;
+    /* N flag */
+    if (product < 0)
+      *ccr |= 0b00001000;
+    else
+      *ccr &= 0b11110111;
 
+    /* Z flag */
+    if (product == 0)
+      *ccr |= 0b00000100;
+    else
+      *ccr &= 0b11111011;
+
+    /* C flag */
+    *ccr &= 0b11111110;
+
+    /* increment pc */
+    frame->m68000.pc += 8;
   }
-  /* 0b01001100011111000000100000000000 ; divsl opcode with #<data> mode 111 reg
-   * 100 */
+  /* 0b01001100011111000000100000000000 ; divsl #<data> mode 111 reg 100 */
   else if ((instrhigh & 0b01001100011111000000100000000000) ==
            0b01001100011111000000100000000000) {
+
+    /* get divisor */
     int32_t divisor = *(int32_t *)(&instrlow);
-    if (divisor == 0)
+
+    /* check if div by zero */
+    if (divisor == 0) {
+
+      /* set trap number to div by zero */
+      frame->trapnum = T_ZERODIV;
+
+      /* C flag */
+      *ccr &= 0b11111110;
+
+      /* invoke def trap handler */
       vPortDefaultTrapHandler(frame);
+      return;
+    }
+
+    /* get dividend and quotient destination register */
     uint32_t *dq =
       (uint32_t *)((void *)frame +
                    (((instrhigh & 0b0111000000000000) >> 12) << 2));
 
+    /* get remainder destination register */
     uint32_t *dr = (uint32_t *)((void *)frame + (instrhigh << 2));
+
+    /* dividend is stored in quotient destination register */
     int32_t dividend = *(int32_t *)dq;
-    int sign_dividend, sign_divisor;
-    if (divisor >= 0)
-      sign_divisor = 0;
-    else {
-      divisor = -divisor;
-      sign_divisor = 1;
+
+    /* check if overflow */
+    if (dividend == 0b10000000000000000000000000000000 && divisor == -1) {
+
+      /* V flag */
+      *ccr |= 0b00000010;
+
+      /* C flag */
+      *ccr &= 0b11111110;
+
+      /* increment pc */
+      frame->m68000.pc += 8;
+      return;
     }
 
-    if (dividend >= 0)
-      sign_dividend = 0;
-    else {
-      dividend = -dividend;
-      sign_dividend = 1;
-    }
-    int32_t q = 0;
-    int32_t r = dividend;
-    while (r >= divisor) {
-      q++;
-      r -= divisor;
-    }
+    /* do math */
+    int32_t q, r;
+    q = dividend / divisor;
+    r = dividend - q * divisor;
 
-    if (sign_dividend ^ sign_divisor)
-      q = -q;
-
-    if (sign_dividend)
-      r -= divisor;
-
+    /* get the result in the correct place */
     *dq = q;
     *dr = r;
 
+    /* N flag */
+    if (q < 0)
+      *ccr |= 0b00001000;
+    else
+      *ccr &= 0b11110111;
+
+    /* Z flag */
+    if (q == 0)
+      *ccr |= 0b00000100;
+    else
+      *ccr &= 0b11111011;
+
+    /* V flag */
+    *ccr &= 0b11111101;
+
+    /* C flag */
+    *ccr &= 0b11111110;
+
+    /* increment pc */
     frame->m68000.pc += 8;
 
   } else
     vPortDefaultTrapHandler(frame);
-
-    /* simple version (harmful if used anywhere outside rand.c)*/
-#if 0
-  {
-    uint64_t instr = ((uint64_t)(*(uint32_t *)(frame->m68000.pc)) << 32) |
-                     *(uint32_t *)((frame->m68000.pc) + 4);
-    frame->m68000.pc += 8;
-
-    if (instr == 0x4c7c28000001f31d) {
-      int32_t q = 0, r = frame->d0;
-      while (r >= 127773) {
-        q++;
-        r -= 127773;
-      }
-      frame->d0 = r;
-      frame->d2 = q;
-
-    } else if (instr == 0x4c3c0800000041a7) {
-      int32_t p = 0;
-      int32_t f = frame->d0;
-      for (int i = 0; i < 16807; i++)
-        p += f;
-      frame->d0 = p;
-
-    } else if (instr == 0x4c3c2800fffff4ec) {
-      int32_t p = 0;
-      int32_t f = frame->d2;
-      for (int i = 0; i < 2836; i++)
-        p -= f;
-      frame->d2 = p;
-
-    } else
-      vPortDefaultTrapHandler(frame);
-  }
-#endif
 }
 
 int main(void) {
