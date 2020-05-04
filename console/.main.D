@@ -1,0 +1,34 @@
+main.o: \
+ /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/examples/console/main.c \
+ /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/include/FreeRTOS/FreeRTOS.h \
+ /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/include/stdint.h \
+ /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOSConfig.h \
+ /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/include/FreeRTOS/projdefs.h \
+ /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/include/FreeRTOS/portable.h \
+ /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/include/FreeRTOS/deprecated_definitions.h \
+ /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/portable/m68k-amiga/portmacro.h \
+ /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/include/cdefs.h \
+ /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/include/FreeRTOS/mpu_wrappers.h \
+ /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/include/FreeRTOS/task.h \
+ /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/include/FreeRTOS/list.h \
+ /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/include/interrupt.h \
+ /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/include/FreeRTOS/list.h \
+ /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/include/custom.h \
+ /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/include/custom_regdef.h \
+ /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/include/stdio.h \
+ /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/include/file.h \
+ /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/include/copper.h \
+ /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/include/palette.h \
+ /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/include/bitmap.h \
+ /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/include/sprite.h \
+ /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/include/font.h \
+ /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/include/stdlib.h \
+ /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/include/types.h \
+ /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/examples/console/console.h \
+ /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/examples/console/event.h \
+ /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/include/mouse.h \
+ /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/include/keyboard.h \
+ /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/examples/console/tty.h \
+ /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/examples/console/data/lat2-08.c \
+ /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/examples/console/data/pointer.c \
+ /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/examples/console/data/screen.c
