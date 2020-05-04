@@ -8,5 +8,7 @@ void ConsoleInit(struct bitmap *bm, struct font *font);
 void ConsoleSetCursor(short x, short y);
 void ConsoleDrawCursor(void);
 void ConsolePutChar(char c);
+void EraseChar();
+void KillLine();
 
 #endif

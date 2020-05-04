@@ -90,7 +90,7 @@ Linker script and memory map
                 [!provide]                        PROVIDE (msm6242b = 0xdc0000)
                 0x0000000000dff000                PROVIDE (custom = 0xdff000)
 
-.text           0x0000000000000000     0x4218
+.text           0x0000000000000000     0x4310
                 [!provide]                        PROVIDE (_text = .)
  *(.text .text.*)
  .text          0x0000000000000000      0x13e ../startup.o
@@ -106,334 +106,336 @@ Linker script and memory map
                 0x000000000000041e                vApplicationIdleHook
  .text.startup  0x0000000000000420      0x1ac main.o
                 0x0000000000000420                main
- .text          0x00000000000005cc      0x1e2 console.o
-                0x0000000000000664                ConsolePutChar
-                0x00000000000006b6                ConsoleInit
-                0x00000000000006fe                ConsoleSetCursor
-                0x000000000000075e                ConsoleDrawCursor
-                0x0000000000000790                ConsolePrintf
- .text          0x00000000000007ae      0x258 tty.o
-                0x0000000000000978                TtyClose
-                0x00000000000009a4                TtyOpen
- .text          0x0000000000000a06      0x18e event.o
-                0x0000000000000a06                QueuesInit
-                0x0000000000000a4c                QueuesKill
-                0x0000000000000a74                InitTtyDriverHandle
-                0x0000000000000a7e                PushKeyEventFromISR
-                0x0000000000000ab8                PushMouseEventFromISR
-                0x0000000000000ad6                PushEventTtyRead
-                0x0000000000000b08                PushEventTtyWrite
-                0x0000000000000b3a                PopKeyEvent
-                0x0000000000000b58                PopEventTtyRead
-                0x0000000000000b76                PopEventTtyWrite
- .text          0x0000000000000b94       0x30 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(bootcons.o)
- .text          0x0000000000000bc4       0x6c /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(cia-icr.o)
-                0x0000000000000bc4                WriteICR
-                0x0000000000000bfe                SampleICR
- .text          0x0000000000000c30       0xde /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(file.o)
-                0x0000000000000c30                FileRead
-                0x0000000000000c44                FileWrite
-                0x0000000000000c7a                FileSeek
-                0x0000000000000c90                FileClose
-                0x0000000000000ca4                FilePutChar
-                0x0000000000000cc6                FilePrintf
- .text          0x0000000000000d0e       0xae /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(hexdump.o)
-                0x0000000000000d0e                FileHexDump
- .text          0x0000000000000dbc      0x188 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(keyboard.o)
-                0x0000000000000eb6                KeyboardInit
-                0x0000000000000f22                KeyboardKill
- .text          0x0000000000000f44       0x20 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(bootcons-putc.o)
-                0x0000000000000f44                BootConsPutChar
- .text          0x0000000000000f64      0x1ce /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(cia-timer.o)
-                0x0000000000000f9e                AcquireTimer
-                0x000000000000102e                ReleaseTimer
-                0x0000000000001058                WaitTimerGeneric
- .text          0x0000000000001132      0xa8a /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(queue.o)
-                0x000000000000129c                xQueueGenericReset
-                0x000000000000132a                xQueueGenericCreate
-                0x0000000000001388                xQueueGenericSend
-                0x00000000000014e4                xQueueGenericSendFromISR
-                0x000000000000159e                xQueueGiveFromISR
-                0x0000000000001636                xQueueReceive
-                0x000000000000177e                xQueueSemaphoreTake
-                0x00000000000018b2                xQueuePeek
-                0x00000000000019fa                xQueueReceiveFromISR
-                0x0000000000001a92                xQueuePeekFromISR
-                0x0000000000001b00                uxQueueMessagesWaiting
-                0x0000000000001b26                uxQueueSpacesAvailable
-                0x0000000000001b58                uxQueueMessagesWaitingFromISR
-                0x0000000000001b6c                vQueueDelete
-                0x0000000000001b80                xQueueIsQueueEmptyFromISR
-                0x0000000000001b9c                xQueueIsQueueFullFromISR
- .text          0x0000000000001bbc     0x128e /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(tasks.o)
-                0x0000000000001cc4                xTaskResumeFromISR
-                0x0000000000001d70                vTaskEndScheduler
-                0x0000000000001d80                vTaskSuspendAll
-                0x0000000000001d90                xTaskGetTickCountFromISR
-                0x0000000000001db4                uxTaskGetNumberOfTasks
-                0x0000000000001dbc                pcTaskGetName
-                0x0000000000001dd4                xTaskIncrementTick
-                0x0000000000001f14                vTaskSwitchContext
-                0x0000000000001fd0                vTaskPlaceOnEventList
-                0x0000000000002006                vTaskPlaceOnUnorderedEventList
-                0x000000000000205e                xTaskRemoveFromEventList
-                0x00000000000020fa                vTaskRemoveFromUnorderedEventList
-                0x000000000000218a                vTaskInternalSetTimeOutState
-                0x00000000000021a2                vTaskMissedYield
-                0x00000000000021ac                uxTaskGetStackHighWaterMark
-                0x00000000000021d8                xTaskGetCurrentTaskHandle
-                0x00000000000021e0                xTaskGetSchedulerState
-                0x00000000000021fc                vTaskEnterCritical
-                0x000000000000222e                vTaskExitCritical
-                0x000000000000225e                xTaskCreate
-                0x000000000000245c                vTaskStartScheduler
-                0x00000000000024aa                vTaskDelete
-                0x000000000000255c                vTaskSuspend
-                0x000000000000260e                vTaskResume
-                0x0000000000002714                xTaskResumeAll
-                0x0000000000002818                vTaskDelayUntil
-                0x0000000000002882                vTaskDelay
-                0x00000000000028b4                xTaskCatchUpTicks
-                0x00000000000028de                xTaskGetTickCount
-                0x00000000000028f4                vTaskSetTimeOutState
-                0x0000000000002920                xTaskCheckForTimeOut
-                0x000000000000298e                uxTaskResetEventItemValue
-                0x00000000000029b0                ulTaskNotifyTake
-                0x0000000000002a34                xTaskNotifyWait
-                0x0000000000002ae6                xTaskGenericNotify
-                0x0000000000002bda                xTaskGenericNotifyFromISR
-                0x0000000000002d08                vTaskNotifyGiveFromISR
-                0x0000000000002dd6                xTaskNotifyStateClear
-                0x0000000000002e0c                ulTaskNotifyValueClear
- .text          0x0000000000002e4a      0x21e /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(heap.o)
-                0x0000000000002e4a                _pvPortMallocBelow
-                0x0000000000002ef0                pvPortMalloc
-                0x0000000000002f00                pvPortMallocChip
-                0x0000000000002f12                vPortFree
-                0x0000000000002fe0                xPortGetFreeHeapSize
-                0x0000000000002ffa                xPortGetMinimumEverFreeHeapSize
-                0x0000000000003014                vPortDefineMemoryRegions
- .text          0x0000000000003068      0x1c2 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(port.o)
-                0x0000000000003068                pxPortInitialiseStack
-                0x000000000000309e                xPortStartScheduler
-                0x00000000000030be                vPortEndScheduler
-                0x00000000000030c0                vPortSetupExceptionVector
- .text          0x000000000000322a       0xaa /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(intsrv.o)
-                0x000000000000322a                AddIntServer
-                0x0000000000003274                RemIntServer
-                0x00000000000032a8                RunIntChain
- .text          0x00000000000032d4       0xe8 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(intr.o)
-                0x00000000000032d4                AmigaLvl1Handler
-                0x00000000000032f8                AmigaLvl2Handler
-                0x0000000000003306                AmigaLvl3Handler
-                0x000000000000332a                AmigaLvl4Handler
-                0x0000000000003392                AmigaLvl5Handler
-                0x00000000000033ac                AmigaLvl6Handler
-                0x00000000000033ba                DummyInterruptHandler
- .text          0x00000000000033bc       0x5a /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(trap.o)
-                0x00000000000033bc                BadTrap
-                0x00000000000033c2                BusErrTrap
-                0x00000000000033c8                AddrErrTrap
-                0x00000000000033ce                IllegalTrap
-                0x00000000000033d4                ZeroDivTrap
-                0x00000000000033da                ChkInstTrap
-                0x00000000000033e0                TrapvInstTrap
-                0x00000000000033e6                PrivInstTrap
-                0x00000000000033ec                TraceTrap
-                0x00000000000033f2                FmtErrTrap
-                0x00000000000033f8                TrapInstTrap
-                0x0000000000003400                EnterTrap
- .text          0x0000000000003416       0x4e /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(portasm.o)
-                0x0000000000003416                ulPortSetIPL
-                0x0000000000003432                vPortYieldHandler
-                0x0000000000003456                vPortStartFirstTask
- .text          0x0000000000003464       0xe2 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(list.o)
-                0x0000000000003464                vListInitialise
-                0x0000000000003482                vListInitialiseItem
-                0x000000000000348c                vListInsertEnd
-                0x00000000000034c2                vListInsert
-                0x000000000000350e                uxListRemove
- .text          0x0000000000003546      0x376 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(kvprintf.o)
-                0x0000000000003698                kvprintf
- .text          0x00000000000038bc      0x1c0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(strtol.o)
-                0x00000000000038bc                strtol
- .text          0x0000000000003a7c       0x2e /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(divsi3.o)
-                0x0000000000003a7c                __divsi3
-                0x0000000000003a7c                __ldivs
- .text          0x0000000000003aaa       0x2e /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(modsi3.o)
-                0x0000000000003aaa                __lmods
-                0x0000000000003aaa                __modsi3
- .text          0x0000000000003ad8       0x22 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(mulsi3.o)
-                0x0000000000003ad8                __mulsi3
- .text          0x0000000000003afa       0x5c /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(udivsi3.o)
-                0x0000000000003afa                __ldivu
-                0x0000000000003afa                __udivsi3
- .text          0x0000000000003b56       0x2e /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(umodsi3.o)
-                0x0000000000003b56                __umodsi3
- .text          0x0000000000003b84       0xfc /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(memcpy.o)
-                0x0000000000003b84                memmove
-                0x0000000000003b84                memcpy
- .text          0x0000000000003c80       0x94 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(memset.o)
-                0x0000000000003c80                memset
- .text          0x0000000000003d14      0x172 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(ctype.o)
-                0x0000000000003d14                isspace
-                0x0000000000003d34                isascii
-                0x0000000000003d44                isupper
-                0x0000000000003d58                islower
-                0x0000000000003d6c                isalpha
-                0x0000000000003d86                isalnum
-                0x0000000000003db0                isdigit
-                0x0000000000003dc4                isxdigit
-                0x0000000000003df0                iscntrl
-                0x0000000000003e0c                isgraph
-                0x0000000000003e20                isprint
-                0x0000000000003e34                ispunct
-                0x0000000000003e5a                toupper
-                0x0000000000003e70                tolower
+ .text          0x00000000000005cc      0x2ac console.o
+                0x00000000000006b8                ConsolePutChar
+                0x000000000000070a                ConsoleInit
+                0x0000000000000752                ConsoleSetCursor
+                0x00000000000007b2                ConsoleDrawCursor
+                0x00000000000007e4                EraseChar
+                0x0000000000000856                KillLine
+                0x000000000000085a                ConsolePrintf
+ .text          0x0000000000000878      0x292 tty.o
+                0x0000000000000a62                TtyClose
+                0x0000000000000a9c                TtyOpen
+ .text          0x0000000000000b0a      0x182 event.o
+                0x0000000000000b0a                QueuesInit
+                0x0000000000000b50                QueuesKill
+                0x0000000000000b78                InitTtyDriverHandle
+                0x0000000000000b82                PushKeyEventFromISR
+                0x0000000000000bb8                PushMouseEventFromISR
+                0x0000000000000bd6                PushEventTtyRead
+                0x0000000000000c04                PushEventTtyWrite
+                0x0000000000000c32                PopKeyEvent
+                0x0000000000000c50                PopEventTtyRead
+                0x0000000000000c6e                PopEventTtyWrite
+ .text          0x0000000000000c8c       0x30 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(bootcons.o)
+ .text          0x0000000000000cbc       0x6c /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(cia-icr.o)
+                0x0000000000000cbc                WriteICR
+                0x0000000000000cf6                SampleICR
+ .text          0x0000000000000d28       0xde /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(file.o)
+                0x0000000000000d28                FileRead
+                0x0000000000000d3c                FileWrite
+                0x0000000000000d72                FileSeek
+                0x0000000000000d88                FileClose
+                0x0000000000000d9c                FilePutChar
+                0x0000000000000dbe                FilePrintf
+ .text          0x0000000000000e06       0xae /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(hexdump.o)
+                0x0000000000000e06                FileHexDump
+ .text          0x0000000000000eb4      0x188 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(keyboard.o)
+                0x0000000000000fae                KeyboardInit
+                0x000000000000101a                KeyboardKill
+ .text          0x000000000000103c       0x20 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(bootcons-putc.o)
+                0x000000000000103c                BootConsPutChar
+ .text          0x000000000000105c      0x1ce /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(cia-timer.o)
+                0x0000000000001096                AcquireTimer
+                0x0000000000001126                ReleaseTimer
+                0x0000000000001150                WaitTimerGeneric
+ .text          0x000000000000122a      0xa8a /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(queue.o)
+                0x0000000000001394                xQueueGenericReset
+                0x0000000000001422                xQueueGenericCreate
+                0x0000000000001480                xQueueGenericSend
+                0x00000000000015dc                xQueueGenericSendFromISR
+                0x0000000000001696                xQueueGiveFromISR
+                0x000000000000172e                xQueueReceive
+                0x0000000000001876                xQueueSemaphoreTake
+                0x00000000000019aa                xQueuePeek
+                0x0000000000001af2                xQueueReceiveFromISR
+                0x0000000000001b8a                xQueuePeekFromISR
+                0x0000000000001bf8                uxQueueMessagesWaiting
+                0x0000000000001c1e                uxQueueSpacesAvailable
+                0x0000000000001c50                uxQueueMessagesWaitingFromISR
+                0x0000000000001c64                vQueueDelete
+                0x0000000000001c78                xQueueIsQueueEmptyFromISR
+                0x0000000000001c94                xQueueIsQueueFullFromISR
+ .text          0x0000000000001cb4     0x128e /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(tasks.o)
+                0x0000000000001dbc                xTaskResumeFromISR
+                0x0000000000001e68                vTaskEndScheduler
+                0x0000000000001e78                vTaskSuspendAll
+                0x0000000000001e88                xTaskGetTickCountFromISR
+                0x0000000000001eac                uxTaskGetNumberOfTasks
+                0x0000000000001eb4                pcTaskGetName
+                0x0000000000001ecc                xTaskIncrementTick
+                0x000000000000200c                vTaskSwitchContext
+                0x00000000000020c8                vTaskPlaceOnEventList
+                0x00000000000020fe                vTaskPlaceOnUnorderedEventList
+                0x0000000000002156                xTaskRemoveFromEventList
+                0x00000000000021f2                vTaskRemoveFromUnorderedEventList
+                0x0000000000002282                vTaskInternalSetTimeOutState
+                0x000000000000229a                vTaskMissedYield
+                0x00000000000022a4                uxTaskGetStackHighWaterMark
+                0x00000000000022d0                xTaskGetCurrentTaskHandle
+                0x00000000000022d8                xTaskGetSchedulerState
+                0x00000000000022f4                vTaskEnterCritical
+                0x0000000000002326                vTaskExitCritical
+                0x0000000000002356                xTaskCreate
+                0x0000000000002554                vTaskStartScheduler
+                0x00000000000025a2                vTaskDelete
+                0x0000000000002654                vTaskSuspend
+                0x0000000000002706                vTaskResume
+                0x000000000000280c                xTaskResumeAll
+                0x0000000000002910                vTaskDelayUntil
+                0x000000000000297a                vTaskDelay
+                0x00000000000029ac                xTaskCatchUpTicks
+                0x00000000000029d6                xTaskGetTickCount
+                0x00000000000029ec                vTaskSetTimeOutState
+                0x0000000000002a18                xTaskCheckForTimeOut
+                0x0000000000002a86                uxTaskResetEventItemValue
+                0x0000000000002aa8                ulTaskNotifyTake
+                0x0000000000002b2c                xTaskNotifyWait
+                0x0000000000002bde                xTaskGenericNotify
+                0x0000000000002cd2                xTaskGenericNotifyFromISR
+                0x0000000000002e00                vTaskNotifyGiveFromISR
+                0x0000000000002ece                xTaskNotifyStateClear
+                0x0000000000002f04                ulTaskNotifyValueClear
+ .text          0x0000000000002f42      0x21e /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(heap.o)
+                0x0000000000002f42                _pvPortMallocBelow
+                0x0000000000002fe8                pvPortMalloc
+                0x0000000000002ff8                pvPortMallocChip
+                0x000000000000300a                vPortFree
+                0x00000000000030d8                xPortGetFreeHeapSize
+                0x00000000000030f2                xPortGetMinimumEverFreeHeapSize
+                0x000000000000310c                vPortDefineMemoryRegions
+ .text          0x0000000000003160      0x1c2 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(port.o)
+                0x0000000000003160                pxPortInitialiseStack
+                0x0000000000003196                xPortStartScheduler
+                0x00000000000031b6                vPortEndScheduler
+                0x00000000000031b8                vPortSetupExceptionVector
+ .text          0x0000000000003322       0xaa /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(intsrv.o)
+                0x0000000000003322                AddIntServer
+                0x000000000000336c                RemIntServer
+                0x00000000000033a0                RunIntChain
+ .text          0x00000000000033cc       0xe8 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(intr.o)
+                0x00000000000033cc                AmigaLvl1Handler
+                0x00000000000033f0                AmigaLvl2Handler
+                0x00000000000033fe                AmigaLvl3Handler
+                0x0000000000003422                AmigaLvl4Handler
+                0x000000000000348a                AmigaLvl5Handler
+                0x00000000000034a4                AmigaLvl6Handler
+                0x00000000000034b2                DummyInterruptHandler
+ .text          0x00000000000034b4       0x5a /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(trap.o)
+                0x00000000000034b4                BadTrap
+                0x00000000000034ba                BusErrTrap
+                0x00000000000034c0                AddrErrTrap
+                0x00000000000034c6                IllegalTrap
+                0x00000000000034cc                ZeroDivTrap
+                0x00000000000034d2                ChkInstTrap
+                0x00000000000034d8                TrapvInstTrap
+                0x00000000000034de                PrivInstTrap
+                0x00000000000034e4                TraceTrap
+                0x00000000000034ea                FmtErrTrap
+                0x00000000000034f0                TrapInstTrap
+                0x00000000000034f8                EnterTrap
+ .text          0x000000000000350e       0x4e /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(portasm.o)
+                0x000000000000350e                ulPortSetIPL
+                0x000000000000352a                vPortYieldHandler
+                0x000000000000354e                vPortStartFirstTask
+ .text          0x000000000000355c       0xe2 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(list.o)
+                0x000000000000355c                vListInitialise
+                0x000000000000357a                vListInitialiseItem
+                0x0000000000003584                vListInsertEnd
+                0x00000000000035ba                vListInsert
+                0x0000000000003606                uxListRemove
+ .text          0x000000000000363e      0x376 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(kvprintf.o)
+                0x0000000000003790                kvprintf
+ .text          0x00000000000039b4      0x1c0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(strtol.o)
+                0x00000000000039b4                strtol
+ .text          0x0000000000003b74       0x2e /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(divsi3.o)
+                0x0000000000003b74                __divsi3
+                0x0000000000003b74                __ldivs
+ .text          0x0000000000003ba2       0x2e /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(modsi3.o)
+                0x0000000000003ba2                __lmods
+                0x0000000000003ba2                __modsi3
+ .text          0x0000000000003bd0       0x22 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(mulsi3.o)
+                0x0000000000003bd0                __mulsi3
+ .text          0x0000000000003bf2       0x5c /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(udivsi3.o)
+                0x0000000000003bf2                __ldivu
+                0x0000000000003bf2                __udivsi3
+ .text          0x0000000000003c4e       0x2e /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(umodsi3.o)
+                0x0000000000003c4e                __umodsi3
+ .text          0x0000000000003c7c       0xfc /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(memcpy.o)
+                0x0000000000003c7c                memmove
+                0x0000000000003c7c                memcpy
+ .text          0x0000000000003d78       0x94 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(memset.o)
+                0x0000000000003d78                memset
+ .text          0x0000000000003e0c      0x172 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(ctype.o)
+                0x0000000000003e0c                isspace
+                0x0000000000003e2c                isascii
+                0x0000000000003e3c                isupper
+                0x0000000000003e50                islower
+                0x0000000000003e64                isalpha
+                0x0000000000003e7e                isalnum
+                0x0000000000003ea8                isdigit
+                0x0000000000003ebc                isxdigit
+                0x0000000000003ee8                iscntrl
+                0x0000000000003f04                isgraph
+                0x0000000000003f18                isprint
+                0x0000000000003f2c                ispunct
+                0x0000000000003f52                toupper
+                0x0000000000003f68                tolower
  *(.rodata .rodata.*)
  .rodata.str1.1
-                0x0000000000003e86       0x67 ../startup.o
- *fill*         0x0000000000003eed        0x1 
+                0x0000000000003f7e       0x67 ../startup.o
+ *fill*         0x0000000000003fe5        0x1 
  .rodata.str1.1
-                0x0000000000003eee       0x24 ../fault.o
+                0x0000000000003fe6       0x24 ../fault.o
  .rodata.str1.1
-                0x0000000000003f12      0x182 ../trap.o
+                0x000000000000400a      0x182 ../trap.o
                                         0x18e (size before relaxing)
- .rodata        0x0000000000004094       0x2c ../trap.o
+ .rodata        0x000000000000418c       0x2c ../trap.o
  .rodata.str1.1
-                0x00000000000040c0        0x6 main.o
+                0x00000000000041b8        0x6 main.o
  .rodata.str1.1
-                0x00000000000040c6        0xb tty.o
- *fill*         0x00000000000040d1        0x1 
+                0x00000000000041be        0xb tty.o
+ *fill*         0x00000000000041c9        0x1 
  .rodata.str1.1
-                0x00000000000040d2        0x6 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(hexdump.o)
- .rodata        0x00000000000040d8       0x10 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(hexdump.o)
+                0x00000000000041ca        0x6 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(hexdump.o)
+ .rodata        0x00000000000041d0       0x10 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(hexdump.o)
  .rodata.str1.1
-                0x00000000000040e8       0x19 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(keyboard.o)
- *fill*         0x0000000000004101        0x1 
- .rodata        0x0000000000004102      0x100 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(keyboard.o)
+                0x00000000000041e0       0x19 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(keyboard.o)
+ *fill*         0x00000000000041f9        0x1 
+ .rodata        0x00000000000041fa      0x100 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(keyboard.o)
  .rodata.str1.1
-                0x0000000000004202        0x5 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(tasks.o)
- *fill*         0x0000000000004207        0x1 
- .rodata        0x0000000000004208       0x10 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(kvprintf.o)
-                0x0000000000004218                . = ALIGN (0x4)
+                0x00000000000042fa        0x5 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(tasks.o)
+ *fill*         0x00000000000042ff        0x1 
+ .rodata        0x0000000000004300       0x10 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(kvprintf.o)
+                0x0000000000004310                . = ALIGN (0x4)
                 [!provide]                        PROVIDE (_etext = .)
 
-.data           0x0000000000004218      0x550
+.data           0x0000000000004310      0x550
                 [!provide]                        PROVIDE (_data = .)
  *(.data .data.*)
- .data          0x0000000000004218        0x0 ../startup.o
- .data          0x0000000000004218        0x0 ../fault.o
- .data          0x0000000000004218        0x0 ../trap.o
- .data          0x0000000000004218      0x462 main.o
-                0x0000000000004218                screen_bm
-                0x000000000000425c                cp
-                0x0000000000004268                pointer_spr
-                0x0000000000004272                pointer_pal
-                0x000000000000427c                console_font
-                0x0000000000004382                console_font_glyphs
- *fill*         0x000000000000467a        0x2 
- .data          0x000000000000467c        0x0 console.o
- .data          0x000000000000467c       0x1a tty.o
- *fill*         0x0000000000004696        0x2 
- .data          0x0000000000004698        0x0 event.o
- .data          0x0000000000004698       0x1e /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(bootcons.o)
-                0x0000000000004698                KernCons
- *fill*         0x00000000000046b6        0x2 
- .data          0x00000000000046b8        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(cia-icr.o)
- .data          0x00000000000046b8        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(file.o)
- .data          0x00000000000046b8        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(hexdump.o)
- .data          0x00000000000046b8       0x1c /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(keyboard.o)
- .data          0x00000000000046d4        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(bootcons-putc.o)
- .data          0x00000000000046d4       0x88 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(cia-timer.o)
-                0x00000000000046d4                Timers
- .data          0x000000000000475c        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(queue.o)
- .data          0x000000000000475c        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(tasks.o)
- .data          0x000000000000475c        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(heap.o)
- .data          0x000000000000475c        0xc /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(port.o)
-                0x000000000000475c                ExterChain
-                0x0000000000004760                VertBlankChain
-                0x0000000000004764                PortsChain
- .data          0x0000000000004768        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(intsrv.o)
- .data          0x0000000000004768        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(intr.o)
- .data          0x0000000000004768        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(trap.o)
- .data          0x0000000000004768        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(portasm.o)
- .data          0x0000000000004768        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(list.o)
- .data          0x0000000000004768        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(kvprintf.o)
- .data          0x0000000000004768        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(strtol.o)
- .data          0x0000000000004768        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(divsi3.o)
- .data          0x0000000000004768        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(modsi3.o)
- .data          0x0000000000004768        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(mulsi3.o)
- .data          0x0000000000004768        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(udivsi3.o)
- .data          0x0000000000004768        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(umodsi3.o)
- .data          0x0000000000004768        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(memcpy.o)
- .data          0x0000000000004768        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(memset.o)
- .data          0x0000000000004768        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(ctype.o)
-                0x0000000000004768                . = ALIGN (0x4)
+ .data          0x0000000000004310        0x0 ../startup.o
+ .data          0x0000000000004310        0x0 ../fault.o
+ .data          0x0000000000004310        0x0 ../trap.o
+ .data          0x0000000000004310      0x462 main.o
+                0x0000000000004310                screen_bm
+                0x0000000000004354                cp
+                0x0000000000004360                pointer_spr
+                0x000000000000436a                pointer_pal
+                0x0000000000004374                console_font
+                0x000000000000447a                console_font_glyphs
+ *fill*         0x0000000000004772        0x2 
+ .data          0x0000000000004774        0x0 console.o
+ .data          0x0000000000004774       0x1a tty.o
+ *fill*         0x000000000000478e        0x2 
+ .data          0x0000000000004790        0x0 event.o
+ .data          0x0000000000004790       0x1e /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(bootcons.o)
+                0x0000000000004790                KernCons
+ *fill*         0x00000000000047ae        0x2 
+ .data          0x00000000000047b0        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(cia-icr.o)
+ .data          0x00000000000047b0        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(file.o)
+ .data          0x00000000000047b0        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(hexdump.o)
+ .data          0x00000000000047b0       0x1c /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(keyboard.o)
+ .data          0x00000000000047cc        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(bootcons-putc.o)
+ .data          0x00000000000047cc       0x88 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(cia-timer.o)
+                0x00000000000047cc                Timers
+ .data          0x0000000000004854        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(queue.o)
+ .data          0x0000000000004854        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(tasks.o)
+ .data          0x0000000000004854        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(heap.o)
+ .data          0x0000000000004854        0xc /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(port.o)
+                0x0000000000004854                ExterChain
+                0x0000000000004858                VertBlankChain
+                0x000000000000485c                PortsChain
+ .data          0x0000000000004860        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(intsrv.o)
+ .data          0x0000000000004860        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(intr.o)
+ .data          0x0000000000004860        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(trap.o)
+ .data          0x0000000000004860        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(portasm.o)
+ .data          0x0000000000004860        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(list.o)
+ .data          0x0000000000004860        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(kvprintf.o)
+ .data          0x0000000000004860        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(strtol.o)
+ .data          0x0000000000004860        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(divsi3.o)
+ .data          0x0000000000004860        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(modsi3.o)
+ .data          0x0000000000004860        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(mulsi3.o)
+ .data          0x0000000000004860        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(udivsi3.o)
+ .data          0x0000000000004860        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(umodsi3.o)
+ .data          0x0000000000004860        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(memcpy.o)
+ .data          0x0000000000004860        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(memset.o)
+ .data          0x0000000000004860        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(ctype.o)
+                0x0000000000004860                . = ALIGN (0x4)
                 [!provide]                        PROVIDE (_edata = .)
 
-.bss            0x0000000000004768      0x1e8
+.bss            0x0000000000004860      0x1e8
                 [!provide]                        PROVIDE (_bss = .)
  *(.bss .bss.*)
- .bss           0x0000000000004768        0x0 ../startup.o
- .bss           0x0000000000004768        0x0 ../fault.o
- .bss           0x0000000000004768        0x0 ../trap.o
- .bss           0x0000000000004768        0x4 main.o
- .bss           0x000000000000476c       0x10 console.o
- .bss           0x000000000000477c        0x4 tty.o
- .bss           0x0000000000004780       0x10 event.o
-                0x0000000000004780                tty_driver_handle
- .bss           0x0000000000004790        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(bootcons.o)
- .bss           0x0000000000004790        0x4 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(cia-icr.o)
- .bss           0x0000000000004794        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(file.o)
- .bss           0x0000000000004794        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(hexdump.o)
- .bss           0x0000000000004794        0x8 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(keyboard.o)
- .bss           0x000000000000479c        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(bootcons-putc.o)
- .bss           0x000000000000479c        0x1 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(cia-timer.o)
- *fill*         0x000000000000479d        0x3 
- .bss           0x00000000000047a0        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(queue.o)
- .bss           0x00000000000047a0       0xf0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(tasks.o)
-                0x00000000000047a0                pxCurrentTCB
- .bss           0x0000000000004890        0x4 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(heap.o)
-                0x0000000000004890                MemRegions
- .bss           0x0000000000004894       0xbc /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(port.o)
-                0x0000000000004894                xNeedRescheduleTask
-                0x0000000000004898                CpuModel
-                0x000000000000489a                IntVec
-                0x000000000000490a                ExcVecBase
- .bss           0x0000000000004950        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(intsrv.o)
- .bss           0x0000000000004950        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(intr.o)
- .bss           0x0000000000004950        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(trap.o)
- .bss           0x0000000000004950        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(portasm.o)
- .bss           0x0000000000004950        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(list.o)
- .bss           0x0000000000004950        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(kvprintf.o)
- .bss           0x0000000000004950        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(strtol.o)
- .bss           0x0000000000004950        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(divsi3.o)
- .bss           0x0000000000004950        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(modsi3.o)
- .bss           0x0000000000004950        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(mulsi3.o)
- .bss           0x0000000000004950        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(udivsi3.o)
- .bss           0x0000000000004950        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(umodsi3.o)
- .bss           0x0000000000004950        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(memcpy.o)
- .bss           0x0000000000004950        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(memset.o)
- .bss           0x0000000000004950        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(ctype.o)
+ .bss           0x0000000000004860        0x0 ../startup.o
+ .bss           0x0000000000004860        0x0 ../fault.o
+ .bss           0x0000000000004860        0x0 ../trap.o
+ .bss           0x0000000000004860        0x4 main.o
+ .bss           0x0000000000004864       0x10 console.o
+ .bss           0x0000000000004874        0x4 tty.o
+ .bss           0x0000000000004878       0x10 event.o
+                0x0000000000004878                tty_driver_handle
+ .bss           0x0000000000004888        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(bootcons.o)
+ .bss           0x0000000000004888        0x4 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(cia-icr.o)
+ .bss           0x000000000000488c        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(file.o)
+ .bss           0x000000000000488c        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(hexdump.o)
+ .bss           0x000000000000488c        0x8 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(keyboard.o)
+ .bss           0x0000000000004894        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(bootcons-putc.o)
+ .bss           0x0000000000004894        0x1 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(cia-timer.o)
+ *fill*         0x0000000000004895        0x3 
+ .bss           0x0000000000004898        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(queue.o)
+ .bss           0x0000000000004898       0xf0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(tasks.o)
+                0x0000000000004898                pxCurrentTCB
+ .bss           0x0000000000004988        0x4 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(heap.o)
+                0x0000000000004988                MemRegions
+ .bss           0x000000000000498c       0xbc /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(port.o)
+                0x000000000000498c                xNeedRescheduleTask
+                0x0000000000004990                CpuModel
+                0x0000000000004992                IntVec
+                0x0000000000004a02                ExcVecBase
+ .bss           0x0000000000004a48        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(intsrv.o)
+ .bss           0x0000000000004a48        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(intr.o)
+ .bss           0x0000000000004a48        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(trap.o)
+ .bss           0x0000000000004a48        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(portasm.o)
+ .bss           0x0000000000004a48        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(list.o)
+ .bss           0x0000000000004a48        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(kvprintf.o)
+ .bss           0x0000000000004a48        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(strtol.o)
+ .bss           0x0000000000004a48        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(divsi3.o)
+ .bss           0x0000000000004a48        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(modsi3.o)
+ .bss           0x0000000000004a48        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(mulsi3.o)
+ .bss           0x0000000000004a48        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(udivsi3.o)
+ .bss           0x0000000000004a48        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(umodsi3.o)
+ .bss           0x0000000000004a48        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(memcpy.o)
+ .bss           0x0000000000004a48        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(memset.o)
+ .bss           0x0000000000004a48        0x0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(ctype.o)
  *(COMMON)
-                0x0000000000004950                . = ALIGN (0x4)
+                0x0000000000004a48                . = ALIGN (0x4)
                 [!provide]                        PROVIDE (_ebss = .)
 
 .data.MEMF_CHIP
-                0x0000000000004950       0x48
+                0x0000000000004a48       0x48
                 [!provide]                        PROVIDE (_datachip = .)
  *(.datachip .datachip.*)
- .datachip      0x0000000000004950       0x48 main.o
-                0x0000000000004998                . = ALIGN (0x4)
+ .datachip      0x0000000000004a48       0x48 main.o
+                0x0000000000004a90                . = ALIGN (0x4)
                 [!provide]                        PROVIDE (_edatachip = .)
 
-.bss.MEMF_CHIP  0x0000000000004998     0x50a0
+.bss.MEMF_CHIP  0x0000000000004a90     0x50a0
                 [!provide]                        PROVIDE (_bsschip = .)
  *(.bsschip .bsschip.*)
- .bsschip       0x0000000000004998     0x50a0 main.o
-                0x0000000000004998                screen_bpl0
-                0x0000000000009a38                . = ALIGN (0x4)
+ .bsschip       0x0000000000004a90     0x50a0 main.o
+                0x0000000000004a90                screen_bpl0
+                0x0000000000009b30                . = ALIGN (0x4)
                 [!provide]                        PROVIDE (_ebsschip = .)
 
 /DISCARD/
@@ -450,97 +452,97 @@ LOAD /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/free
 LOAD /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib
 OUTPUT(console.elf elf32-m68k)
 
-.debug_info     0x0000000000000000     0xe39b
+.debug_info     0x0000000000000000     0xe54a
  .debug_info    0x0000000000000000      0xd2d ../startup.o
  .debug_info    0x0000000000000d2d      0x234 ../fault.o
  .debug_info    0x0000000000000f61      0x572 ../trap.o
  .debug_info    0x00000000000014d3     0x1c0e main.o
- .debug_info    0x00000000000030e1      0xcce console.o
- .debug_info    0x0000000000003daf     0x12cb tty.o
- .debug_info    0x000000000000507a      0x529 event.o
- .debug_info    0x00000000000055a3      0x276 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(bootcons.o)
- .debug_info    0x0000000000005819      0x380 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(cia-icr.o)
- .debug_info    0x0000000000005b99      0x43c /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(file.o)
- .debug_info    0x0000000000005fd5      0x300 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(hexdump.o)
- .debug_info    0x00000000000062d5     0x12cc /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(keyboard.o)
- .debug_info    0x00000000000075a1       0x26 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(bootcons-putc.o)
- .debug_info    0x00000000000075c7      0xf88 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(cia-timer.o)
- .debug_info    0x000000000000854f     0x1357 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(queue.o)
- .debug_info    0x00000000000098a6     0x1ce1 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(tasks.o)
- .debug_info    0x000000000000b587      0x6c6 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(heap.o)
- .debug_info    0x000000000000bc4d      0xe8a /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(port.o)
- .debug_info    0x000000000000cad7      0xbd9 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(intsrv.o)
- .debug_info    0x000000000000d6b0       0x26 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(intr.o)
- .debug_info    0x000000000000d6d6       0x26 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(trap.o)
- .debug_info    0x000000000000d6fc       0x26 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(portasm.o)
- .debug_info    0x000000000000d722      0x2ed /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(list.o)
- .debug_info    0x000000000000da0f      0x3e1 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(kvprintf.o)
- .debug_info    0x000000000000ddf0      0x1b2 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(strtol.o)
- .debug_info    0x000000000000dfa2       0x26 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(divsi3.o)
- .debug_info    0x000000000000dfc8       0x26 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(modsi3.o)
- .debug_info    0x000000000000dfee       0x26 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(mulsi3.o)
- .debug_info    0x000000000000e014       0x26 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(udivsi3.o)
- .debug_info    0x000000000000e03a       0x26 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(umodsi3.o)
- .debug_info    0x000000000000e060       0x26 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(memcpy.o)
- .debug_info    0x000000000000e086       0x26 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(memset.o)
- .debug_info    0x000000000000e0ac      0x2ef /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(ctype.o)
+ .debug_info    0x00000000000030e1      0xdfe console.o
+ .debug_info    0x0000000000003edf     0x134a tty.o
+ .debug_info    0x0000000000005229      0x529 event.o
+ .debug_info    0x0000000000005752      0x276 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(bootcons.o)
+ .debug_info    0x00000000000059c8      0x380 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(cia-icr.o)
+ .debug_info    0x0000000000005d48      0x43c /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(file.o)
+ .debug_info    0x0000000000006184      0x300 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(hexdump.o)
+ .debug_info    0x0000000000006484     0x12cc /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(keyboard.o)
+ .debug_info    0x0000000000007750       0x26 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(bootcons-putc.o)
+ .debug_info    0x0000000000007776      0xf88 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(cia-timer.o)
+ .debug_info    0x00000000000086fe     0x1357 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(queue.o)
+ .debug_info    0x0000000000009a55     0x1ce1 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(tasks.o)
+ .debug_info    0x000000000000b736      0x6c6 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(heap.o)
+ .debug_info    0x000000000000bdfc      0xe8a /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(port.o)
+ .debug_info    0x000000000000cc86      0xbd9 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(intsrv.o)
+ .debug_info    0x000000000000d85f       0x26 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(intr.o)
+ .debug_info    0x000000000000d885       0x26 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(trap.o)
+ .debug_info    0x000000000000d8ab       0x26 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(portasm.o)
+ .debug_info    0x000000000000d8d1      0x2ed /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(list.o)
+ .debug_info    0x000000000000dbbe      0x3e1 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(kvprintf.o)
+ .debug_info    0x000000000000df9f      0x1b2 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(strtol.o)
+ .debug_info    0x000000000000e151       0x26 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(divsi3.o)
+ .debug_info    0x000000000000e177       0x26 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(modsi3.o)
+ .debug_info    0x000000000000e19d       0x26 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(mulsi3.o)
+ .debug_info    0x000000000000e1c3       0x26 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(udivsi3.o)
+ .debug_info    0x000000000000e1e9       0x26 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(umodsi3.o)
+ .debug_info    0x000000000000e20f       0x26 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(memcpy.o)
+ .debug_info    0x000000000000e235       0x26 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(memset.o)
+ .debug_info    0x000000000000e25b      0x2ef /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(ctype.o)
 
-.debug_abbrev   0x0000000000000000     0x2d85
+.debug_abbrev   0x0000000000000000     0x2db7
  .debug_abbrev  0x0000000000000000      0x245 ../startup.o
  .debug_abbrev  0x0000000000000245       0xf8 ../fault.o
  .debug_abbrev  0x000000000000033d      0x182 ../trap.o
  .debug_abbrev  0x00000000000004bf      0x39c main.o
- .debug_abbrev  0x000000000000085b      0x2ba console.o
- .debug_abbrev  0x0000000000000b15      0x301 tty.o
- .debug_abbrev  0x0000000000000e16      0x170 event.o
- .debug_abbrev  0x0000000000000f86      0x15e /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(bootcons.o)
- .debug_abbrev  0x00000000000010e4      0x13d /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(cia-icr.o)
- .debug_abbrev  0x0000000000001221      0x1ba /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(file.o)
- .debug_abbrev  0x00000000000013db      0x17a /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(hexdump.o)
- .debug_abbrev  0x0000000000001555      0x26c /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(keyboard.o)
- .debug_abbrev  0x00000000000017c1       0x14 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(bootcons-putc.o)
- .debug_abbrev  0x00000000000017d5      0x2dd /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(cia-timer.o)
- .debug_abbrev  0x0000000000001ab2      0x2b5 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(queue.o)
- .debug_abbrev  0x0000000000001d67      0x405 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(tasks.o)
- .debug_abbrev  0x000000000000216c      0x254 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(heap.o)
- .debug_abbrev  0x00000000000023c0      0x251 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(port.o)
- .debug_abbrev  0x0000000000002611      0x239 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(intsrv.o)
- .debug_abbrev  0x000000000000284a       0x14 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(intr.o)
- .debug_abbrev  0x000000000000285e       0x14 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(trap.o)
- .debug_abbrev  0x0000000000002872       0x14 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(portasm.o)
- .debug_abbrev  0x0000000000002886      0x105 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(list.o)
- .debug_abbrev  0x000000000000298b      0x1ce /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(kvprintf.o)
- .debug_abbrev  0x0000000000002b59       0xd4 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(strtol.o)
- .debug_abbrev  0x0000000000002c2d       0x14 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(divsi3.o)
- .debug_abbrev  0x0000000000002c41       0x14 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(modsi3.o)
- .debug_abbrev  0x0000000000002c55       0x14 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(mulsi3.o)
- .debug_abbrev  0x0000000000002c69       0x14 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(udivsi3.o)
- .debug_abbrev  0x0000000000002c7d       0x14 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(umodsi3.o)
- .debug_abbrev  0x0000000000002c91       0x14 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(memcpy.o)
- .debug_abbrev  0x0000000000002ca5       0x14 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(memset.o)
- .debug_abbrev  0x0000000000002cb9       0xcc /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(ctype.o)
+ .debug_abbrev  0x000000000000085b      0x32f console.o
+ .debug_abbrev  0x0000000000000b8a      0x2be tty.o
+ .debug_abbrev  0x0000000000000e48      0x170 event.o
+ .debug_abbrev  0x0000000000000fb8      0x15e /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(bootcons.o)
+ .debug_abbrev  0x0000000000001116      0x13d /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(cia-icr.o)
+ .debug_abbrev  0x0000000000001253      0x1ba /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(file.o)
+ .debug_abbrev  0x000000000000140d      0x17a /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(hexdump.o)
+ .debug_abbrev  0x0000000000001587      0x26c /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(keyboard.o)
+ .debug_abbrev  0x00000000000017f3       0x14 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(bootcons-putc.o)
+ .debug_abbrev  0x0000000000001807      0x2dd /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(cia-timer.o)
+ .debug_abbrev  0x0000000000001ae4      0x2b5 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(queue.o)
+ .debug_abbrev  0x0000000000001d99      0x405 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(tasks.o)
+ .debug_abbrev  0x000000000000219e      0x254 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(heap.o)
+ .debug_abbrev  0x00000000000023f2      0x251 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(port.o)
+ .debug_abbrev  0x0000000000002643      0x239 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(intsrv.o)
+ .debug_abbrev  0x000000000000287c       0x14 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(intr.o)
+ .debug_abbrev  0x0000000000002890       0x14 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(trap.o)
+ .debug_abbrev  0x00000000000028a4       0x14 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(portasm.o)
+ .debug_abbrev  0x00000000000028b8      0x105 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(list.o)
+ .debug_abbrev  0x00000000000029bd      0x1ce /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(kvprintf.o)
+ .debug_abbrev  0x0000000000002b8b       0xd4 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(strtol.o)
+ .debug_abbrev  0x0000000000002c5f       0x14 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(divsi3.o)
+ .debug_abbrev  0x0000000000002c73       0x14 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(modsi3.o)
+ .debug_abbrev  0x0000000000002c87       0x14 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(mulsi3.o)
+ .debug_abbrev  0x0000000000002c9b       0x14 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(udivsi3.o)
+ .debug_abbrev  0x0000000000002caf       0x14 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(umodsi3.o)
+ .debug_abbrev  0x0000000000002cc3       0x14 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(memcpy.o)
+ .debug_abbrev  0x0000000000002cd7       0x14 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(memset.o)
+ .debug_abbrev  0x0000000000002ceb       0xcc /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(ctype.o)
 
-.debug_loc      0x0000000000000000     0x3bc5
+.debug_loc      0x0000000000000000     0x3c82
  .debug_loc     0x0000000000000000       0x5d ../startup.o
  .debug_loc     0x000000000000005d       0xe8 ../trap.o
  .debug_loc     0x0000000000000145      0xbf0 main.o
- .debug_loc     0x0000000000000d35      0x19a console.o
- .debug_loc     0x0000000000000ecf       0x9e tty.o
- .debug_loc     0x0000000000000f6d       0x3f /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(bootcons.o)
- .debug_loc     0x0000000000000fac       0x67 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(cia-icr.o)
- .debug_loc     0x0000000000001013       0xa2 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(file.o)
- .debug_loc     0x00000000000010b5      0x146 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(hexdump.o)
- .debug_loc     0x00000000000011fb      0x116 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(keyboard.o)
- .debug_loc     0x0000000000001311      0x18f /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(cia-timer.o)
- .debug_loc     0x00000000000014a0      0xa85 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(queue.o)
- .debug_loc     0x0000000000001f25      0xd55 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(tasks.o)
- .debug_loc     0x0000000000002c7a      0x40b /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(heap.o)
- .debug_loc     0x0000000000003085       0xf0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(port.o)
- .debug_loc     0x0000000000003175       0x99 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(intsrv.o)
- .debug_loc     0x000000000000320e       0x8a /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(list.o)
- .debug_loc     0x0000000000003298      0x5d4 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(kvprintf.o)
- .debug_loc     0x000000000000386c      0x32f /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(strtol.o)
- .debug_loc     0x0000000000003b9b       0x2a /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(ctype.o)
+ .debug_loc     0x0000000000000d35      0x288 console.o
+ .debug_loc     0x0000000000000fbd       0x6d tty.o
+ .debug_loc     0x000000000000102a       0x3f /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(bootcons.o)
+ .debug_loc     0x0000000000001069       0x67 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(cia-icr.o)
+ .debug_loc     0x00000000000010d0       0xa2 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(file.o)
+ .debug_loc     0x0000000000001172      0x146 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(hexdump.o)
+ .debug_loc     0x00000000000012b8      0x116 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(keyboard.o)
+ .debug_loc     0x00000000000013ce      0x18f /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(cia-timer.o)
+ .debug_loc     0x000000000000155d      0xa85 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(queue.o)
+ .debug_loc     0x0000000000001fe2      0xd55 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(tasks.o)
+ .debug_loc     0x0000000000002d37      0x40b /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(heap.o)
+ .debug_loc     0x0000000000003142       0xf0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(port.o)
+ .debug_loc     0x0000000000003232       0x99 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(intsrv.o)
+ .debug_loc     0x00000000000032cb       0x8a /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(list.o)
+ .debug_loc     0x0000000000003355      0x5d4 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(kvprintf.o)
+ .debug_loc     0x0000000000003929      0x32f /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(strtol.o)
+ .debug_loc     0x0000000000003c58       0x2a /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(ctype.o)
 
 .debug_aranges  0x0000000000000000      0x428
  .debug_aranges
@@ -610,57 +612,57 @@ OUTPUT(console.elf elf32-m68k)
  .debug_aranges
                 0x0000000000000408       0x20 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(ctype.o)
 
-.debug_ranges   0x0000000000000000      0x710
+.debug_ranges   0x0000000000000000      0x740
  .debug_ranges  0x0000000000000000       0x18 ../startup.o
  .debug_ranges  0x0000000000000018       0x18 ../trap.o
  .debug_ranges  0x0000000000000030      0x178 main.o
- .debug_ranges  0x00000000000001a8       0x48 console.o
- .debug_ranges  0x00000000000001f0       0x30 tty.o
- .debug_ranges  0x0000000000000220       0x18 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(bootcons.o)
- .debug_ranges  0x0000000000000238       0x38 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(hexdump.o)
- .debug_ranges  0x0000000000000270       0x30 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(keyboard.o)
- .debug_ranges  0x00000000000002a0       0x30 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(cia-timer.o)
- .debug_ranges  0x00000000000002d0      0x150 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(queue.o)
- .debug_ranges  0x0000000000000420      0x170 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(tasks.o)
- .debug_ranges  0x0000000000000590      0x168 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(heap.o)
- .debug_ranges  0x00000000000006f8       0x18 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(intsrv.o)
+ .debug_ranges  0x00000000000001a8       0x90 console.o
+ .debug_ranges  0x0000000000000238       0x18 tty.o
+ .debug_ranges  0x0000000000000250       0x18 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(bootcons.o)
+ .debug_ranges  0x0000000000000268       0x38 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(hexdump.o)
+ .debug_ranges  0x00000000000002a0       0x30 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(keyboard.o)
+ .debug_ranges  0x00000000000002d0       0x30 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(cia-timer.o)
+ .debug_ranges  0x0000000000000300      0x150 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(queue.o)
+ .debug_ranges  0x0000000000000450      0x170 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(tasks.o)
+ .debug_ranges  0x00000000000005c0      0x168 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(heap.o)
+ .debug_ranges  0x0000000000000728       0x18 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(intsrv.o)
 
-.debug_line     0x0000000000000000     0x6fa0
+.debug_line     0x0000000000000000     0x7089
  .debug_line    0x0000000000000000      0x38e ../startup.o
  .debug_line    0x000000000000038e      0x19c ../fault.o
  .debug_line    0x000000000000052a      0x29a ../trap.o
  .debug_line    0x00000000000007c4      0x7e8 main.o
- .debug_line    0x0000000000000fac      0x38b console.o
- .debug_line    0x0000000000001337      0x3ea tty.o
- .debug_line    0x0000000000001721      0x2a2 event.o
- .debug_line    0x00000000000019c3      0x143 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(bootcons.o)
- .debug_line    0x0000000000001b06      0x150 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(cia-icr.o)
- .debug_line    0x0000000000001c56      0x1df /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(file.o)
- .debug_line    0x0000000000001e35      0x1cc /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(hexdump.o)
- .debug_line    0x0000000000002001      0x34c /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(keyboard.o)
- .debug_line    0x000000000000234d       0x8b /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(bootcons-putc.o)
- .debug_line    0x00000000000023d8      0x3cc /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(cia-timer.o)
- .debug_line    0x00000000000027a4     0x1187 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(queue.o)
- .debug_line    0x000000000000392b     0x186f /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(tasks.o)
- .debug_line    0x000000000000519a      0x5b1 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(heap.o)
- .debug_line    0x000000000000574b      0x389 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(port.o)
- .debug_line    0x0000000000005ad4      0x23e /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(intsrv.o)
- .debug_line    0x0000000000005d12       0xb9 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(intr.o)
- .debug_line    0x0000000000005dcb       0xa2 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(trap.o)
- .debug_line    0x0000000000005e6d       0xa1 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(portasm.o)
- .debug_line    0x0000000000005f0e      0x2fb /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(list.o)
- .debug_line    0x0000000000006209      0x455 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(kvprintf.o)
- .debug_line    0x000000000000665e      0x317 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(strtol.o)
- .debug_line    0x0000000000006975       0x8f /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(divsi3.o)
- .debug_line    0x0000000000006a04       0x8b /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(modsi3.o)
- .debug_line    0x0000000000006a8f       0x87 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(mulsi3.o)
- .debug_line    0x0000000000006b16       0xa1 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(udivsi3.o)
- .debug_line    0x0000000000006bb7       0x8c /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(umodsi3.o)
- .debug_line    0x0000000000006c43       0xe0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(memcpy.o)
- .debug_line    0x0000000000006d23       0xba /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(memset.o)
- .debug_line    0x0000000000006ddd      0x1c3 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(ctype.o)
+ .debug_line    0x0000000000000fac      0x448 console.o
+ .debug_line    0x00000000000013f4      0x416 tty.o
+ .debug_line    0x000000000000180a      0x2a2 event.o
+ .debug_line    0x0000000000001aac      0x143 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(bootcons.o)
+ .debug_line    0x0000000000001bef      0x150 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(cia-icr.o)
+ .debug_line    0x0000000000001d3f      0x1df /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(file.o)
+ .debug_line    0x0000000000001f1e      0x1cc /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(hexdump.o)
+ .debug_line    0x00000000000020ea      0x34c /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(keyboard.o)
+ .debug_line    0x0000000000002436       0x8b /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(bootcons-putc.o)
+ .debug_line    0x00000000000024c1      0x3cc /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(cia-timer.o)
+ .debug_line    0x000000000000288d     0x1187 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(queue.o)
+ .debug_line    0x0000000000003a14     0x186f /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(tasks.o)
+ .debug_line    0x0000000000005283      0x5b1 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(heap.o)
+ .debug_line    0x0000000000005834      0x389 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(port.o)
+ .debug_line    0x0000000000005bbd      0x23e /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(intsrv.o)
+ .debug_line    0x0000000000005dfb       0xb9 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(intr.o)
+ .debug_line    0x0000000000005eb4       0xa2 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(trap.o)
+ .debug_line    0x0000000000005f56       0xa1 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(portasm.o)
+ .debug_line    0x0000000000005ff7      0x2fb /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(list.o)
+ .debug_line    0x00000000000062f2      0x455 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(kvprintf.o)
+ .debug_line    0x0000000000006747      0x317 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(strtol.o)
+ .debug_line    0x0000000000006a5e       0x8f /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(divsi3.o)
+ .debug_line    0x0000000000006aed       0x8b /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(modsi3.o)
+ .debug_line    0x0000000000006b78       0x87 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(mulsi3.o)
+ .debug_line    0x0000000000006bff       0xa1 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(udivsi3.o)
+ .debug_line    0x0000000000006ca0       0x8c /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(umodsi3.o)
+ .debug_line    0x0000000000006d2c       0xe0 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(memcpy.o)
+ .debug_line    0x0000000000006e0c       0xba /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(memset.o)
+ .debug_line    0x0000000000006ec6      0x1c3 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(ctype.o)
 
-.debug_str      0x0000000000000000     0x2f95
+.debug_str      0x0000000000000000     0x2fae
  .debug_str     0x0000000000000000      0x729 ../startup.o
                                         0x77c (size before relaxing)
  .debug_str     0x0000000000000729       0x8a ../fault.o
@@ -669,85 +671,85 @@ OUTPUT(console.elf elf32-m68k)
                                         0x325 (size before relaxing)
  .debug_str     0x00000000000008d8      0x435 main.o
                                         0x9fb (size before relaxing)
- .debug_str     0x0000000000000d0d      0x110 console.o
-                                        0x6b3 (size before relaxing)
- .debug_str     0x0000000000000e1d      0x597 tty.o
-                                        0xcc2 (size before relaxing)
- .debug_str     0x00000000000013b4      0x139 event.o
+ .debug_str     0x0000000000000d0d      0x136 console.o
+                                        0x6d9 (size before relaxing)
+ .debug_str     0x0000000000000e43      0x61b tty.o
+                                        0xd59 (size before relaxing)
+ .debug_str     0x000000000000145e      0x13f event.o
                                         0x46e (size before relaxing)
- .debug_str     0x00000000000014ed       0xca /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(bootcons.o)
+ .debug_str     0x000000000000159d       0xca /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(bootcons.o)
                                         0x22f (size before relaxing)
- .debug_str     0x00000000000015b7       0x7e /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(cia-icr.o)
+ .debug_str     0x0000000000001667       0x7e /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(cia-icr.o)
                                         0x2b2 (size before relaxing)
- .debug_str     0x0000000000001635       0x7d /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(file.o)
+ .debug_str     0x00000000000016e5       0x7d /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(file.o)
                                         0x276 (size before relaxing)
- .debug_str     0x00000000000016b2       0x60 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(hexdump.o)
+ .debug_str     0x0000000000001762       0x60 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(hexdump.o)
                                         0x23c (size before relaxing)
- .debug_str     0x0000000000001712      0x17e /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(keyboard.o)
+ .debug_str     0x00000000000017c2      0x10c /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(keyboard.o)
                                         0xc90 (size before relaxing)
- .debug_str     0x0000000000001890       0x62 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(bootcons-putc.o)
+ .debug_str     0x00000000000018ce       0x62 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(bootcons-putc.o)
                                          0xa8 (size before relaxing)
- .debug_str     0x00000000000018f2       0xf2 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(cia-timer.o)
+ .debug_str     0x0000000000001930       0xf2 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(cia-timer.o)
                                         0x8a8 (size before relaxing)
- .debug_str     0x00000000000019e4      0x4d9 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(queue.o)
+ .debug_str     0x0000000000001a22      0x4b4 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(queue.o)
                                         0x7e1 (size before relaxing)
- .debug_str     0x0000000000001ebd      0x849 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(tasks.o)
+ .debug_str     0x0000000000001ed6      0x849 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(tasks.o)
                                         0xd6c (size before relaxing)
- .debug_str     0x0000000000002706      0x169 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(heap.o)
+ .debug_str     0x000000000000271f      0x169 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(heap.o)
                                         0x38a (size before relaxing)
- .debug_str     0x000000000000286f       0xa1 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(port.o)
+ .debug_str     0x0000000000002888       0xa1 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(port.o)
                                         0x89c (size before relaxing)
- .debug_str     0x0000000000002910       0x84 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(intsrv.o)
+ .debug_str     0x0000000000002929       0x84 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(intsrv.o)
                                         0x708 (size before relaxing)
- .debug_str     0x0000000000002994       0x62 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(intr.o)
+ .debug_str     0x00000000000029ad       0x62 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(intr.o)
                                          0xb5 (size before relaxing)
- .debug_str     0x00000000000029f6       0x62 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(trap.o)
+ .debug_str     0x0000000000002a0f       0x62 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(trap.o)
                                          0xb5 (size before relaxing)
- .debug_str     0x0000000000002a58       0x65 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(portasm.o)
+ .debug_str     0x0000000000002a71       0x65 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(portasm.o)
                                          0xb8 (size before relaxing)
- .debug_str     0x0000000000002abd       0x96 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(list.o)
+ .debug_str     0x0000000000002ad6       0x96 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(list.o)
                                         0x2e1 (size before relaxing)
- .debug_str     0x0000000000002b53       0xd1 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(kvprintf.o)
+ .debug_str     0x0000000000002b6c       0xd1 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(kvprintf.o)
                                         0x271 (size before relaxing)
- .debug_str     0x0000000000002c24       0x98 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(strtol.o)
+ .debug_str     0x0000000000002c3d       0x98 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(strtol.o)
                                         0x1c8 (size before relaxing)
- .debug_str     0x0000000000002cbc       0x50 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(divsi3.o)
+ .debug_str     0x0000000000002cd5       0x50 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(divsi3.o)
                                          0x9f (size before relaxing)
- .debug_str     0x0000000000002d0c       0x50 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(modsi3.o)
+ .debug_str     0x0000000000002d25       0x50 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(modsi3.o)
                                          0x9f (size before relaxing)
- .debug_str     0x0000000000002d5c       0x50 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(mulsi3.o)
+ .debug_str     0x0000000000002d75       0x50 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(mulsi3.o)
                                          0x9f (size before relaxing)
- .debug_str     0x0000000000002dac       0x51 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(udivsi3.o)
+ .debug_str     0x0000000000002dc5       0x51 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(udivsi3.o)
                                          0xa0 (size before relaxing)
- .debug_str     0x0000000000002dfd       0x51 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(umodsi3.o)
+ .debug_str     0x0000000000002e16       0x51 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(umodsi3.o)
                                          0xa0 (size before relaxing)
- .debug_str     0x0000000000002e4e       0x53 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(memcpy.o)
+ .debug_str     0x0000000000002e67       0x53 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(memcpy.o)
                                          0xa2 (size before relaxing)
- .debug_str     0x0000000000002ea1       0x53 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(memset.o)
+ .debug_str     0x0000000000002eba       0x53 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(memset.o)
                                          0xa2 (size before relaxing)
- .debug_str     0x0000000000002ef4       0xa1 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(ctype.o)
+ .debug_str     0x0000000000002f0d       0xa1 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(ctype.o)
                                         0x155 (size before relaxing)
 
-.debug_frame    0x0000000000000000     0x174c
+.debug_frame    0x0000000000000000     0x17ac
  .debug_frame   0x0000000000000000       0x8c ../startup.o
  .debug_frame   0x000000000000008c       0x4c ../fault.o
  .debug_frame   0x00000000000000d8       0x90 ../trap.o
  .debug_frame   0x0000000000000168      0x120 main.o
- .debug_frame   0x0000000000000288       0xd8 console.o
- .debug_frame   0x0000000000000360      0x118 tty.o
- .debug_frame   0x0000000000000478      0x178 event.o
- .debug_frame   0x00000000000005f0       0x38 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(bootcons.o)
- .debug_frame   0x0000000000000628       0x48 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(cia-icr.o)
- .debug_frame   0x0000000000000670       0x9c /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(file.o)
- .debug_frame   0x000000000000070c       0x5c /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(hexdump.o)
- .debug_frame   0x0000000000000768       0x8c /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(keyboard.o)
- .debug_frame   0x00000000000007f4       0xb8 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(cia-timer.o)
- .debug_frame   0x00000000000008ac      0x404 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(queue.o)
- .debug_frame   0x0000000000000cb0      0x5ec /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(tasks.o)
- .debug_frame   0x000000000000129c       0xc8 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(heap.o)
- .debug_frame   0x0000000000001364       0x68 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(port.o)
- .debug_frame   0x00000000000013cc       0x7c /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(intsrv.o)
- .debug_frame   0x0000000000001448       0x88 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(list.o)
- .debug_frame   0x00000000000014d0       0xf8 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(kvprintf.o)
- .debug_frame   0x00000000000015c8       0x7c /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(strtol.o)
- .debug_frame   0x0000000000001644      0x108 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(ctype.o)
+ .debug_frame   0x0000000000000288      0x12c console.o
+ .debug_frame   0x00000000000003b4      0x124 tty.o
+ .debug_frame   0x00000000000004d8      0x178 event.o
+ .debug_frame   0x0000000000000650       0x38 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(bootcons.o)
+ .debug_frame   0x0000000000000688       0x48 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(cia-icr.o)
+ .debug_frame   0x00000000000006d0       0x9c /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(file.o)
+ .debug_frame   0x000000000000076c       0x5c /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(hexdump.o)
+ .debug_frame   0x00000000000007c8       0x8c /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(keyboard.o)
+ .debug_frame   0x0000000000000854       0xb8 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/drivers/drivers.lib(cia-timer.o)
+ .debug_frame   0x000000000000090c      0x404 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(queue.o)
+ .debug_frame   0x0000000000000d10      0x5ec /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(tasks.o)
+ .debug_frame   0x00000000000012fc       0xc8 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(heap.o)
+ .debug_frame   0x00000000000013c4       0x68 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(port.o)
+ .debug_frame   0x000000000000142c       0x7c /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(intsrv.o)
+ .debug_frame   0x00000000000014a8       0x88 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/FreeRTOS/freertos.lib(list.o)
+ .debug_frame   0x0000000000001530       0xf8 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(kvprintf.o)
+ .debug_frame   0x0000000000001628       0x7c /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(strtol.o)
+ .debug_frame   0x00000000000016a4      0x108 /home/tomasz/Downloads/sju_terminal/terminal-ThomasStachovsky/libc/c.lib(ctype.o)

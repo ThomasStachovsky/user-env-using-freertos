@@ -58,6 +58,13 @@ static void ConsoleDrawChar(short x, short y, uint8_t c) {
   } while (--h != -1);
 }
 
+static void ConsoleMoveLinesUp(short y) {
+  unsigned char *dst = cons.bitmap->planes[0];
+  short h = cons.font->height;
+  for (int i = 0; i < cons.bitmap->width * y; i++)
+    dst[i] = dst[i + cons.bitmap->bytesPerRow * h];
+}
+
 void ConsoleDrawCursor(void) {
   unsigned char *dst = cons.bitmap->planes[0];
   short dwidth = cons.bitmap->bytesPerRow;
@@ -75,8 +82,12 @@ static void ConsoleNextLine(void) {
   for (short x = cons.cursor.x; x < cons.width; x++)
     ConsoleDrawChar(x, cons.cursor.y, ' ');
   cons.cursor.x = 0;
-  if (++cons.cursor.y >= cons.height)
-    cons.cursor.y = 0;
+  if (++cons.cursor.y >= cons.height) {
+    cons.cursor.y = cons.height - 1;
+    ConsoleMoveLinesUp(cons.cursor.y);
+    for (short x = 0; x < cons.width; x++)
+      ConsoleDrawChar(x, cons.cursor.y, ' ');
+  }
 }
 
 static void ConsoleNextChar(void) {
@@ -98,6 +109,24 @@ void ConsolePutChar(char c) {
       ConsoleNextChar();
       break;
   }
+}
+
+void EraseChar() {
+  ConsoleDrawChar(cons.cursor.x, cons.cursor.y, ' ');
+  cons.cursor.x--;
+  if (cons.cursor.x < 0) {
+    if (cons.cursor.y == 0)
+      cons.cursor.x = 0;
+    else {
+      cons.cursor.x = cons.width - 1;
+      cons.cursor.y--;
+    }
+  }
+  ConsoleDrawChar(cons.cursor.x, cons.cursor.y, ' ');
+}
+
+void KillLine() {
+  ConsoleNextLine();
 }
 
 void ConsolePrintf(const char *fmt, ...) {

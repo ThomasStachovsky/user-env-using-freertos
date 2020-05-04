@@ -3,7 +3,6 @@
 
 #include <file.h>
 
-#define ttyDRIVER_TASK_PRIORITY 3
 #define MAX_CANON 80
 
 File_t *TtyOpen(void);
