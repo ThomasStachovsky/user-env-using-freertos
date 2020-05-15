@@ -23,7 +23,7 @@ static void vBackgroundTask(__unused File_t *ser) {
   // FilePutChar(ser, '+');
 }
 
-__unused static void vListDirTask(File_t *ser) {
+__unused static void vListDirTask(__unused File_t *ser) {
   (void)FsMount();
   void *base_p = NULL;
   for (;;) {
@@ -33,8 +33,26 @@ __unused static void vListDirTask(File_t *ser) {
       base_p = NULL;
       vTaskDelay(2000 / portTICK_PERIOD_MS);
     } else {
-      FilePrintf(ser, "%s   (%d)\n", direntry->name, direntry->size);
+      // FilePrintf(ser, "%s   (%d)\n", direntry->name, direntry->size);
     }
+  }
+}
+
+static void vReadFileTask(File_t *ser) {
+  (void)FsMount();
+  File_t *f = FsOpen("aliceinwonderland.txt");
+  char buffer[110];
+  if (f == NULL)
+    FilePrintf(ser, "file doesnt exist, its impossible\n");
+  vTaskDelay(1000 / portTICK_PERIOD_MS);
+  FileSeek(f, -400, SEEK_END);
+  for (;;) {
+    int read_bytes = FileRead(f, buffer, 100);
+    FileWrite(ser, buffer, read_bytes);
+    // FilePrintf(ser, "name %s\noffset %d\nsize %d\n", ((FsFile_t
+    // *)f)->de->name,
+    //           f->offset, ((FsFile_t *)f)->de->size);
+    // vTaskDelay(200 / portTICK_PERIOD_MS);
   }
 }
 
@@ -63,10 +81,18 @@ int main(void) {
   xTaskCreate((TaskFunction_t)vBackgroundTask, "background",
               configMINIMAL_STACK_SIZE, ser, BACKGROUND_TASK_PRIO, &bg_handle);
 
+  FilePrintf(ser, "hej");
+  FilePrintf(ser, "ho");
+  FilePrintf(ser, "hej");
+  FilePrintf(ser, "ho");
+
   FsInit(ser);
 
   xTaskCreate((TaskFunction_t)vListDirTask, "listdir", configMINIMAL_STACK_SIZE,
               ser, BACKGROUND_TASK_PRIO, &bg_handle);
+
+  xTaskCreate((TaskFunction_t)vReadFileTask, "readfile",
+              configMINIMAL_STACK_SIZE, ser, BACKGROUND_TASK_PRIO, &bg_handle);
 
   vTaskStartScheduler();
 
