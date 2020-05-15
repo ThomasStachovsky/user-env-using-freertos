@@ -3,20 +3,9 @@
 #include <FreeRTOS/queue.h>
 
 #include <floppy.h>
-
-#include "filesys.h"
-
-// na chwile
-static File_t *temptemp;
-#include <FreeRTOS/FreeRTOS.h>
-#include <FreeRTOS/task.h>
-
-#include <interrupt.h>
-#include <stdio.h>
-#include <serial.h>
 #include <string.h>
 
-////
+#include "filesys.h"
 
 typedef enum {
   FS_MOUNT,   /* mount filesystem */
@@ -44,8 +33,10 @@ typedef struct FsMsg {
       DirEntry_t **base_p;
     } dirent;
     struct {
+      DirEntry_t *direntry;
     } open;
     struct {
+      FsFile_t *ff;
     } close;
     struct {
       FsFile_t *ff;
@@ -67,6 +58,26 @@ static FileOps_t FsOps = {.read = (FileRead_t)FsRead,
                           .seek = (FileSeek_t)FsSeek,
                           .close = (FileClose_t)FsClose};
 
+static QueueHandle_t requestQ;
+static QueueHandle_t replyQ;
+static int opened_files;
+static FloppyIO_t floppyio;
+static FsMsg_t curr_msg;
+static short dirsize;
+static DirEntry_t *directory;
+
+#define DEF_PRIO_BUF_TRACK 0
+#define MIN_PRIO_BUF_TRACK (-1000)
+#define NUMBER_OF_BUFFERED_TRACKS 10
+
+typedef struct BufferedTrack {
+  void *buffer;
+  int priority;
+  short track;
+} BufferedTrack_t;
+
+static BufferedTrack_t buffered_tracks[NUMBER_OF_BUFFERED_TRACKS];
+
 static void SendIO(FloppyIO_t *io, short track) {
   io->track = track;
   FloppySendIO(io);
@@ -82,149 +93,194 @@ static void WaitIO(QueueHandle_t replyQ, void *buf) {
     DecodeSector(sectors[j], buf + j * SECTOR_SIZE);
 }
 
-static QueueHandle_t requestQ;
-static int opened_files;
-// static FsFile_t **opened_files;
-//#define MAX_NUMBER_ONE_FILE_OPENED 32
-//#define BUFFERED_TRACKS_COUNT 10
-// static int buffered_tracks_state[BUFFERED_TRACKS_COUNT];
-// static void *buffered_tracks[BUFFERED_TRACKS_COUNT];
+static void *GetTrack(short track) {
+  int min_prio = buffered_tracks[0].priority;
+  int index_min_prio = 0;
+  int index_wanted_track = -1;
+  for (int i = 0; i < NUMBER_OF_BUFFERED_TRACKS; i++) {
+    if (buffered_tracks[i].track == track)
+      index_wanted_track = i;
+    if (buffered_tracks[i].priority > MIN_PRIO_BUF_TRACK)
+      buffered_tracks[i].priority--;
+    if (buffered_tracks[i].priority < min_prio) {
+      min_prio = buffered_tracks[i].priority;
+      index_min_prio = i;
+    }
+  }
+  void *buf;
+  if (index_wanted_track != -1) {
+    buf = buffered_tracks[index_wanted_track].buffer;
+    buffered_tracks[index_wanted_track].priority = DEF_PRIO_BUF_TRACK;
+    return buf;
+  } else {
+    buf = buffered_tracks[index_min_prio].buffer;
+    buffered_tracks[index_min_prio].priority = DEF_PRIO_BUF_TRACK;
+    buffered_tracks[index_min_prio].track = track;
+    SendIO(&floppyio, track);
+    WaitIO(replyQ, buf);
+    return buf;
+  }
+}
+
+static void vFileSysCaseMount() {
+  if (directory) {
+    *curr_msg.response.replyp = false;
+  } else {
+    for (int i = 0; i < NUMBER_OF_BUFFERED_TRACKS; i++) {
+      buffered_tracks[i].priority = DEF_PRIO_BUF_TRACK;
+      buffered_tracks[i].track = -1;
+    }
+    opened_files = 0;
+    int track = 0;
+    char *track_buf = (char *)GetTrack(track++);
+    dirsize = *(short *)(track_buf + SECTOR_SIZE + SECTOR_SIZE);
+    short bytesleft = dirsize;
+    short offset = 0;
+    directory = (DirEntry_t *)pvPortMalloc(dirsize);
+    char *ptr = track_buf + SECTOR_SIZE + SECTOR_SIZE + 2;
+    while (bytesleft > 0) {
+      memcpy((char *)directory + offset, ptr, ((DirEntry_t *)ptr)->reclen);
+      offset += ((DirEntry_t *)ptr)->reclen;
+      bytesleft -= ((DirEntry_t *)ptr)->reclen;
+      ptr = (char *)ptr + ((DirEntry_t *)ptr)->reclen;
+      if (ptr - track_buf >= SECTOR_COUNT * SECTOR_SIZE) {
+        track_buf = (char *)GetTrack(track++);
+        ptr = track_buf;
+      }
+    }
+    *curr_msg.response.replyp = true;
+  }
+
+  xTaskNotify(curr_msg.response.task, 0, eNoAction);
+}
+
+static void vFileSysCaseDirent() {
+  char **base_p = (char **)curr_msg.request.dirent.base_p;
+  DirEntry_t **replyp = (DirEntry_t **)curr_msg.response.replyp;
+
+  if ((directory == NULL) || (*base_p >= (char *)directory + dirsize)) {
+    *replyp = NULL;
+  } else if (*base_p == NULL) {
+    *replyp = directory;
+    *base_p = (char *)directory + directory->reclen;
+  } else {
+    *replyp = (DirEntry_t *)(*base_p);
+    *base_p += ((DirEntry_t *)(*base_p))->reclen;
+  }
+
+  xTaskNotify(curr_msg.response.task, 0, eNoAction);
+}
+
+static void vFileSysCaseRead() {
+  long offset = curr_msg.request.read.ff->f.offset;
+  long start = curr_msg.request.read.ff->de->start;
+  long size = curr_msg.request.read.ff->de->size;
+  void *buffer = curr_msg.request.read.buf;
+  long nbyte = curr_msg.request.read.nbyte;
+
+  if (offset >= size || nbyte == 0) {
+    *(size_t *)curr_msg.response.replyp = 0;
+    xTaskNotify(curr_msg.response.task, 0, eNoAction);
+    return;
+  }
+
+  if (nbyte > size - offset)
+    nbyte = size - offset;
+  long bytes_left = nbyte;
+  int track = (start * SECTOR_SIZE + offset) / (SECTOR_SIZE * SECTOR_COUNT);
+  long start_relative_to_track =
+    (start * SECTOR_SIZE + offset) % (SECTOR_SIZE * SECTOR_COUNT);
+  long bytes_read_first_track =
+    min(bytes_left, (SECTOR_SIZE * SECTOR_COUNT) - start_relative_to_track);
+  char *track_buf = (char *)GetTrack(track++);
+
+  memcpy(buffer, track_buf + start_relative_to_track, bytes_read_first_track);
+  bytes_left -= bytes_read_first_track;
+  buffer += bytes_read_first_track;
+
+  while (bytes_left > SECTOR_SIZE * SECTOR_COUNT) {
+    track_buf = GetTrack(track++);
+    memcpy(buffer, track_buf, SECTOR_SIZE * SECTOR_COUNT);
+    bytes_left -= SECTOR_SIZE * SECTOR_COUNT;
+    buffer += SECTOR_SIZE * SECTOR_COUNT;
+  }
+
+  if (bytes_left > 0) {
+    track_buf = GetTrack(track++);
+    memcpy(buffer, track_buf, bytes_left);
+    bytes_left = 0;
+    buffer += bytes_left;
+  }
+
+  curr_msg.request.read.ff->f.offset += nbyte;
+  *(size_t *)curr_msg.response.replyp = nbyte;
+  xTaskNotify(curr_msg.response.task, 0, eNoAction);
+}
+
+static void vFileSysCaseUnMount() {
+  if (opened_files == 0) {
+    if (directory != NULL) {
+      vPortFree(directory);
+      directory = NULL;
+    }
+  }
+  *curr_msg.response.replyp = opened_files;
+  xTaskNotify(curr_msg.response.task, 0, eNoAction);
+}
+
+static void vFileSysCaseOpen() {
+  if (directory == NULL) {
+    *(File_t **)curr_msg.response.replyp = NULL;
+    xTaskNotify(curr_msg.response.task, 0, eNoAction);
+    return;
+  }
+  opened_files++;
+  FsFile_t *new_file = pvPortMalloc(sizeof(FsFile_t));
+  new_file->de = curr_msg.request.open.direntry;
+  new_file->f.offset = 0;
+  new_file->f.ops = &FsOps;
+  new_file->f.usecount = 1;
+  *(File_t **)curr_msg.response.replyp = &(new_file->f);
+  xTaskNotify(curr_msg.response.task, 0, eNoAction);
+}
+
+static void vFileSysCaseClose() {
+  FsFile_t *ff = curr_msg.request.close.ff;
+  ff->f.usecount--;
+  if (ff->f.usecount == 0) {
+    vPortFree(ff);
+    opened_files--;
+  }
+  xTaskNotify(curr_msg.response.task, 0, eNoAction);
+}
 
 static void vFileSysTask(__unused void *data) {
-  QueueHandle_t replyQ = xQueueCreate(2, sizeof(FloppyIO_t *));
-  void *buf = pvPortMalloc(SECTOR_SIZE * SECTOR_COUNT);
 
-  FsMsg_t request;
-  short dirsize = 0;
-  DirEntry_t *directory = NULL;
-  // size_t nfiles = 0;
-
-  /*
-   * For double buffering we need (sic!) two track buffers:
-   *  - one track will be owned by floppy driver
-   *    which will set up a DMA transfer to it
-   *  - the track will be decoded from MFM format
-   *    and possibly read by this task
-   */
-  FloppyIO_t io[2];
-  for (short i = 0; i < 2; i++) {
-    io[i].cmd = CMD_READ;
-    io[i].buffer = AllocTrack();
-    io[i].replyQueue = replyQ;
-  }
-  char **base_p;
   for (;;) {
-    // portNOP();
-    (void)xQueueReceive(requestQ, &request, portMAX_DELAY);
-    // portNOP();
-    switch (request.cmd) {
+    (void)xQueueReceive(requestQ, &curr_msg, portMAX_DELAY);
+    switch (curr_msg.cmd) {
       case FS_MOUNT: {
-        if (directory) {
-          *request.response.replyp = false;
-          xTaskNotify(request.response.task, 0, eNoAction);
-        } else {
-          opened_files = 0;
-          int track = 0;
-          SendIO(&io[0], track++);
-          WaitIO(replyQ, buf);
-          dirsize = *(short *)((char *)buf + SECTOR_SIZE + SECTOR_SIZE);
-          short bytesleft = dirsize;
-          short offset = 0;
-          directory = (DirEntry_t *)pvPortMalloc(dirsize);
-          char *ptr = (char *)buf + SECTOR_SIZE + SECTOR_SIZE + 2;
-          // int first = 1;
-          while (bytesleft > 0) {
-            // nfiles++;
-            memcpy((char *)directory + offset, ptr,
-                   ((DirEntry_t *)ptr)->reclen);
-            // FilePrintf(temptemp, "Loaded %s\n", directory + offset)
-            FilePrintf(temptemp, "bytesleft: %d ; Loaded %s\n", bytesleft,
-                       ((DirEntry_t *)((char *)directory + offset))->name);
-            offset += ((DirEntry_t *)ptr)->reclen;
-            bytesleft -= ((DirEntry_t *)ptr)->reclen;
-            ptr = (char *)ptr + ((DirEntry_t *)ptr)->reclen;
-            // FilePrintf(temptemp, "XXX %d XXX\n",
-            //           ptr - (char *)buf -
-            //             first * (SECTOR_SIZE + SECTOR_SIZE - 2));
-            if (ptr - (char *)buf >= SECTOR_COUNT * SECTOR_SIZE) {
-              // first = 0;
-              SendIO(&io[0], track++);
-              WaitIO(replyQ, buf);
-              ptr = (char *)buf;
-            }
-          }
-          // opened_files = pvPortMalloc(nfiles * sizeof(FsFile_t *));
-          // for (int i = 0; i < opened_files; i++) {
-          //  opened_files[i] =
-          //     pvPortMalloc(MAX_NUMBER_ONE_FILE_OPENED * sizeof(FsFile_t));
-        }
-
-        *request.response.replyp = true;
-        xTaskNotify(request.response.task, 0, eNoAction);
+        vFileSysCaseMount();
+        break;
+      }
+      case FS_UNMOUNT: {
+        vFileSysCaseUnMount();
         break;
       }
       case FS_DIRENT: {
-        base_p = (char **)request.request.dirent.base_p;
-        if (*base_p >= (char *)directory + dirsize) {
-          *(DirEntry_t **)request.response.replyp = (DirEntry_t *)NULL;
-        } else if (*base_p == NULL) {
-          *(DirEntry_t **)request.response.replyp = (DirEntry_t *)directory;
-          *base_p = (char *)directory + directory->reclen;
-        } else {
-          *(DirEntry_t **)request.response.replyp = (DirEntry_t *)(*base_p);
-          *base_p = (char *)(*base_p) + ((DirEntry_t *)(*base_p))->reclen;
-        }
-        xTaskNotify(request.response.task, 0, eNoAction);
+        vFileSysCaseDirent();
+        break;
+      }
+      case FS_OPEN: {
+        vFileSysCaseOpen();
+        break;
+      }
+      case FS_CLOSE: {
+        vFileSysCaseClose();
         break;
       }
       case FS_READ: {
-        // XXX: prosta wersja bez buforowania
-        long offset = request.request.read.ff->f.offset;
-        long start = request.request.read.ff->de->start;
-        long size = request.request.read.ff->de->size;
-        void *buffer = request.request.read.buf;
-        long nbyte = request.request.read.nbyte;
-
-        if (offset >= size || nbyte == 0) {
-          *(size_t *)request.response.replyp = 0;
-          xTaskNotify(request.response.task, 0, eNoAction);
-          break;
-        }
-
-        if (nbyte > size - offset)
-          nbyte = size - offset;
-        long bytes_left = nbyte;
-        int track =
-          (start * SECTOR_SIZE + offset) / (SECTOR_SIZE * SECTOR_COUNT);
-        long start_relative_to_track =
-          (start * SECTOR_SIZE + offset) % (SECTOR_SIZE * SECTOR_COUNT);
-        long bytes_read_first_track = min(
-          bytes_left, (SECTOR_SIZE * SECTOR_COUNT) - start_relative_to_track);
-        /*FilePrintf(temptemp,
-                   "\nSTART LOCATION:%d\ntrack %d\n start rel %d\n bytes read "
-                   "first %d\n",
-                   start, track, start_relative_to_track,
-                   bytes_read_first_track);*/
-        SendIO(&io[0], track++);
-        WaitIO(replyQ, buf);
-
-        memcpy(buffer, buf + start_relative_to_track, bytes_read_first_track);
-        bytes_left -= bytes_read_first_track;
-
-        while (bytes_left > SECTOR_SIZE * SECTOR_COUNT) {
-          SendIO(&io[0], track++);
-          WaitIO(replyQ, buf);
-          memcpy(buffer, buf, SECTOR_SIZE * SECTOR_COUNT);
-          bytes_left -= SECTOR_SIZE * SECTOR_COUNT;
-          buffer += SECTOR_SIZE * SECTOR_COUNT;
-        }
-        SendIO(&io[0], track++);
-        WaitIO(replyQ, buf);
-        memcpy(buffer, buf, bytes_left);
-
-        request.request.read.ff->f.offset += nbyte;
-        *(size_t *)request.response.replyp = nbyte;
-        xTaskNotify(request.response.task, 0, eNoAction);
+        vFileSysCaseRead();
         break;
       }
       default: {
@@ -247,10 +303,13 @@ bool FsMount(void) {
 
 /* Remember to free memory used up by a directory! */
 int FsUnMount(void) {
-  if (opened_files == 0) {
-    // a lot of things
-  }
-  return opened_files;
+  long retval;
+  FsMsg_t request = {.cmd = FS_UNMOUNT,
+                     .response.replyp = &retval,
+                     .response.task = xTaskGetCurrentTaskHandle()};
+  (void)xQueueSend(requestQ, &request, portMAX_DELAY);
+  (void)xTaskNotifyWait(0xffffffff, 0, NULL, portMAX_DELAY);
+  return (int)retval;
 }
 
 const DirEntry_t *FsListDir(void **base_p) {
@@ -269,29 +328,28 @@ File_t *FsOpen(const char *name) {
   void *base_p = NULL;
   do {
     direntry = (DirEntry_t *)FsListDir(&base_p);
-    if (direntry == NULL)
+    if (direntry == NULL) {
       return NULL;
-    // FilePrintf(temptemp, "STRING: %s\n", direntry->name);
-    // FilePrintf(temptemp, "nameparam: %s\n", name);
-    // FilePrintf(temptemp, "SIZE: %d\n", direntry->size);
+    }
   } while (strcmp(name, direntry->name));
-  opened_files++;
-  FsFile_t *new_file = pvPortMalloc(sizeof(FsFile_t));
-  new_file->de = direntry;
-  new_file->f.offset = 0;
-  new_file->f.ops = &FsOps;
-  new_file->f.usecount = 1;
-  // FilePrintf(temptemp, "name %s\noffset %d\nsize %d\n", direntry->name,
-  //           ((File_t *)new_file)->offset, direntry->size);
-  return &(new_file->f);
+  File_t *f;
+  FsMsg_t request = {.cmd = FS_OPEN,
+                     .request.open.direntry = direntry,
+                     .response.replyp = (long *)&f,
+                     .response.task = xTaskGetCurrentTaskHandle()};
+  (void)xQueueSend(requestQ, &request, portMAX_DELAY);
+  (void)xTaskNotifyWait(0xffffffff, 0, NULL, portMAX_DELAY);
+  return f;
 }
 
 static void FsClose(FsFile_t *ff) {
-  ff->f.usecount--;
-  if (ff->f.usecount == 0) {
-    vPortFree(ff);
-    opened_files--;
-  }
+  long unused;
+  FsMsg_t request = {.cmd = FS_CLOSE,
+                     .request.close.ff = ff,
+                     .response.replyp = &unused,
+                     .response.task = xTaskGetCurrentTaskHandle()};
+  (void)xQueueSend(requestQ, &request, portMAX_DELAY);
+  (void)xTaskNotifyWait(0xffffffff, 0, NULL, portMAX_DELAY);
 }
 
 static long FsRead(FsFile_t *ff, void *buf, size_t nbyte) {
@@ -336,10 +394,17 @@ static TaskHandle_t filesys_handle;
 #define FLOPPY_TASK_PRIO 3
 #define FILESYS_TASK_PRIO 2
 
-void FsInit(File_t *ptr) {
-  temptemp = ptr;
+void FsInit() {
   FloppyInit(FLOPPY_TASK_PRIO);
   requestQ = xQueueCreate(32, sizeof(FsMsg_t));
+  replyQ = xQueueCreate(2, sizeof(FloppyIO_t *));
+  floppyio.cmd = CMD_READ;
+  floppyio.buffer = AllocTrack();
+  floppyio.replyQueue = replyQ;
+  directory = NULL;
+  for (int i = 0; i < NUMBER_OF_BUFFERED_TRACKS; i++) {
+    buffered_tracks[i].buffer = pvPortMalloc(SECTOR_SIZE * SECTOR_COUNT);
+  }
   xTaskCreate(vFileSysTask, "filesys", configMINIMAL_STACK_SIZE, NULL,
               FILESYS_TASK_PRIO, &filesys_handle);
 }

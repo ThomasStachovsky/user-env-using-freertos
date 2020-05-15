@@ -5,7 +5,7 @@ Archive member included to satisfy reference by file (symbol)
 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(cia-icr.o)
                               ../startup.o (WriteICR)
 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(file.o)
-                              ../startup.o (FilePrintf)
+                              main.o (FileRead)
 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(floppy.o)
                               filesys.o (FloppyInit)
 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(floppy-mfm.o)
@@ -23,7 +23,7 @@ Archive member included to satisfy reference by file (symbol)
 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(tasks.o)
                               /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(cia-timer.o) (vTaskSuspendAll)
 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(heap.o)
-                              filesys.o (pvPortMalloc)
+                              main.o (pvPortMalloc)
 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(port.o)
                               /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(tasks.o) (pxPortInitialiseStack)
 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(intsrv.o)
@@ -38,6 +38,14 @@ Archive member included to satisfy reference by file (symbol)
                               /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(queue.o) (vListInitialise)
 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(kvprintf.o)
                               /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(file.o) (kvprintf)
+/home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(rand_r.o)
+                              main.o (rand_r)
+/home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(strtol.o)
+                              main.o (strtol)
+/home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(divsi3.o)
+                              filesys.o (__divsi3)
+/home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(modsi3.o)
+                              main.o (__modsi3)
 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(mulsi3.o)
                               /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(queue.o) (__mulsi3)
 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(udivsi3.o)
@@ -48,6 +56,10 @@ Archive member included to satisfy reference by file (symbol)
                               filesys.o (memcpy)
 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(memset.o)
                               filesys.o (memset)
+/home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(strcmp.o)
+                              filesys.o (strcmp)
+/home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(ctype.o)
+                              /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(strtol.o) (isspace)
 
 Discarded input sections
 
@@ -71,6 +83,9 @@ Discarded input sections
  .comment       0x0000000000000000       0x12 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(intsrv.o)
  .comment       0x0000000000000000       0x12 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(list.o)
  .comment       0x0000000000000000       0x12 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(kvprintf.o)
+ .comment       0x0000000000000000       0x12 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(rand_r.o)
+ .comment       0x0000000000000000       0x12 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(strtol.o)
+ .comment       0x0000000000000000       0x12 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(ctype.o)
 
 Memory Configuration
 
@@ -84,7 +99,7 @@ Linker script and memory map
                 [!provide]                        PROVIDE (msm6242b = 0xdc0000)
                 0x0000000000dff000                PROVIDE (custom = 0xdff000)
 
-.text           0x0000000000000000     0x3ec4
+.text           0x0000000000000000     0x4c04
                 [!provide]                        PROVIDE (_text = .)
  *(.text .text.*)
  .text          0x0000000000000000      0x13e ../startup.o
@@ -95,289 +110,329 @@ Linker script and memory map
  .text          0x0000000000000172      0x168 ../trap.o
                 0x0000000000000172                vPortDefaultTrapHandler
                 0x0000000000000172                vPortTrapHandler
- .text          0x00000000000002da       0x8c main.o
-                0x000000000000035e                vApplicationIdleHook
- .text.startup  0x0000000000000366       0x9a main.o
-                0x0000000000000366                main
- .text          0x0000000000000400      0x328 filesys.o
-                0x0000000000000618                FsMount
-                0x000000000000067c                FsUnMount
-                0x0000000000000680                FsListDir
-                0x00000000000006d6                FsOpen
-                0x00000000000006da                FsInit
- .text          0x0000000000000728       0x30 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(bootcons.o)
- .text          0x0000000000000758       0x6c /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(cia-icr.o)
-                0x0000000000000758                WriteICR
-                0x0000000000000792                SampleICR
- .text          0x00000000000007c4       0xde /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(file.o)
-                0x00000000000007c4                FileRead
-                0x00000000000007d8                FileWrite
-                0x000000000000080e                FileSeek
-                0x0000000000000824                FileClose
-                0x0000000000000838                FilePutChar
-                0x000000000000085a                FilePrintf
- .text          0x00000000000008a2      0x43c /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(floppy.o)
-                0x0000000000000b8e                FloppyInit
-                0x0000000000000c2c                FloppyKill
-                0x0000000000000c82                FloppySendIO
- .text          0x0000000000000cde       0xb4 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(floppy-mfm.o)
-                0x0000000000000cde                DecodeTrack
-                0x0000000000000d38                DecodeSector
- .text          0x0000000000000d92       0x9a /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(serial-file.o)
-                0x0000000000000e06                SerialOpen
- .text          0x0000000000000e2c       0x20 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(bootcons-putc.o)
-                0x0000000000000e2c                BootConsPutChar
- .text          0x0000000000000e4c      0x1ce /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(cia-timer.o)
-                0x0000000000000e86                AcquireTimer
-                0x0000000000000f16                ReleaseTimer
-                0x0000000000000f40                WaitTimerGeneric
- .text          0x000000000000101a      0x1fe /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(serial.o)
-                0x00000000000010ee                SerialInit
-                0x000000000000117e                SerialKill
-                0x00000000000011c4                SerialPutChar
-                0x00000000000011f0                SerialGetChar
- .text          0x0000000000001218      0xa8a /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(queue.o)
-                0x0000000000001382                xQueueGenericReset
-                0x0000000000001410                xQueueGenericCreate
-                0x000000000000146e                xQueueGenericSend
-                0x00000000000015ca                xQueueGenericSendFromISR
-                0x0000000000001684                xQueueGiveFromISR
-                0x000000000000171c                xQueueReceive
-                0x0000000000001864                xQueueSemaphoreTake
-                0x0000000000001998                xQueuePeek
-                0x0000000000001ae0                xQueueReceiveFromISR
-                0x0000000000001b78                xQueuePeekFromISR
-                0x0000000000001be6                uxQueueMessagesWaiting
-                0x0000000000001c0c                uxQueueSpacesAvailable
-                0x0000000000001c3e                uxQueueMessagesWaitingFromISR
-                0x0000000000001c52                vQueueDelete
-                0x0000000000001c66                xQueueIsQueueEmptyFromISR
-                0x0000000000001c82                xQueueIsQueueFullFromISR
- .text          0x0000000000001ca2     0x128e /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(tasks.o)
-                0x0000000000001daa                xTaskResumeFromISR
-                0x0000000000001e56                vTaskEndScheduler
-                0x0000000000001e66                vTaskSuspendAll
-                0x0000000000001e76                xTaskGetTickCountFromISR
-                0x0000000000001e9a                uxTaskGetNumberOfTasks
-                0x0000000000001ea2                pcTaskGetName
-                0x0000000000001eba                xTaskIncrementTick
-                0x0000000000001ffa                vTaskSwitchContext
-                0x00000000000020b6                vTaskPlaceOnEventList
-                0x00000000000020ec                vTaskPlaceOnUnorderedEventList
-                0x0000000000002144                xTaskRemoveFromEventList
-                0x00000000000021e0                vTaskRemoveFromUnorderedEventList
-                0x0000000000002270                vTaskInternalSetTimeOutState
-                0x0000000000002288                vTaskMissedYield
-                0x0000000000002292                uxTaskGetStackHighWaterMark
-                0x00000000000022be                xTaskGetCurrentTaskHandle
-                0x00000000000022c6                xTaskGetSchedulerState
-                0x00000000000022e2                vTaskEnterCritical
-                0x0000000000002314                vTaskExitCritical
-                0x0000000000002344                xTaskCreate
-                0x0000000000002542                vTaskStartScheduler
-                0x0000000000002590                vTaskDelete
-                0x0000000000002642                vTaskSuspend
-                0x00000000000026f4                vTaskResume
-                0x00000000000027fa                xTaskResumeAll
-                0x00000000000028fe                vTaskDelayUntil
-                0x0000000000002968                vTaskDelay
-                0x000000000000299a                xTaskCatchUpTicks
-                0x00000000000029c4                xTaskGetTickCount
-                0x00000000000029da                vTaskSetTimeOutState
-                0x0000000000002a06                xTaskCheckForTimeOut
-                0x0000000000002a74                uxTaskResetEventItemValue
-                0x0000000000002a96                ulTaskNotifyTake
-                0x0000000000002b1a                xTaskNotifyWait
-                0x0000000000002bcc                xTaskGenericNotify
-                0x0000000000002cc0                xTaskGenericNotifyFromISR
-                0x0000000000002dee                vTaskNotifyGiveFromISR
-                0x0000000000002ebc                xTaskNotifyStateClear
-                0x0000000000002ef2                ulTaskNotifyValueClear
- .text          0x0000000000002f30      0x21e /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(heap.o)
-                0x0000000000002f30                _pvPortMallocBelow
-                0x0000000000002fd6                pvPortMalloc
-                0x0000000000002fe6                pvPortMallocChip
-                0x0000000000002ff8                vPortFree
-                0x00000000000030c6                xPortGetFreeHeapSize
-                0x00000000000030e0                xPortGetMinimumEverFreeHeapSize
-                0x00000000000030fa                vPortDefineMemoryRegions
- .text          0x000000000000314e      0x1c2 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(port.o)
-                0x000000000000314e                pxPortInitialiseStack
-                0x0000000000003184                xPortStartScheduler
-                0x00000000000031a4                vPortEndScheduler
-                0x00000000000031a6                vPortSetupExceptionVector
- .text          0x0000000000003310       0xaa /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(intsrv.o)
-                0x0000000000003310                AddIntServer
-                0x000000000000335a                RemIntServer
-                0x000000000000338e                RunIntChain
- .text          0x00000000000033ba       0xe8 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(intr.o)
-                0x00000000000033ba                AmigaLvl1Handler
-                0x00000000000033de                AmigaLvl2Handler
-                0x00000000000033ec                AmigaLvl3Handler
-                0x0000000000003410                AmigaLvl4Handler
-                0x0000000000003478                AmigaLvl5Handler
-                0x0000000000003492                AmigaLvl6Handler
-                0x00000000000034a0                DummyInterruptHandler
- .text          0x00000000000034a2       0x5a /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(trap.o)
-                0x00000000000034a2                BadTrap
-                0x00000000000034a8                BusErrTrap
-                0x00000000000034ae                AddrErrTrap
-                0x00000000000034b4                IllegalTrap
-                0x00000000000034ba                ZeroDivTrap
-                0x00000000000034c0                ChkInstTrap
-                0x00000000000034c6                TrapvInstTrap
-                0x00000000000034cc                PrivInstTrap
-                0x00000000000034d2                TraceTrap
-                0x00000000000034d8                FmtErrTrap
-                0x00000000000034de                TrapInstTrap
-                0x00000000000034e6                EnterTrap
- .text          0x00000000000034fc       0x4e /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(portasm.o)
-                0x00000000000034fc                ulPortSetIPL
-                0x0000000000003518                vPortYieldHandler
-                0x000000000000353c                vPortStartFirstTask
- .text          0x000000000000354a       0xe2 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(list.o)
-                0x000000000000354a                vListInitialise
-                0x0000000000003568                vListInitialiseItem
-                0x0000000000003572                vListInsertEnd
-                0x00000000000035a8                vListInsert
-                0x00000000000035f4                uxListRemove
- .text          0x000000000000362c      0x376 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(kvprintf.o)
-                0x000000000000377e                kvprintf
- .text          0x00000000000039a2       0x22 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(mulsi3.o)
-                0x00000000000039a2                __mulsi3
- .text          0x00000000000039c4       0x5c /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(udivsi3.o)
-                0x00000000000039c4                __ldivu
-                0x00000000000039c4                __udivsi3
- .text          0x0000000000003a20       0x2e /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(umodsi3.o)
-                0x0000000000003a20                __umodsi3
- .text          0x0000000000003a4e       0xfc /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(memcpy.o)
-                0x0000000000003a4e                memmove
-                0x0000000000003a4e                memcpy
- .text          0x0000000000003b4a       0x94 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(memset.o)
-                0x0000000000003b4a                memset
+ .text          0x00000000000002da      0x4c6 main.o
+                0x00000000000003c0                FileHexDumpOffset
+                0x0000000000000798                vApplicationIdleHook
+ .text.startup  0x00000000000007a0       0xba main.o
+                0x00000000000007a0                main
+ .text          0x000000000000085a      0x7a2 filesys.o
+                0x0000000000000d84                FsMount
+                0x0000000000000de8                FsUnMount
+                0x0000000000000e48                FsListDir
+                0x0000000000000eae                FsOpen
+                0x0000000000000f4a                FsInit
+ .text          0x0000000000000ffc       0x30 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(bootcons.o)
+ .text          0x000000000000102c       0x6c /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(cia-icr.o)
+                0x000000000000102c                WriteICR
+                0x0000000000001066                SampleICR
+ .text          0x0000000000001098       0xde /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(file.o)
+                0x0000000000001098                FileRead
+                0x00000000000010ac                FileWrite
+                0x00000000000010e2                FileSeek
+                0x00000000000010f8                FileClose
+                0x000000000000110c                FilePutChar
+                0x000000000000112e                FilePrintf
+ .text          0x0000000000001176      0x43c /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(floppy.o)
+                0x0000000000001462                FloppyInit
+                0x0000000000001500                FloppyKill
+                0x0000000000001556                FloppySendIO
+ .text          0x00000000000015b2       0xb4 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(floppy-mfm.o)
+                0x00000000000015b2                DecodeTrack
+                0x000000000000160c                DecodeSector
+ .text          0x0000000000001666       0x9a /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(serial-file.o)
+                0x00000000000016da                SerialOpen
+ .text          0x0000000000001700       0x20 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(bootcons-putc.o)
+                0x0000000000001700                BootConsPutChar
+ .text          0x0000000000001720      0x1ce /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(cia-timer.o)
+                0x000000000000175a                AcquireTimer
+                0x00000000000017ea                ReleaseTimer
+                0x0000000000001814                WaitTimerGeneric
+ .text          0x00000000000018ee      0x1fe /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(serial.o)
+                0x00000000000019c2                SerialInit
+                0x0000000000001a52                SerialKill
+                0x0000000000001a98                SerialPutChar
+                0x0000000000001ac4                SerialGetChar
+ .text          0x0000000000001aec      0xa8a /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(queue.o)
+                0x0000000000001c56                xQueueGenericReset
+                0x0000000000001ce4                xQueueGenericCreate
+                0x0000000000001d42                xQueueGenericSend
+                0x0000000000001e9e                xQueueGenericSendFromISR
+                0x0000000000001f58                xQueueGiveFromISR
+                0x0000000000001ff0                xQueueReceive
+                0x0000000000002138                xQueueSemaphoreTake
+                0x000000000000226c                xQueuePeek
+                0x00000000000023b4                xQueueReceiveFromISR
+                0x000000000000244c                xQueuePeekFromISR
+                0x00000000000024ba                uxQueueMessagesWaiting
+                0x00000000000024e0                uxQueueSpacesAvailable
+                0x0000000000002512                uxQueueMessagesWaitingFromISR
+                0x0000000000002526                vQueueDelete
+                0x000000000000253a                xQueueIsQueueEmptyFromISR
+                0x0000000000002556                xQueueIsQueueFullFromISR
+ .text          0x0000000000002576     0x128e /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(tasks.o)
+                0x000000000000267e                xTaskResumeFromISR
+                0x000000000000272a                vTaskEndScheduler
+                0x000000000000273a                vTaskSuspendAll
+                0x000000000000274a                xTaskGetTickCountFromISR
+                0x000000000000276e                uxTaskGetNumberOfTasks
+                0x0000000000002776                pcTaskGetName
+                0x000000000000278e                xTaskIncrementTick
+                0x00000000000028ce                vTaskSwitchContext
+                0x000000000000298a                vTaskPlaceOnEventList
+                0x00000000000029c0                vTaskPlaceOnUnorderedEventList
+                0x0000000000002a18                xTaskRemoveFromEventList
+                0x0000000000002ab4                vTaskRemoveFromUnorderedEventList
+                0x0000000000002b44                vTaskInternalSetTimeOutState
+                0x0000000000002b5c                vTaskMissedYield
+                0x0000000000002b66                uxTaskGetStackHighWaterMark
+                0x0000000000002b92                xTaskGetCurrentTaskHandle
+                0x0000000000002b9a                xTaskGetSchedulerState
+                0x0000000000002bb6                vTaskEnterCritical
+                0x0000000000002be8                vTaskExitCritical
+                0x0000000000002c18                xTaskCreate
+                0x0000000000002e16                vTaskStartScheduler
+                0x0000000000002e64                vTaskDelete
+                0x0000000000002f16                vTaskSuspend
+                0x0000000000002fc8                vTaskResume
+                0x00000000000030ce                xTaskResumeAll
+                0x00000000000031d2                vTaskDelayUntil
+                0x000000000000323c                vTaskDelay
+                0x000000000000326e                xTaskCatchUpTicks
+                0x0000000000003298                xTaskGetTickCount
+                0x00000000000032ae                vTaskSetTimeOutState
+                0x00000000000032da                xTaskCheckForTimeOut
+                0x0000000000003348                uxTaskResetEventItemValue
+                0x000000000000336a                ulTaskNotifyTake
+                0x00000000000033ee                xTaskNotifyWait
+                0x00000000000034a0                xTaskGenericNotify
+                0x0000000000003594                xTaskGenericNotifyFromISR
+                0x00000000000036c2                vTaskNotifyGiveFromISR
+                0x0000000000003790                xTaskNotifyStateClear
+                0x00000000000037c6                ulTaskNotifyValueClear
+ .text          0x0000000000003804      0x222 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(heap.o)
+                0x0000000000003804                _pvPortMallocBelow
+                0x00000000000038ae                pvPortMalloc
+                0x00000000000038be                pvPortMallocChip
+                0x00000000000038d0                vPortFree
+                0x000000000000399e                xPortGetFreeHeapSize
+                0x00000000000039b8                xPortGetMinimumEverFreeHeapSize
+                0x00000000000039d2                vPortDefineMemoryRegions
+ .text          0x0000000000003a26      0x1c2 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(port.o)
+                0x0000000000003a26                pxPortInitialiseStack
+                0x0000000000003a5c                xPortStartScheduler
+                0x0000000000003a7c                vPortEndScheduler
+                0x0000000000003a7e                vPortSetupExceptionVector
+ .text          0x0000000000003be8       0xaa /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(intsrv.o)
+                0x0000000000003be8                AddIntServer
+                0x0000000000003c32                RemIntServer
+                0x0000000000003c66                RunIntChain
+ .text          0x0000000000003c92       0xe8 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(intr.o)
+                0x0000000000003c92                AmigaLvl1Handler
+                0x0000000000003cb6                AmigaLvl2Handler
+                0x0000000000003cc4                AmigaLvl3Handler
+                0x0000000000003ce8                AmigaLvl4Handler
+                0x0000000000003d50                AmigaLvl5Handler
+                0x0000000000003d6a                AmigaLvl6Handler
+                0x0000000000003d78                DummyInterruptHandler
+ .text          0x0000000000003d7a       0x5a /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(trap.o)
+                0x0000000000003d7a                BadTrap
+                0x0000000000003d80                BusErrTrap
+                0x0000000000003d86                AddrErrTrap
+                0x0000000000003d8c                IllegalTrap
+                0x0000000000003d92                ZeroDivTrap
+                0x0000000000003d98                ChkInstTrap
+                0x0000000000003d9e                TrapvInstTrap
+                0x0000000000003da4                PrivInstTrap
+                0x0000000000003daa                TraceTrap
+                0x0000000000003db0                FmtErrTrap
+                0x0000000000003db6                TrapInstTrap
+                0x0000000000003dbe                EnterTrap
+ .text          0x0000000000003dd4       0x4e /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(portasm.o)
+                0x0000000000003dd4                ulPortSetIPL
+                0x0000000000003df0                vPortYieldHandler
+                0x0000000000003e14                vPortStartFirstTask
+ .text          0x0000000000003e22       0xe2 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(list.o)
+                0x0000000000003e22                vListInitialise
+                0x0000000000003e40                vListInitialiseItem
+                0x0000000000003e4a                vListInsertEnd
+                0x0000000000003e80                vListInsert
+                0x0000000000003ecc                uxListRemove
+ .text          0x0000000000003f04      0x376 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(kvprintf.o)
+                0x0000000000004056                kvprintf
+ .text          0x000000000000427a       0x6c /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(rand_r.o)
+                0x000000000000427a                rand_r
+ .text          0x00000000000042e6      0x1c0 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(strtol.o)
+                0x00000000000042e6                strtol
+ .text          0x00000000000044a6       0x2e /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(divsi3.o)
+                0x00000000000044a6                __divsi3
+                0x00000000000044a6                __ldivs
+ .text          0x00000000000044d4       0x2e /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(modsi3.o)
+                0x00000000000044d4                __lmods
+                0x00000000000044d4                __modsi3
+ .text          0x0000000000004502       0x22 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(mulsi3.o)
+                0x0000000000004502                __mulsi3
+ .text          0x0000000000004524       0x5c /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(udivsi3.o)
+                0x0000000000004524                __ldivu
+                0x0000000000004524                __udivsi3
+ .text          0x0000000000004580       0x2e /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(umodsi3.o)
+                0x0000000000004580                __umodsi3
+ .text          0x00000000000045ae       0xfc /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(memcpy.o)
+                0x00000000000045ae                memmove
+                0x00000000000045ae                memcpy
+ .text          0x00000000000046aa       0x94 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(memset.o)
+                0x00000000000046aa                memset
+ .text          0x000000000000473e       0x3a /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(strcmp.o)
+                0x000000000000473e                strcmp
+ .text          0x0000000000004778      0x172 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(ctype.o)
+                0x0000000000004778                isspace
+                0x0000000000004798                isascii
+                0x00000000000047a8                isupper
+                0x00000000000047bc                islower
+                0x00000000000047d0                isalpha
+                0x00000000000047ea                isalnum
+                0x0000000000004814                isdigit
+                0x0000000000004828                isxdigit
+                0x0000000000004854                iscntrl
+                0x0000000000004870                isgraph
+                0x0000000000004884                isprint
+                0x0000000000004898                ispunct
+                0x00000000000048be                toupper
+                0x00000000000048d4                tolower
  *(.rodata .rodata.*)
  .rodata.str1.1
-                0x0000000000003bde       0x67 ../startup.o
- *fill*         0x0000000000003c45        0x1 
+                0x00000000000048ea       0x67 ../startup.o
+ *fill*         0x0000000000004951        0x1 
  .rodata.str1.1
-                0x0000000000003c46       0x24 ../fault.o
+                0x0000000000004952       0x24 ../fault.o
  .rodata.str1.1
-                0x0000000000003c6a      0x182 ../trap.o
+                0x0000000000004976      0x182 ../trap.o
                                         0x18e (size before relaxing)
- .rodata        0x0000000000003dec       0x2c ../trap.o
+ .rodata        0x0000000000004af8       0x2c ../trap.o
  .rodata.str1.1
-                0x0000000000003e18       0x29 main.o
- *fill*         0x0000000000003e41        0x1 
+                0x0000000000004b24       0x6a main.o
+ .rodata        0x0000000000004b8e       0x10 main.o
  .rodata.str1.1
-                0x0000000000003e42       0x23 filesys.o
- *fill*         0x0000000000003e65        0x1 
+                0x0000000000004b9e        0x8 filesys.o
  .rodata.str1.1
-                0x0000000000003e66       0x2a /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(floppy.o)
+                0x0000000000004ba6       0x2a /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(floppy.o)
  .rodata.str1.1
-                0x0000000000003e90       0x1c /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(serial.o)
+                0x0000000000004bd0       0x1c /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(serial.o)
  .rodata.str1.1
-                0x0000000000003eac        0x5 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(tasks.o)
- *fill*         0x0000000000003eb1        0x1 
- .rodata        0x0000000000003eb2       0x10 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(kvprintf.o)
-                0x0000000000003ec4                . = ALIGN (0x4)
- *fill*         0x0000000000003ec2        0x2 
+                0x0000000000004bec        0x5 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(tasks.o)
+ *fill*         0x0000000000004bf1        0x1 
+ .rodata        0x0000000000004bf2       0x10 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(kvprintf.o)
+                0x0000000000004c04                . = ALIGN (0x4)
+ *fill*         0x0000000000004c02        0x2 
                 [!provide]                        PROVIDE (_etext = .)
 
-.data           0x0000000000003ec4       0xe8
+.data           0x0000000000004c04       0xfc
                 [!provide]                        PROVIDE (_data = .)
  *(.data .data.*)
- .data          0x0000000000003ec4        0x0 ../startup.o
- .data          0x0000000000003ec4        0x0 ../fault.o
- .data          0x0000000000003ec4        0x0 ../trap.o
- .data          0x0000000000003ec4       0x18 main.o
- .data          0x0000000000003edc        0x0 filesys.o
- .data          0x0000000000003edc       0x20 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(bootcons.o)
-                0x0000000000003edc                KernCons
- .data          0x0000000000003efc        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(cia-icr.o)
- .data          0x0000000000003efc        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(file.o)
- .data          0x0000000000003efc        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(floppy.o)
- .data          0x0000000000003efc        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(floppy-mfm.o)
- .data          0x0000000000003efc       0x1c /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(serial-file.o)
- .data          0x0000000000003f18        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(bootcons-putc.o)
- .data          0x0000000000003f18       0x88 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(cia-timer.o)
-                0x0000000000003f18                Timers
- .data          0x0000000000003fa0        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(serial.o)
- .data          0x0000000000003fa0        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(queue.o)
- .data          0x0000000000003fa0        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(tasks.o)
- .data          0x0000000000003fa0        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(heap.o)
- .data          0x0000000000003fa0        0xc /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(port.o)
-                0x0000000000003fa0                ExterChain
-                0x0000000000003fa4                VertBlankChain
-                0x0000000000003fa8                PortsChain
- .data          0x0000000000003fac        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(intsrv.o)
- .data          0x0000000000003fac        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(intr.o)
- .data          0x0000000000003fac        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(trap.o)
- .data          0x0000000000003fac        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(portasm.o)
- .data          0x0000000000003fac        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(list.o)
- .data          0x0000000000003fac        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(kvprintf.o)
- .data          0x0000000000003fac        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(mulsi3.o)
- .data          0x0000000000003fac        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(udivsi3.o)
- .data          0x0000000000003fac        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(umodsi3.o)
- .data          0x0000000000003fac        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(memcpy.o)
- .data          0x0000000000003fac        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(memset.o)
-                0x0000000000003fac                . = ALIGN (0x4)
+ .data          0x0000000000004c04        0x0 ../startup.o
+ .data          0x0000000000004c04        0x0 ../fault.o
+ .data          0x0000000000004c04        0x0 ../trap.o
+ .data          0x0000000000004c04       0x1c main.o
+ .data          0x0000000000004c20       0x10 filesys.o
+ .data          0x0000000000004c30       0x20 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(bootcons.o)
+                0x0000000000004c30                KernCons
+ .data          0x0000000000004c50        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(cia-icr.o)
+ .data          0x0000000000004c50        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(file.o)
+ .data          0x0000000000004c50        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(floppy.o)
+ .data          0x0000000000004c50        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(floppy-mfm.o)
+ .data          0x0000000000004c50       0x1c /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(serial-file.o)
+ .data          0x0000000000004c6c        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(bootcons-putc.o)
+ .data          0x0000000000004c6c       0x88 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(cia-timer.o)
+                0x0000000000004c6c                Timers
+ .data          0x0000000000004cf4        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(serial.o)
+ .data          0x0000000000004cf4        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(queue.o)
+ .data          0x0000000000004cf4        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(tasks.o)
+ .data          0x0000000000004cf4        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(heap.o)
+ .data          0x0000000000004cf4        0xc /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(port.o)
+                0x0000000000004cf4                ExterChain
+                0x0000000000004cf8                VertBlankChain
+                0x0000000000004cfc                PortsChain
+ .data          0x0000000000004d00        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(intsrv.o)
+ .data          0x0000000000004d00        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(intr.o)
+ .data          0x0000000000004d00        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(trap.o)
+ .data          0x0000000000004d00        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(portasm.o)
+ .data          0x0000000000004d00        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(list.o)
+ .data          0x0000000000004d00        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(kvprintf.o)
+ .data          0x0000000000004d00        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(rand_r.o)
+ .data          0x0000000000004d00        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(strtol.o)
+ .data          0x0000000000004d00        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(divsi3.o)
+ .data          0x0000000000004d00        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(modsi3.o)
+ .data          0x0000000000004d00        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(mulsi3.o)
+ .data          0x0000000000004d00        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(udivsi3.o)
+ .data          0x0000000000004d00        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(umodsi3.o)
+ .data          0x0000000000004d00        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(memcpy.o)
+ .data          0x0000000000004d00        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(memset.o)
+ .data          0x0000000000004d00        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(strcmp.o)
+ .data          0x0000000000004d00        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(ctype.o)
+                0x0000000000004d00                . = ALIGN (0x4)
                 [!provide]                        PROVIDE (_edata = .)
 
-.bss            0x0000000000003fac      0x1e8
+.bss            0x0000000000004d00      0x284
                 [!provide]                        PROVIDE (_bss = .)
  *(.bss .bss.*)
- .bss           0x0000000000003fac        0x0 ../startup.o
- .bss           0x0000000000003fac        0x0 ../fault.o
- .bss           0x0000000000003fac        0x0 ../trap.o
- .bss           0x0000000000003fac        0x8 main.o
- .bss           0x0000000000003fb4        0xc filesys.o
- .bss           0x0000000000003fc0        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(bootcons.o)
- .bss           0x0000000000003fc0        0x4 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(cia-icr.o)
- .bss           0x0000000000003fc4        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(file.o)
- .bss           0x0000000000003fc4       0x12 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(floppy.o)
- *fill*         0x0000000000003fd6        0x2 
- .bss           0x0000000000003fd8        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(floppy-mfm.o)
- .bss           0x0000000000003fd8        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(serial-file.o)
- .bss           0x0000000000003fd8        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(bootcons-putc.o)
- .bss           0x0000000000003fd8        0x1 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(cia-timer.o)
- *fill*         0x0000000000003fd9        0x3 
- .bss           0x0000000000003fdc        0x8 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(serial.o)
- .bss           0x0000000000003fe4        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(queue.o)
- .bss           0x0000000000003fe4       0xf0 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(tasks.o)
-                0x0000000000003fe4                pxCurrentTCB
- .bss           0x00000000000040d4        0x4 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(heap.o)
-                0x00000000000040d4                MemRegions
- .bss           0x00000000000040d8       0xbc /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(port.o)
-                0x00000000000040d8                xNeedRescheduleTask
-                0x00000000000040dc                CpuModel
-                0x00000000000040de                IntVec
-                0x000000000000414e                ExcVecBase
- .bss           0x0000000000004194        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(intsrv.o)
- .bss           0x0000000000004194        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(intr.o)
- .bss           0x0000000000004194        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(trap.o)
- .bss           0x0000000000004194        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(portasm.o)
- .bss           0x0000000000004194        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(list.o)
- .bss           0x0000000000004194        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(kvprintf.o)
- .bss           0x0000000000004194        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(mulsi3.o)
- .bss           0x0000000000004194        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(udivsi3.o)
- .bss           0x0000000000004194        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(umodsi3.o)
- .bss           0x0000000000004194        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(memcpy.o)
- .bss           0x0000000000004194        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(memset.o)
+ .bss           0x0000000000004d00        0x0 ../startup.o
+ .bss           0x0000000000004d00        0x0 ../fault.o
+ .bss           0x0000000000004d00        0x0 ../trap.o
+ .bss           0x0000000000004d00       0x10 main.o
+ .bss           0x0000000000004d10       0x9e filesys.o
+ *fill*         0x0000000000004dae        0x2 
+ .bss           0x0000000000004db0        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(bootcons.o)
+ .bss           0x0000000000004db0        0x4 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(cia-icr.o)
+ .bss           0x0000000000004db4        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(file.o)
+ .bss           0x0000000000004db4       0x12 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(floppy.o)
+ *fill*         0x0000000000004dc6        0x2 
+ .bss           0x0000000000004dc8        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(floppy-mfm.o)
+ .bss           0x0000000000004dc8        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(serial-file.o)
+ .bss           0x0000000000004dc8        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(bootcons-putc.o)
+ .bss           0x0000000000004dc8        0x1 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(cia-timer.o)
+ *fill*         0x0000000000004dc9        0x3 
+ .bss           0x0000000000004dcc        0x8 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(serial.o)
+ .bss           0x0000000000004dd4        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(queue.o)
+ .bss           0x0000000000004dd4       0xf0 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(tasks.o)
+                0x0000000000004dd4                pxCurrentTCB
+ .bss           0x0000000000004ec4        0x4 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(heap.o)
+                0x0000000000004ec4                MemRegions
+ .bss           0x0000000000004ec8       0xbc /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(port.o)
+                0x0000000000004ec8                xNeedRescheduleTask
+                0x0000000000004ecc                CpuModel
+                0x0000000000004ece                IntVec
+                0x0000000000004f3e                ExcVecBase
+ .bss           0x0000000000004f84        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(intsrv.o)
+ .bss           0x0000000000004f84        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(intr.o)
+ .bss           0x0000000000004f84        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(trap.o)
+ .bss           0x0000000000004f84        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(portasm.o)
+ .bss           0x0000000000004f84        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(list.o)
+ .bss           0x0000000000004f84        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(kvprintf.o)
+ .bss           0x0000000000004f84        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(rand_r.o)
+ .bss           0x0000000000004f84        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(strtol.o)
+ .bss           0x0000000000004f84        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(divsi3.o)
+ .bss           0x0000000000004f84        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(modsi3.o)
+ .bss           0x0000000000004f84        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(mulsi3.o)
+ .bss           0x0000000000004f84        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(udivsi3.o)
+ .bss           0x0000000000004f84        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(umodsi3.o)
+ .bss           0x0000000000004f84        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(memcpy.o)
+ .bss           0x0000000000004f84        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(memset.o)
+ .bss           0x0000000000004f84        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(strcmp.o)
+ .bss           0x0000000000004f84        0x0 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(ctype.o)
  *(COMMON)
-                0x0000000000004194                . = ALIGN (0x4)
+                0x0000000000004f84                . = ALIGN (0x4)
                 [!provide]                        PROVIDE (_ebss = .)
 
 .data.MEMF_CHIP
-                0x0000000000004194        0x0
+                0x0000000000004f84        0x0
                 [!provide]                        PROVIDE (_datachip = .)
  *(.datachip .datachip.*)
-                0x0000000000004194                . = ALIGN (0x4)
+                0x0000000000004f84                . = ALIGN (0x4)
                 [!provide]                        PROVIDE (_edatachip = .)
 
-.bss.MEMF_CHIP  0x0000000000004194        0x0
+.bss.MEMF_CHIP  0x0000000000004f84        0x0
                 [!provide]                        PROVIDE (_bsschip = .)
  *(.bsschip .bsschip.*)
-                0x0000000000004194                . = ALIGN (0x4)
+                0x0000000000004f84                . = ALIGN (0x4)
                 [!provide]                        PROVIDE (_ebsschip = .)
 
 /DISCARD/
@@ -392,90 +447,105 @@ LOAD /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib
 LOAD /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib
 OUTPUT(floppy.elf elf32-m68k)
 
-.debug_info     0x0000000000000000     0xd9cb
+.debug_info     0x0000000000000000     0xe2b7
  .debug_info    0x0000000000000000      0xd2d ../startup.o
  .debug_info    0x0000000000000d2d      0x240 ../fault.o
  .debug_info    0x0000000000000f6d      0x572 ../trap.o
- .debug_info    0x00000000000014df      0xe0a main.o
- .debug_info    0x00000000000022e9     0x12b1 filesys.o
- .debug_info    0x000000000000359a      0x282 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(bootcons.o)
- .debug_info    0x000000000000381c      0x380 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(cia-icr.o)
- .debug_info    0x0000000000003b9c      0x448 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(file.o)
- .debug_info    0x0000000000003fe4     0x1371 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(floppy.o)
- .debug_info    0x0000000000005355      0xbe5 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(floppy-mfm.o)
- .debug_info    0x0000000000005f3a      0x359 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(serial-file.o)
- .debug_info    0x0000000000006293       0x26 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(bootcons-putc.o)
- .debug_info    0x00000000000062b9      0xf88 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(cia-timer.o)
- .debug_info    0x0000000000007241      0xe1f /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(serial.o)
- .debug_info    0x0000000000008060     0x1357 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(queue.o)
- .debug_info    0x00000000000093b7     0x1ce1 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(tasks.o)
- .debug_info    0x000000000000b098      0x6c6 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(heap.o)
- .debug_info    0x000000000000b75e      0xe8a /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(port.o)
- .debug_info    0x000000000000c5e8      0xbd9 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(intsrv.o)
- .debug_info    0x000000000000d1c1       0x26 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(intr.o)
- .debug_info    0x000000000000d1e7       0x26 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(trap.o)
- .debug_info    0x000000000000d20d       0x26 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(portasm.o)
- .debug_info    0x000000000000d233      0x2ed /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(list.o)
- .debug_info    0x000000000000d520      0x3ed /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(kvprintf.o)
- .debug_info    0x000000000000d90d       0x26 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(mulsi3.o)
- .debug_info    0x000000000000d933       0x26 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(udivsi3.o)
- .debug_info    0x000000000000d959       0x26 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(umodsi3.o)
- .debug_info    0x000000000000d97f       0x26 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(memcpy.o)
- .debug_info    0x000000000000d9a5       0x26 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(memset.o)
+ .debug_info    0x00000000000014df     0x131c main.o
+ .debug_info    0x00000000000027fb     0x108d filesys.o
+ .debug_info    0x0000000000003888      0x282 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(bootcons.o)
+ .debug_info    0x0000000000003b0a      0x380 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(cia-icr.o)
+ .debug_info    0x0000000000003e8a      0x448 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(file.o)
+ .debug_info    0x00000000000042d2     0x1371 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(floppy.o)
+ .debug_info    0x0000000000005643      0xbe5 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(floppy-mfm.o)
+ .debug_info    0x0000000000006228      0x359 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(serial-file.o)
+ .debug_info    0x0000000000006581       0x26 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(bootcons-putc.o)
+ .debug_info    0x00000000000065a7      0xf88 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(cia-timer.o)
+ .debug_info    0x000000000000752f      0xe1f /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(serial.o)
+ .debug_info    0x000000000000834e     0x1357 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(queue.o)
+ .debug_info    0x00000000000096a5     0x1ce1 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(tasks.o)
+ .debug_info    0x000000000000b386      0x6c6 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(heap.o)
+ .debug_info    0x000000000000ba4c      0xe8a /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(port.o)
+ .debug_info    0x000000000000c8d6      0xbd9 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(intsrv.o)
+ .debug_info    0x000000000000d4af       0x26 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(intr.o)
+ .debug_info    0x000000000000d4d5       0x26 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(trap.o)
+ .debug_info    0x000000000000d4fb       0x26 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(portasm.o)
+ .debug_info    0x000000000000d521      0x2ed /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(list.o)
+ .debug_info    0x000000000000d80e      0x3ed /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(kvprintf.o)
+ .debug_info    0x000000000000dbfb       0xeb /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(rand_r.o)
+ .debug_info    0x000000000000dce6      0x1b2 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(strtol.o)
+ .debug_info    0x000000000000de98       0x26 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(divsi3.o)
+ .debug_info    0x000000000000debe       0x26 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(modsi3.o)
+ .debug_info    0x000000000000dee4       0x26 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(mulsi3.o)
+ .debug_info    0x000000000000df0a       0x26 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(udivsi3.o)
+ .debug_info    0x000000000000df30       0x26 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(umodsi3.o)
+ .debug_info    0x000000000000df56       0x26 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(memcpy.o)
+ .debug_info    0x000000000000df7c       0x26 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(memset.o)
+ .debug_info    0x000000000000dfa2       0x26 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(strcmp.o)
+ .debug_info    0x000000000000dfc8      0x2ef /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(ctype.o)
 
-.debug_abbrev   0x0000000000000000     0x2bed
+.debug_abbrev   0x0000000000000000     0x2f70
  .debug_abbrev  0x0000000000000000      0x245 ../startup.o
  .debug_abbrev  0x0000000000000245       0xf8 ../fault.o
  .debug_abbrev  0x000000000000033d      0x182 ../trap.o
- .debug_abbrev  0x00000000000004bf      0x260 main.o
- .debug_abbrev  0x000000000000071f      0x34f filesys.o
- .debug_abbrev  0x0000000000000a6e      0x15e /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(bootcons.o)
- .debug_abbrev  0x0000000000000bcc      0x13d /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(cia-icr.o)
- .debug_abbrev  0x0000000000000d09      0x1ba /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(file.o)
- .debug_abbrev  0x0000000000000ec3      0x313 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(floppy.o)
- .debug_abbrev  0x00000000000011d6      0x1c9 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(floppy-mfm.o)
- .debug_abbrev  0x000000000000139f      0x1b6 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(serial-file.o)
- .debug_abbrev  0x0000000000001555       0x14 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(bootcons-putc.o)
- .debug_abbrev  0x0000000000001569      0x2dd /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(cia-timer.o)
- .debug_abbrev  0x0000000000001846      0x29c /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(serial.o)
- .debug_abbrev  0x0000000000001ae2      0x2b5 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(queue.o)
- .debug_abbrev  0x0000000000001d97      0x405 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(tasks.o)
- .debug_abbrev  0x000000000000219c      0x254 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(heap.o)
- .debug_abbrev  0x00000000000023f0      0x251 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(port.o)
- .debug_abbrev  0x0000000000002641      0x239 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(intsrv.o)
- .debug_abbrev  0x000000000000287a       0x14 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(intr.o)
- .debug_abbrev  0x000000000000288e       0x14 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(trap.o)
- .debug_abbrev  0x00000000000028a2       0x14 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(portasm.o)
- .debug_abbrev  0x00000000000028b6      0x105 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(list.o)
- .debug_abbrev  0x00000000000029bb      0x1ce /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(kvprintf.o)
- .debug_abbrev  0x0000000000002b89       0x14 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(mulsi3.o)
- .debug_abbrev  0x0000000000002b9d       0x14 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(udivsi3.o)
- .debug_abbrev  0x0000000000002bb1       0x14 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(umodsi3.o)
- .debug_abbrev  0x0000000000002bc5       0x14 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(memcpy.o)
- .debug_abbrev  0x0000000000002bd9       0x14 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(memset.o)
+ .debug_abbrev  0x00000000000004bf      0x2c0 main.o
+ .debug_abbrev  0x000000000000077f      0x414 filesys.o
+ .debug_abbrev  0x0000000000000b93      0x15e /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(bootcons.o)
+ .debug_abbrev  0x0000000000000cf1      0x13d /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(cia-icr.o)
+ .debug_abbrev  0x0000000000000e2e      0x1ba /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(file.o)
+ .debug_abbrev  0x0000000000000fe8      0x313 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(floppy.o)
+ .debug_abbrev  0x00000000000012fb      0x1c9 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(floppy-mfm.o)
+ .debug_abbrev  0x00000000000014c4      0x1b6 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(serial-file.o)
+ .debug_abbrev  0x000000000000167a       0x14 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(bootcons-putc.o)
+ .debug_abbrev  0x000000000000168e      0x2dd /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(cia-timer.o)
+ .debug_abbrev  0x000000000000196b      0x29c /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(serial.o)
+ .debug_abbrev  0x0000000000001c07      0x2b5 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(queue.o)
+ .debug_abbrev  0x0000000000001ebc      0x405 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(tasks.o)
+ .debug_abbrev  0x00000000000022c1      0x254 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(heap.o)
+ .debug_abbrev  0x0000000000002515      0x251 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(port.o)
+ .debug_abbrev  0x0000000000002766      0x239 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(intsrv.o)
+ .debug_abbrev  0x000000000000299f       0x14 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(intr.o)
+ .debug_abbrev  0x00000000000029b3       0x14 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(trap.o)
+ .debug_abbrev  0x00000000000029c7       0x14 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(portasm.o)
+ .debug_abbrev  0x00000000000029db      0x105 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(list.o)
+ .debug_abbrev  0x0000000000002ae0      0x1ce /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(kvprintf.o)
+ .debug_abbrev  0x0000000000002cae       0x82 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(rand_r.o)
+ .debug_abbrev  0x0000000000002d30       0xd4 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(strtol.o)
+ .debug_abbrev  0x0000000000002e04       0x14 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(divsi3.o)
+ .debug_abbrev  0x0000000000002e18       0x14 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(modsi3.o)
+ .debug_abbrev  0x0000000000002e2c       0x14 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(mulsi3.o)
+ .debug_abbrev  0x0000000000002e40       0x14 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(udivsi3.o)
+ .debug_abbrev  0x0000000000002e54       0x14 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(umodsi3.o)
+ .debug_abbrev  0x0000000000002e68       0x14 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(memcpy.o)
+ .debug_abbrev  0x0000000000002e7c       0x14 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(memset.o)
+ .debug_abbrev  0x0000000000002e90       0x14 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(strcmp.o)
+ .debug_abbrev  0x0000000000002ea4       0xcc /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(ctype.o)
 
-.debug_loc      0x0000000000000000     0x2ee4
+.debug_loc      0x0000000000000000     0x3d3e
  .debug_loc     0x0000000000000000       0x5d ../startup.o
  .debug_loc     0x000000000000005d       0xe8 ../trap.o
- .debug_loc     0x0000000000000145       0xa0 main.o
- .debug_loc     0x00000000000001e5      0x222 filesys.o
- .debug_loc     0x0000000000000407       0x3f /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(bootcons.o)
- .debug_loc     0x0000000000000446       0x67 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(cia-icr.o)
- .debug_loc     0x00000000000004ad       0xa2 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(file.o)
- .debug_loc     0x000000000000054f      0x13b /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(floppy.o)
- .debug_loc     0x000000000000068a      0x201 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(floppy-mfm.o)
- .debug_loc     0x000000000000088b       0x6f /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(serial-file.o)
- .debug_loc     0x00000000000008fa      0x18f /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(cia-timer.o)
- .debug_loc     0x0000000000000a89       0x8f /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(serial.o)
- .debug_loc     0x0000000000000b18      0xa85 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(queue.o)
- .debug_loc     0x000000000000159d      0xd55 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(tasks.o)
- .debug_loc     0x00000000000022f2      0x40b /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(heap.o)
- .debug_loc     0x00000000000026fd       0xf0 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(port.o)
- .debug_loc     0x00000000000027ed       0x99 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(intsrv.o)
- .debug_loc     0x0000000000002886       0x8a /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(list.o)
- .debug_loc     0x0000000000002910      0x5d4 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(kvprintf.o)
+ .debug_loc     0x0000000000000145      0x7a6 main.o
+ .debug_loc     0x00000000000008eb      0x5bd filesys.o
+ .debug_loc     0x0000000000000ea8       0x3f /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(bootcons.o)
+ .debug_loc     0x0000000000000ee7       0x67 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(cia-icr.o)
+ .debug_loc     0x0000000000000f4e       0xa2 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(file.o)
+ .debug_loc     0x0000000000000ff0      0x13b /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(floppy.o)
+ .debug_loc     0x000000000000112b      0x201 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(floppy-mfm.o)
+ .debug_loc     0x000000000000132c       0x6f /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(serial-file.o)
+ .debug_loc     0x000000000000139b      0x18f /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(cia-timer.o)
+ .debug_loc     0x000000000000152a       0x8f /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(serial.o)
+ .debug_loc     0x00000000000015b9      0xa85 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(queue.o)
+ .debug_loc     0x000000000000203e      0xd55 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(tasks.o)
+ .debug_loc     0x0000000000002d93      0x40b /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(heap.o)
+ .debug_loc     0x000000000000319e       0xf0 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(port.o)
+ .debug_loc     0x000000000000328e       0x99 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(intsrv.o)
+ .debug_loc     0x0000000000003327       0x8a /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(list.o)
+ .debug_loc     0x00000000000033b1      0x5d4 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(kvprintf.o)
+ .debug_loc     0x0000000000003985       0x60 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(rand_r.o)
+ .debug_loc     0x00000000000039e5      0x32f /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(strtol.o)
+ .debug_loc     0x0000000000003d14       0x2a /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(ctype.o)
 
-.debug_aranges  0x0000000000000000      0x3a8
+.debug_aranges  0x0000000000000000      0x468
  .debug_aranges
                 0x0000000000000000       0x20 ../startup.o
  .debug_aranges
@@ -525,140 +595,173 @@ OUTPUT(floppy.elf elf32-m68k)
  .debug_aranges
                 0x00000000000002e8       0x20 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(kvprintf.o)
  .debug_aranges
-                0x0000000000000308       0x20 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(mulsi3.o)
+                0x0000000000000308       0x20 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(rand_r.o)
  .debug_aranges
-                0x0000000000000328       0x20 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(udivsi3.o)
+                0x0000000000000328       0x20 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(strtol.o)
  .debug_aranges
-                0x0000000000000348       0x20 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(umodsi3.o)
+                0x0000000000000348       0x20 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(divsi3.o)
  .debug_aranges
-                0x0000000000000368       0x20 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(memcpy.o)
+                0x0000000000000368       0x20 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(modsi3.o)
  .debug_aranges
-                0x0000000000000388       0x20 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(memset.o)
+                0x0000000000000388       0x20 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(mulsi3.o)
+ .debug_aranges
+                0x00000000000003a8       0x20 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(udivsi3.o)
+ .debug_aranges
+                0x00000000000003c8       0x20 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(umodsi3.o)
+ .debug_aranges
+                0x00000000000003e8       0x20 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(memcpy.o)
+ .debug_aranges
+                0x0000000000000408       0x20 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(memset.o)
+ .debug_aranges
+                0x0000000000000428       0x20 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(strcmp.o)
+ .debug_aranges
+                0x0000000000000448       0x20 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(ctype.o)
 
-.debug_ranges   0x0000000000000000      0x5b8
+.debug_ranges   0x0000000000000000      0x750
  .debug_ranges  0x0000000000000000       0x18 ../startup.o
  .debug_ranges  0x0000000000000018       0x18 ../trap.o
- .debug_ranges  0x0000000000000030       0x30 main.o
- .debug_ranges  0x0000000000000060       0x38 filesys.o
- .debug_ranges  0x0000000000000098       0x18 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(bootcons.o)
- .debug_ranges  0x00000000000000b0       0x68 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(floppy.o)
- .debug_ranges  0x0000000000000118       0x18 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(floppy-mfm.o)
- .debug_ranges  0x0000000000000130       0x18 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(serial-file.o)
- .debug_ranges  0x0000000000000148       0x30 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(cia-timer.o)
- .debug_ranges  0x0000000000000178      0x150 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(queue.o)
- .debug_ranges  0x00000000000002c8      0x170 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(tasks.o)
- .debug_ranges  0x0000000000000438      0x168 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(heap.o)
- .debug_ranges  0x00000000000005a0       0x18 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(intsrv.o)
+ .debug_ranges  0x0000000000000030      0x168 main.o
+ .debug_ranges  0x0000000000000198       0x98 filesys.o
+ .debug_ranges  0x0000000000000230       0x18 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(bootcons.o)
+ .debug_ranges  0x0000000000000248       0x68 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(floppy.o)
+ .debug_ranges  0x00000000000002b0       0x18 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(floppy-mfm.o)
+ .debug_ranges  0x00000000000002c8       0x18 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(serial-file.o)
+ .debug_ranges  0x00000000000002e0       0x30 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(cia-timer.o)
+ .debug_ranges  0x0000000000000310      0x150 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(queue.o)
+ .debug_ranges  0x0000000000000460      0x170 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(tasks.o)
+ .debug_ranges  0x00000000000005d0      0x168 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(heap.o)
+ .debug_ranges  0x0000000000000738       0x18 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(intsrv.o)
 
-.debug_line     0x0000000000000000     0x6491
+.debug_line     0x0000000000000000     0x72f3
  .debug_line    0x0000000000000000      0x356 ../startup.o
  .debug_line    0x0000000000000356      0x17e ../fault.o
  .debug_line    0x00000000000004d4      0x270 ../trap.o
- .debug_line    0x0000000000000744      0x2d7 main.o
- .debug_line    0x0000000000000a1b      0x4e1 filesys.o
- .debug_line    0x0000000000000efc      0x133 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(bootcons.o)
- .debug_line    0x000000000000102f      0x134 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(cia-icr.o)
- .debug_line    0x0000000000001163      0x1cf /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(file.o)
- .debug_line    0x0000000000001332      0x5b3 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(floppy.o)
- .debug_line    0x00000000000018e5      0x26e /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(floppy-mfm.o)
- .debug_line    0x0000000000001b53      0x1b3 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(serial-file.o)
- .debug_line    0x0000000000001d06       0x7d /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(bootcons-putc.o)
- .debug_line    0x0000000000001d83      0x394 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(cia-timer.o)
- .debug_line    0x0000000000002117      0x318 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(serial.o)
- .debug_line    0x000000000000242f     0x114f /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(queue.o)
- .debug_line    0x000000000000357e     0x1837 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(tasks.o)
- .debug_line    0x0000000000004db5      0x587 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(heap.o)
- .debug_line    0x000000000000533c      0x35f /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(port.o)
- .debug_line    0x000000000000569b      0x214 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(intsrv.o)
- .debug_line    0x00000000000058af       0xab /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(intr.o)
- .debug_line    0x000000000000595a       0x94 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(trap.o)
- .debug_line    0x00000000000059ee       0x93 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(portasm.o)
- .debug_line    0x0000000000005a81      0x2c3 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(list.o)
- .debug_line    0x0000000000005d44      0x445 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(kvprintf.o)
- .debug_line    0x0000000000006189       0x79 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(mulsi3.o)
- .debug_line    0x0000000000006202       0x93 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(udivsi3.o)
- .debug_line    0x0000000000006295       0x7e /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(umodsi3.o)
- .debug_line    0x0000000000006313       0xd2 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(memcpy.o)
- .debug_line    0x00000000000063e5       0xac /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(memset.o)
+ .debug_line    0x0000000000000744      0x6f4 main.o
+ .debug_line    0x0000000000000e38      0x822 filesys.o
+ .debug_line    0x000000000000165a      0x133 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(bootcons.o)
+ .debug_line    0x000000000000178d      0x134 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(cia-icr.o)
+ .debug_line    0x00000000000018c1      0x1cf /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(file.o)
+ .debug_line    0x0000000000001a90      0x5b3 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(floppy.o)
+ .debug_line    0x0000000000002043      0x26e /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(floppy-mfm.o)
+ .debug_line    0x00000000000022b1      0x1b3 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(serial-file.o)
+ .debug_line    0x0000000000002464       0x7d /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(bootcons-putc.o)
+ .debug_line    0x00000000000024e1      0x394 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(cia-timer.o)
+ .debug_line    0x0000000000002875      0x318 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(serial.o)
+ .debug_line    0x0000000000002b8d     0x114f /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(queue.o)
+ .debug_line    0x0000000000003cdc     0x1837 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(tasks.o)
+ .debug_line    0x0000000000005513      0x58f /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(heap.o)
+ .debug_line    0x0000000000005aa2      0x35f /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(port.o)
+ .debug_line    0x0000000000005e01      0x214 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(intsrv.o)
+ .debug_line    0x0000000000006015       0xab /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(intr.o)
+ .debug_line    0x00000000000060c0       0x94 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(trap.o)
+ .debug_line    0x0000000000006154       0x93 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(portasm.o)
+ .debug_line    0x00000000000061e7      0x2c3 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(list.o)
+ .debug_line    0x00000000000064aa      0x445 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(kvprintf.o)
+ .debug_line    0x00000000000068ef       0xc2 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(rand_r.o)
+ .debug_line    0x00000000000069b1      0x2fb /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(strtol.o)
+ .debug_line    0x0000000000006cac       0x81 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(divsi3.o)
+ .debug_line    0x0000000000006d2d       0x7d /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(modsi3.o)
+ .debug_line    0x0000000000006daa       0x79 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(mulsi3.o)
+ .debug_line    0x0000000000006e23       0x93 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(udivsi3.o)
+ .debug_line    0x0000000000006eb6       0x7e /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(umodsi3.o)
+ .debug_line    0x0000000000006f34       0xd2 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(memcpy.o)
+ .debug_line    0x0000000000007006       0xac /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(memset.o)
+ .debug_line    0x00000000000070b2       0x8c /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(strcmp.o)
+ .debug_line    0x000000000000713e      0x1b5 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(ctype.o)
 
-.debug_str      0x0000000000000000     0x27ad
- .debug_str     0x0000000000000000      0x70c ../startup.o
+.debug_str      0x0000000000000000     0x2b9b
+ .debug_str     0x0000000000000000      0x6f4 ../startup.o
                                         0x75f (size before relaxing)
- .debug_str     0x000000000000070c       0x7c ../fault.o
+ .debug_str     0x00000000000006f4       0x7c ../fault.o
                                         0x24e (size before relaxing)
- .debug_str     0x0000000000000788      0x11c ../trap.o
+ .debug_str     0x0000000000000770      0x117 ../trap.o
                                         0x308 (size before relaxing)
- .debug_str     0x00000000000008a4      0x2d5 main.o
-                                        0x856 (size before relaxing)
- .debug_str     0x0000000000000b79      0x2d2 filesys.o
-                                        0x9e9 (size before relaxing)
- .debug_str     0x0000000000000e4b       0xb4 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(bootcons.o)
+ .debug_str     0x0000000000000887      0x392 main.o
+                                        0x935 (size before relaxing)
+ .debug_str     0x0000000000000c19      0x439 filesys.o
+                                        0x70c (size before relaxing)
+ .debug_str     0x0000000000001052       0xae /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(bootcons.o)
                                         0x21c (size before relaxing)
- .debug_str     0x0000000000000eff       0x75 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(cia-icr.o)
+ .debug_str     0x0000000000001100       0x75 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(cia-icr.o)
                                         0x296 (size before relaxing)
- .debug_str     0x0000000000000f74       0xa2 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(file.o)
+ .debug_str     0x0000000000001175       0x69 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(file.o)
                                         0x263 (size before relaxing)
- .debug_str     0x0000000000001016      0x1c2 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(floppy.o)
+ .debug_str     0x00000000000011de      0x1c2 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(floppy.o)
                                         0xa02 (size before relaxing)
- .debug_str     0x00000000000011d8       0xbc /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(floppy-mfm.o)
+ .debug_str     0x00000000000013a0       0xbc /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(floppy-mfm.o)
                                         0x656 (size before relaxing)
- .debug_str     0x0000000000001294       0xa7 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(serial-file.o)
+ .debug_str     0x000000000000145c       0xa7 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(serial-file.o)
                                         0x24f (size before relaxing)
- .debug_str     0x000000000000133b       0x54 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(bootcons-putc.o)
+ .debug_str     0x0000000000001503       0x54 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(bootcons-putc.o)
                                          0x8c (size before relaxing)
- .debug_str     0x000000000000138f       0xc9 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(cia-timer.o)
+ .debug_str     0x0000000000001557       0xc9 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(cia-timer.o)
                                         0x88c (size before relaxing)
- .debug_str     0x0000000000001458       0xe7 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(serial.o)
+ .debug_str     0x0000000000001620       0xe7 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(serial.o)
                                         0x800 (size before relaxing)
- .debug_str     0x000000000000153f      0x46c /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(queue.o)
+ .debug_str     0x0000000000001707      0x46c /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(queue.o)
                                         0x7c5 (size before relaxing)
- .debug_str     0x00000000000019ab      0x834 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(tasks.o)
+ .debug_str     0x0000000000001b73      0x834 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(tasks.o)
                                         0xd50 (size before relaxing)
- .debug_str     0x00000000000021df      0x14f /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(heap.o)
+ .debug_str     0x00000000000023a7      0x14a /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(heap.o)
                                         0x36e (size before relaxing)
- .debug_str     0x000000000000232e       0x89 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(port.o)
+ .debug_str     0x00000000000024f1       0x89 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(port.o)
                                         0x880 (size before relaxing)
- .debug_str     0x00000000000023b7       0x62 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(intsrv.o)
+ .debug_str     0x000000000000257a       0x62 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(intsrv.o)
                                         0x6ec (size before relaxing)
- .debug_str     0x0000000000002419       0x54 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(intr.o)
+ .debug_str     0x00000000000025dc       0x54 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(intr.o)
                                          0x99 (size before relaxing)
- .debug_str     0x000000000000246d       0x54 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(trap.o)
+ .debug_str     0x0000000000002630       0x54 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(trap.o)
                                          0x99 (size before relaxing)
- .debug_str     0x00000000000024c1       0x57 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(portasm.o)
+ .debug_str     0x0000000000002684       0x57 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(portasm.o)
                                          0x9c (size before relaxing)
- .debug_str     0x0000000000002518       0x88 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(list.o)
+ .debug_str     0x00000000000026db       0x88 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(list.o)
                                         0x2c5 (size before relaxing)
- .debug_str     0x00000000000025a0       0xbb /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(kvprintf.o)
+ .debug_str     0x0000000000002763       0xbb /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(kvprintf.o)
                                         0x25e (size before relaxing)
- .debug_str     0x000000000000265b       0x42 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(mulsi3.o)
+ .debug_str     0x000000000000281e       0x45 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(rand_r.o)
+                                        0x15f (size before relaxing)
+ .debug_str     0x0000000000002863       0x8a /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(strtol.o)
+                                        0x1ac (size before relaxing)
+ .debug_str     0x00000000000028ed       0x42 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(divsi3.o)
                                          0x83 (size before relaxing)
- .debug_str     0x000000000000269d       0x43 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(udivsi3.o)
+ .debug_str     0x000000000000292f       0x42 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(modsi3.o)
+                                         0x83 (size before relaxing)
+ .debug_str     0x0000000000002971       0x42 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(mulsi3.o)
+                                         0x83 (size before relaxing)
+ .debug_str     0x00000000000029b3       0x43 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(udivsi3.o)
                                          0x84 (size before relaxing)
- .debug_str     0x00000000000026e0       0x43 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(umodsi3.o)
+ .debug_str     0x00000000000029f6       0x43 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(umodsi3.o)
                                          0x84 (size before relaxing)
- .debug_str     0x0000000000002723       0x45 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(memcpy.o)
+ .debug_str     0x0000000000002a39       0x45 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(memcpy.o)
                                          0x86 (size before relaxing)
- .debug_str     0x0000000000002768       0x45 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(memset.o)
+ .debug_str     0x0000000000002a7e       0x45 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(memset.o)
                                          0x86 (size before relaxing)
+ .debug_str     0x0000000000002ac3       0x45 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(strcmp.o)
+                                         0x86 (size before relaxing)
+ .debug_str     0x0000000000002b08       0x93 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(ctype.o)
+                                        0x139 (size before relaxing)
 
-.debug_frame    0x0000000000000000     0x15f0
+.debug_frame    0x0000000000000000     0x19fc
  .debug_frame   0x0000000000000000       0x8c ../startup.o
  .debug_frame   0x000000000000008c       0x4c ../fault.o
  .debug_frame   0x00000000000000d8       0x90 ../trap.o
- .debug_frame   0x0000000000000168       0xf8 main.o
- .debug_frame   0x0000000000000260      0x17c filesys.o
- .debug_frame   0x00000000000003dc       0x38 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(bootcons.o)
- .debug_frame   0x0000000000000414       0x48 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(cia-icr.o)
- .debug_frame   0x000000000000045c       0x9c /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(file.o)
- .debug_frame   0x00000000000004f8      0x16c /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(floppy.o)
- .debug_frame   0x0000000000000664       0x4c /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(floppy-mfm.o)
- .debug_frame   0x00000000000006b0       0x7c /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(serial-file.o)
- .debug_frame   0x000000000000072c       0xb8 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(cia-timer.o)
- .debug_frame   0x00000000000007e4       0xf0 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(serial.o)
- .debug_frame   0x00000000000008d4      0x404 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(queue.o)
- .debug_frame   0x0000000000000cd8      0x5ec /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(tasks.o)
- .debug_frame   0x00000000000012c4       0xc8 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(heap.o)
- .debug_frame   0x000000000000138c       0x68 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(port.o)
- .debug_frame   0x00000000000013f4       0x7c /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(intsrv.o)
- .debug_frame   0x0000000000001470       0x88 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(list.o)
- .debug_frame   0x00000000000014f8       0xf8 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(kvprintf.o)
+ .debug_frame   0x0000000000000168      0x284 main.o
+ .debug_frame   0x00000000000003ec      0x21c filesys.o
+ .debug_frame   0x0000000000000608       0x38 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(bootcons.o)
+ .debug_frame   0x0000000000000640       0x48 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(cia-icr.o)
+ .debug_frame   0x0000000000000688       0x9c /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(file.o)
+ .debug_frame   0x0000000000000724      0x16c /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(floppy.o)
+ .debug_frame   0x0000000000000890       0x4c /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(floppy-mfm.o)
+ .debug_frame   0x00000000000008dc       0x7c /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(serial-file.o)
+ .debug_frame   0x0000000000000958       0xb8 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(cia-timer.o)
+ .debug_frame   0x0000000000000a10       0xf0 /home/tomasz/Downloads/filesys-ThomasStachovsky/drivers/drivers.lib(serial.o)
+ .debug_frame   0x0000000000000b00      0x404 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(queue.o)
+ .debug_frame   0x0000000000000f04      0x5ec /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(tasks.o)
+ .debug_frame   0x00000000000014f0       0xc8 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(heap.o)
+ .debug_frame   0x00000000000015b8       0x68 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(port.o)
+ .debug_frame   0x0000000000001620       0x7c /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(intsrv.o)
+ .debug_frame   0x000000000000169c       0x88 /home/tomasz/Downloads/filesys-ThomasStachovsky/FreeRTOS/freertos.lib(list.o)
+ .debug_frame   0x0000000000001724       0xf8 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(kvprintf.o)
+ .debug_frame   0x000000000000181c       0x5c /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(rand_r.o)
+ .debug_frame   0x0000000000001878       0x7c /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(strtol.o)
+ .debug_frame   0x00000000000018f4      0x108 /home/tomasz/Downloads/filesys-ThomasStachovsky/libc/c.lib(ctype.o)

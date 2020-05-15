@@ -14,13 +14,7 @@ filesys.o: \
  /home/tomasz/Downloads/filesys-ThomasStachovsky/include/FreeRTOS/queue.h \
  /home/tomasz/Downloads/filesys-ThomasStachovsky/include/FreeRTOS/task.h \
  /home/tomasz/Downloads/filesys-ThomasStachovsky/include/floppy.h \
+ /home/tomasz/Downloads/filesys-ThomasStachovsky/include/string.h \
  /home/tomasz/Downloads/filesys-ThomasStachovsky/examples/floppy/filesys.h \
  /home/tomasz/Downloads/filesys-ThomasStachovsky/include/types.h \
- /home/tomasz/Downloads/filesys-ThomasStachovsky/include/file.h \
- /home/tomasz/Downloads/filesys-ThomasStachovsky/include/interrupt.h \
- /home/tomasz/Downloads/filesys-ThomasStachovsky/include/FreeRTOS/list.h \
- /home/tomasz/Downloads/filesys-ThomasStachovsky/include/custom.h \
- /home/tomasz/Downloads/filesys-ThomasStachovsky/include/custom_regdef.h \
- /home/tomasz/Downloads/filesys-ThomasStachovsky/include/stdio.h \
- /home/tomasz/Downloads/filesys-ThomasStachovsky/include/serial.h \
- /home/tomasz/Downloads/filesys-ThomasStachovsky/include/string.h
+ /home/tomasz/Downloads/filesys-ThomasStachovsky/include/file.h
