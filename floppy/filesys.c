@@ -122,6 +122,27 @@ static void *GetTrack(short track) {
   }
 }
 
+static void CopyFromFloppyToMemory(int src_track, int src_sector,
+                                   int src_offset, void *dst, int nbyte) {
+  int track = src_track + (src_sector * SECTOR_SIZE + src_offset) /
+                            (SECTOR_SIZE * SECTOR_COUNT);
+  int start_relative_to_track =
+    (src_sector * SECTOR_SIZE + src_offset) % (SECTOR_SIZE * SECTOR_COUNT);
+  long bytes_left = nbyte;
+  long bytes_read_curr_track;
+  char *track_buf;
+
+  while (bytes_left > 0) {
+    bytes_read_curr_track =
+      min(bytes_left, (SECTOR_SIZE * SECTOR_COUNT) - start_relative_to_track);
+    track_buf = GetTrack(track++);
+    memcpy(dst, track_buf + start_relative_to_track, bytes_read_curr_track);
+    bytes_left -= bytes_read_curr_track;
+    dst += bytes_read_curr_track;
+    start_relative_to_track = 0;
+  }
+}
+
 static void vFileSysCaseMount() {
   if (directory) {
     *curr_msg.response.replyp = false;
@@ -131,23 +152,9 @@ static void vFileSysCaseMount() {
       buffered_tracks[i].track = -1;
     }
     opened_files = 0;
-    int track = 0;
-    char *track_buf = (char *)GetTrack(track++);
-    dirsize = *(short *)(track_buf + SECTOR_SIZE + SECTOR_SIZE);
-    short bytesleft = dirsize;
-    short offset = 0;
+    CopyFromFloppyToMemory(0, 2, 0, &dirsize, sizeof(dirsize));
     directory = (DirEntry_t *)pvPortMalloc(dirsize);
-    char *ptr = track_buf + SECTOR_SIZE + SECTOR_SIZE + 2;
-    while (bytesleft > 0) {
-      memcpy((char *)directory + offset, ptr, ((DirEntry_t *)ptr)->reclen);
-      offset += ((DirEntry_t *)ptr)->reclen;
-      bytesleft -= ((DirEntry_t *)ptr)->reclen;
-      ptr = (char *)ptr + ((DirEntry_t *)ptr)->reclen;
-      if (ptr - track_buf >= SECTOR_COUNT * SECTOR_SIZE) {
-        track_buf = (char *)GetTrack(track++);
-        ptr = track_buf;
-      }
-    }
+    CopyFromFloppyToMemory(0, 2, sizeof(dirsize), directory, dirsize);
     *curr_msg.response.replyp = true;
   }
 
@@ -178,40 +185,9 @@ static void vFileSysCaseRead() {
   void *buffer = curr_msg.request.read.buf;
   long nbyte = curr_msg.request.read.nbyte;
 
-  if (offset >= size || nbyte == 0) {
-    *(size_t *)curr_msg.response.replyp = 0;
-    xTaskNotify(curr_msg.response.task, 0, eNoAction);
-    return;
-  }
+  nbyte = min(nbyte, max(size - offset, 0));
 
-  if (nbyte > size - offset)
-    nbyte = size - offset;
-  long bytes_left = nbyte;
-  int track = (start * SECTOR_SIZE + offset) / (SECTOR_SIZE * SECTOR_COUNT);
-  long start_relative_to_track =
-    (start * SECTOR_SIZE + offset) % (SECTOR_SIZE * SECTOR_COUNT);
-  long bytes_read_first_track =
-    min(bytes_left, (SECTOR_SIZE * SECTOR_COUNT) - start_relative_to_track);
-  char *track_buf = (char *)GetTrack(track++);
-
-  memcpy(buffer, track_buf + start_relative_to_track, bytes_read_first_track);
-  bytes_left -= bytes_read_first_track;
-  buffer += bytes_read_first_track;
-
-  while (bytes_left > SECTOR_SIZE * SECTOR_COUNT) {
-    track_buf = GetTrack(track++);
-    memcpy(buffer, track_buf, SECTOR_SIZE * SECTOR_COUNT);
-    bytes_left -= SECTOR_SIZE * SECTOR_COUNT;
-    buffer += SECTOR_SIZE * SECTOR_COUNT;
-  }
-
-  if (bytes_left > 0) {
-    track_buf = GetTrack(track++);
-    memcpy(buffer, track_buf, bytes_left);
-    bytes_left = 0;
-    buffer += bytes_left;
-  }
-
+  CopyFromFloppyToMemory(0, start, offset, buffer, nbyte);
   curr_msg.request.read.ff->f.offset += nbyte;
   *(size_t *)curr_msg.response.replyp = nbyte;
   xTaskNotify(curr_msg.response.task, 0, eNoAction);
@@ -283,9 +259,7 @@ static void vFileSysTask(__unused void *data) {
         vFileSysCaseRead();
         break;
       }
-      default: {
-        break;
-      }
+      default: { break; }
     }
   }
 }
