@@ -61,8 +61,7 @@ typedef struct WaitMessage {
 Proc_t *TaskGetProc(void);
 void TaskSetProc(Proc_t *proc);
 
-void ProcInit(Proc_t *proc, size_t ustksz, QueueHandle_t parentreports,
-              QueueHandle_t parentresumenotify);
+void ProcInit(Proc_t *proc, size_t ustksz);
 void ProcFini(Proc_t *proc);
 int ProcLoadImage(Proc_t *proc, File_t *exe);
 void ProcFreeImage(Proc_t *proc);

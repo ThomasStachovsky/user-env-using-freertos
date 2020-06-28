@@ -1,10 +1,3 @@
-/* NOTE: Names of example files:
- * cat
- * shell
- * text1.txt
- * text2.txt
- * digits.txt */
-
 #include <FreeRTOS/FreeRTOS.h>
 #include <FreeRTOS/task.h>
 
@@ -28,7 +21,7 @@ static void vMainTask(__unused void *data) {
     MemoryOpen(_binary_ushell_exe_start, (size_t)_binary_ushell_exe_size);
 
   Proc_t p;
-  ProcInit(&p, UPROC_STKSZ, NULL, NULL);
+  ProcInit(&p, UPROC_STKSZ);
   TaskSetProc(&p);
   ProcFileInstall(&p, 0, FileHold(ser));
   ProcFileInstall(&p, 1, FileHold(ser));

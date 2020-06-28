@@ -11,34 +11,7 @@
 #include "syscall.h"
 #include "proc.h"
 #include "utils.h"
-
-extern char _binary_ushell_exe_end[];
-extern char _binary_ushell_exe_size[];
-extern char _binary_ushell_exe_start[];
-
-extern char _binary_ucat_exe_end[];
-extern char _binary_ucat_exe_size[];
-extern char _binary_ucat_exe_start[];
-
-/* FIXME: virtual_filesystem and VirtFileSysOpen are a temporary solution, they
- * will be replaced by the floppy filesystem after the merge of all projects */
-
-#define VIRT_FS_N_ENTRIES 5
-
-static void *virtual_filesystem[VIRT_FS_N_ENTRIES][3] = {
-  {"shell", _binary_ushell_exe_start, _binary_ushell_exe_size},
-  {"cat", _binary_ucat_exe_start, _binary_ucat_exe_size},
-  {"text1.txt", "This is a file.\n", (void *)16},
-  {"text2.txt", "This is another file.\n", (void *)22},
-  {"digits.txt", "0123456789\n", (void *)11}};
-
-static File_t *VirtFileSysOpen(const char *name) {
-  for (int i = 0; i < VIRT_FS_N_ENTRIES; i++)
-    if (strcmp(name, virtual_filesystem[i][0]) == 0)
-      return MemoryOpen(virtual_filesystem[i][1],
-                        (size_t)(virtual_filesystem[i][2]));
-  return NULL;
-}
+#include "filesys.h"
 
 extern void vPortDefaultTrapHandler(TrapFrame_t *);
 
@@ -53,10 +26,14 @@ static void InitForkedProc(void *data) {
   Proc_t child_p;
 
   /* create a new user process with a zero-sized stack */
-  ProcInit(&child_p, 0, parent_p->reports, parent_p->resumenotify);
+  ProcInit(&child_p, 0);
 
-  /* increment the number of parent's children; it doesn't have to be atomic;
-   * noone else is using nchildren and parent is suspended */
+  /* get parent's queues */
+  child_p.parentreports = parent_p->reports;
+  child_p.parentresumenotify = parent_p->resumenotify;
+
+  /* increment the number of parent's children; it doesn't have to be
+   * atomic; noone else is using nchildren and parent is suspended */
   parent_p->nchildren++;
 
   /* child uses parent's stack and executable */
@@ -106,7 +83,7 @@ static void SysCallOpen(Proc_t *p, TrapFrame_t *frame) {
     }
   }
   if (fd != -1) {
-    p->fdtab[fd] = VirtFileSysOpen((char *)(frame->d1));
+    p->fdtab[fd] = FsOpen((char *)(frame->d1));
   }
   if (p->fdtab[fd] == NULL)
     frame->d0 = (uint32_t)-1;
@@ -201,7 +178,7 @@ static void SysCallExecv(Proc_t *p, TrapFrame_t *frame) {
 
   bzero(p->ustk, p->ustksz);
 
-  File_t *executable = VirtFileSysOpen(path);
+  File_t *executable = FsOpen(path);
 
   if (executable == NULL) {
     free(p->ustk);

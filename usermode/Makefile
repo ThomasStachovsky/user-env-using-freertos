@@ -1,7 +1,7 @@
 TOPDIR = $(realpath ../..)
 
 PROGRAM = loadexec
-SOURCES = main.c sysent.c proc.c trampoline.S dummy_filesystem.c
+SOURCES = main.c sysent.c proc.c trampoline.S utils.c
 OBJECTS = ../startup.o ../fault.o ../trap.o ushell.exe.o ucat.exe.o
 
 CLEAN-FILES = crt0.o sysapi.o shell.o cat.o

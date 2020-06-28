@@ -37,8 +37,7 @@ void ProcFreeImage(Proc_t *proc) {
   }
 }
 
-void ProcInit(Proc_t *proc, size_t ustksz, QueueHandle_t parentreports,
-              QueueHandle_t parentresumenotify) {
+void ProcInit(Proc_t *proc, size_t ustksz) {
   static int pid = 1; /* let's assume it will never overflow */
 
   bzero(proc, sizeof(Proc_t));
@@ -50,8 +49,8 @@ void ProcInit(Proc_t *proc, size_t ustksz, QueueHandle_t parentreports,
   bzero(proc->ustk, ustksz);
   proc->reports = xQueueCreate(MAXCHILDREN, sizeof(WaitMessage_t));
   proc->resumenotify = xQueueCreate(1, sizeof(int));
-  proc->parentreports = parentreports;
-  proc->parentresumenotify = parentresumenotify;
+  proc->parentreports = NULL;
+  proc->parentresumenotify = NULL;
   proc->nchildren = 0;
   proc->pid = pid++;
 }

@@ -1,6 +1,5 @@
 #include <custom.h>
 #include <string.h>
-#include <strings.h>
 #include "sysapi.h"
 
 #define MAXLINE 80
@@ -18,15 +17,9 @@ static void spawn(char *argv[], int bg) {
     }
   }
   /* Parent waits for foreground job to terminate */
-
-  /* NOTE: I changed the code here, because it waited for ANY child and returned
-   * its status so if we started a job in the background and then in the
-   * foreground we would possibly get the status of the background job */
   if (!bg) {
-    int status, waitedpid;
-    do {
-      waitedpid = wait(&status);
-    } while (waitedpid != pid);
+    int status;
+    wait(&status);
   }
 }
 
@@ -73,7 +66,7 @@ static int parseline(char *buf, char **argv) {
 /* eval - Evaluate a command line */
 static void eval(char *cmdline) {
   static char *argv[MAXARGS]; /* Argument list execv() */
-  static char buf[MAXLINE];   /* Holds modified command line */
+  static char buf[MAXLINE + 1];   /* Holds modified command line */
 
   strcpy(buf, cmdline);
   int bg = parseline(buf, argv);
@@ -85,16 +78,14 @@ static void eval(char *cmdline) {
 }
 
 int main(void) {
-  static char cmdline[MAXLINE];
+  static char cmdline[MAXLINE + 1];
 
   for (;;) {
-    /* NOTE: We have to zero the string after every line or else shorter lines
-     * get corrupted by previous longer lines */
-    bzero(cmdline, MAXLINE);
     write(STDOUT_FILENO, "> ", 2);
     int res = read(STDIN_FILENO, cmdline, MAXLINE);
     if (res == 0)
       break;
+    cmdline[res] = '\0';
     eval(cmdline);
   }
 
